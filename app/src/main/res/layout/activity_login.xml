@@ -46,21 +46,21 @@
         android:text="Email"
         />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bin_red"
         >
-        <com.google.android.material.textfield.TextInputEditText
+
+        <EditText
+            android:id="@+id/TextInputEditText_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Email"
+            android:layout_marginLeft="16dp"
             android:background="#ffffff"
-            android:id="@+id/TextInputEditText_email"
-        >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Email"></EditText>
+    </LinearLayout>
 
 
     <TextView
@@ -71,21 +71,22 @@
         android:textSize="19dp"
         android:text="Your Password"
         />
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bin_red"
         >
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
             android:background="#ffffff"
             android:hint="Password"
             android:id="@+id/TextInputEditText_password"
             >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        </EditText>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
