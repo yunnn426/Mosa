@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -64,6 +65,9 @@ public class IntitialActivity extends AppCompatActivity {
     Button btn4;
     File file;
     String filePath;
+    MenuItem bottom_1;
+    MenuItem bottom_2;
+    MenuItem bottom_3;
     String faceinfo=null;
     BottomNavigationView bottomNavigationView;
 

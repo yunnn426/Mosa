@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,10 @@ public class CustomerInfo extends AppCompatActivity {
 
     TextView customer_name;
     TextView customer_email;
+
+    MenuItem bottom_1;
+    MenuItem bottom_2;
+    MenuItem bottom_3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,7 @@ public class CustomerInfo extends AppCompatActivity {
         String name=intent.getStringExtra("username");
         String email=intent.getStringExtra("useremail");
 
+
         customer_name.setText(name);
         customer_email.setText(email);
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -45,6 +51,7 @@ public class CustomerInfo extends AppCompatActivity {
                     Toast.makeText(this,"고객님의 이미지로 스타일 진단 화면으로 이동합니다.(사진등록을 먼저해야합니다.)",Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_1=new Intent(CustomerInfo.this, CustomerActivity.class);
                     intent_bottom_1.putExtra("img",img);
+
                     startActivity(intent_bottom_1);
                     break;
                 }

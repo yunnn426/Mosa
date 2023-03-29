@@ -36,6 +36,7 @@ import java.util.List;
 public class CustomerActivity extends AppCompatActivity {
 
     String faceinfo=null;
+
     private final static int scaling_Facter=10;
     FaceDetectorOptions highAccuracyOpts =
             new FaceDetectorOptions.Builder()
@@ -50,7 +51,9 @@ public class CustomerActivity extends AppCompatActivity {
 
     Button btn1;
     Button btn2;
-
+    MenuItem bottom_1;
+    MenuItem bottom_2;
+    MenuItem bottom_3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,6 @@ public class CustomerActivity extends AppCompatActivity {
 
         img1=findViewById(R.id.example_skin_img);
         img2=findViewById(R.id.example_face_img);
-
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
         String imagePath = intent.getStringExtra("img");
@@ -76,6 +78,7 @@ public class CustomerActivity extends AppCompatActivity {
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }
+
 
         //그냥 엑티비티를 이용해도 될듯?
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
