@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="pont_color">#FF4D4D</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,9 +9,4 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="googlebackground">#E2E2E2</color>
-    <color name="press_login">#A256FF</color>
-    <color name="color_gray">#7CFBFBFB</color>
-    <color name="press_google">#B5FFFFFF</color>
-    <color name="main_color">#FF4C4C</color>
 </resources>

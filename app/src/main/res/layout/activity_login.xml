@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="로그인"
-        android:textColor="@color/main_color"
+        android:textColor="@color/pont_color"
         android:textStyle="bold"
 
         android:layout_marginBottom="5dp"
@@ -58,7 +58,7 @@
             android:hint="Email"
             android:background="#ffffff"
             android:id="@+id/TextInputEditText_email"
-        >
+            >
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="98dp"
         android:layout_marginLeft="5dp"
-        android:textColor="@color/main_color"
+        android:textColor="@color/pont_color"
         android:text="비밀번호 찾기"
         />
 
@@ -149,7 +149,7 @@
             android:layout_toLeftOf="@id/GoGoogleButton"
             android:background="@null"
             android:gravity="center"
-            android:src="@drawable/google_48"></ImageView>
+            android:src="@drawable/arrow_48"></ImageView>
 
         <TextView
             android:id="@+id/GoGoogleButton"

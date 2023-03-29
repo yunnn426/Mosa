@@ -1,6 +1,5 @@
 package com.example.mosa;
 
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +51,7 @@ public class subSignup extends AppCompatActivity {
                             finish();
 
                         } else {
-                            Toast.makeText(subSignup.this, "등록 에러", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(subSignup.this, "등록 에러 :"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             return;
                         }
                     });

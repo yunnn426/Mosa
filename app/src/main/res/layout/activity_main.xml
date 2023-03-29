@@ -24,7 +24,7 @@
         android:paddingLeft="20dp"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:textColor="@color/main_color"
+        android:textColor="@color/pont_color"
         android:text="Daily Color" />
     <TextView
         android:layout_width="match_parent"
