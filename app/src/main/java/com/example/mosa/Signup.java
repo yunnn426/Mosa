@@ -37,10 +37,8 @@ public class Signup extends AppCompatActivity {
             firebaseAuth.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(Signup.this, task -> {
                         if (task.isSuccessful()) {//성공했을때 이때는 유저의 로그인 정보 받아서 다음 엑티비티에 전달
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             Toast.makeText(Signup.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Signup.this, IntitialActivity.class);
-                            intent.putExtra("user",user);
                             startActivity(intent);
                         } else {//실패했을때 일단 로그인이 안되도 넘어가게
                             Toast.makeText(Signup.this, "로그인 오류", Toast.LENGTH_SHORT).show();

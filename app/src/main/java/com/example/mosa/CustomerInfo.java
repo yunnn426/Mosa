@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,23 +17,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CustomerInfo extends AppCompatActivity {
+
+    TextView customer_name;
+    TextView customer_email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_info);
+        customer_name=findViewById(R.id.customer_name);
+        customer_email=findViewById(R.id.customer_email);
 
         Intent intent=getIntent();
         //이 화면에서 스타일 진단 화면으로 가려면 얼굴 이미지 경로, ml_kit 얼굴 분석정보가 필요하다.
         String img=intent.getStringExtra("img");
-        String faceinfo=intent.getStringExtra("imginfo");
+        String name=intent.getStringExtra("username");
+        String email=intent.getStringExtra("useremail");
 
+        customer_name.setText(name);
+        customer_email.setText(email);
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item->{
             switch (item.getItemId()){
 
                 case R.id.bottom_menu_1:
                 {
-                    //여기서 스타일 진단 화면으로 넘어가려면 사진, 얼굴 정보를 전달할 필요가 있다.
+                    //여기서 스타일 진단 화면으로 넘어가려면 사진 정보를 전달할 필요가 있다.
                     Toast.makeText(this,"고객님의 이미지로 스타일 진단 화면으로 이동합니다.(사진등록을 먼저해야합니다.)",Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_1=new Intent(CustomerInfo.this, CustomerActivity.class);
                     intent_bottom_1.putExtra("img",img);

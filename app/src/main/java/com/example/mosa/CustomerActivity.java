@@ -21,6 +21,8 @@ import androidx.core.content.FileProvider;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
@@ -59,6 +61,7 @@ public class CustomerActivity extends AppCompatActivity {
         img1=findViewById(R.id.example_skin_img);
         img2=findViewById(R.id.example_face_img);
 
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
         String imagePath = intent.getStringExtra("img");
         File file=new File(imagePath);
@@ -95,9 +98,13 @@ public class CustomerActivity extends AppCompatActivity {
                 }
                 case R.id.bottom_menu_3:
                 {
+                    String user_name=user.getDisplayName();
+                    String user_email=user.getEmail();
                     Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_3=new Intent(CustomerActivity.this,CustomerInfo.class);
                     intent_bottom_3.putExtra("img",imagePath);
+                    intent_bottom_3.putExtra("username",user_name);
+                    intent_bottom_3.putExtra("useremail",user_email);
                     startActivity(intent_bottom_3);
                     break;
                     //회원님의 정보를 보여준다

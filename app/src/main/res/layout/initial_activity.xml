@@ -32,12 +32,7 @@
                 android:layout_gravity="center"
                 android:text="UPLOAD" />
 
-            <Button
-                android:id="@+id/test_screen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="다음화면으로 넘어가기" />
+
         </LinearLayout>
     </ScrollView>
 

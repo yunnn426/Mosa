@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
@@ -70,8 +72,8 @@ public class IntitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.initial_activity);
 
-        Intent intent_login = getIntent();
-        FirebaseUser user = (FirebaseUser) intent_login.getSerializableExtra("user");
+
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
 
         bottomNavigationView=findViewById(R.id.bottom_navigation);
 
@@ -125,19 +127,6 @@ public class IntitialActivity extends AppCompatActivity {
             inImg=true;
         });
 
-        //이거는 테스트용 초기화면으로 넘어가기 위한 인텐트 입니다.(비트맵 형식의 이미지를 보냄)
-        btn4=findViewById(R.id.test_screen);
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(IntitialActivity.this, CustomerActivity.class);
-                BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
-                Bitmap bitmap=bitmapDrawable.getBitmap();
-                File file=BmpToFile(bitmap,"image.png");
-                intent.putExtra("img",file.getAbsolutePath());
-                startActivity(intent);
-            }
-        });
 
 
 
@@ -167,11 +156,15 @@ public class IntitialActivity extends AppCompatActivity {
                 }
                 case R.id.bottom_menu_3:
                 {
+                    String user_name=user.getDisplayName();
+                    String user_email=user.getEmail();
                     Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_3=new Intent(IntitialActivity.this,CustomerInfo.class);
                     BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
                     Bitmap bitmap=bitmapDrawable.getBitmap();
                     File file=BmpToFile(bitmap,"image.png");
+                    intent_bottom_3.putExtra("username",user_name);
+                    intent_bottom_3.putExtra("useremail",user_email);
                     intent_bottom_3.putExtra("img",file.getAbsolutePath());
                     startActivity(intent_bottom_3);
                     break;
