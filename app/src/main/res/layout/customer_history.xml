@@ -5,5 +5,5 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="테스트입니다."/>
+    android:text="여기에 기록을 저장"/>
 </ScrollView>
