@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,6 +38,8 @@ public class CustomerInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_info);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         customer_name=findViewById(R.id.customer_name);
         customer_email=findViewById(R.id.customer_email);
 
@@ -108,6 +111,19 @@ public class CustomerInfo extends AppCompatActivity {
             }
             return false;
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.top_menu,menu); //우상단 메뉴 활성화
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // 뒤로가기 버튼을 눌렀을 때 , 바로 이전 화면으로 이동
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     public File BmpToFile(Bitmap bmp, String filename)
     {
