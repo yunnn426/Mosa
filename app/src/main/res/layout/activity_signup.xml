@@ -8,171 +8,183 @@
     android:paddingTop="16dp"
     >
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@null"
-        android:src="@drawable/arrow_48"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
-        >
-    </ImageView>
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="회원가입"
-        android:textColor="@color/main_color"
-        android:textStyle="bold"
-
-        android:layout_marginBottom="5dp"
-        android:textSize="40sp"
-        >
-    </TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textSize="16dp"
-        android:textColor="#E48A8888"
-        android:text="회원 계정을 만들고 스타일링 추천을 받아보세요!"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:textSize="19dp"
-        android:text="Email"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bin_red"
-        >
-        <com.google.android.material.textfield.TextInputEditText
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Email"
-            android:background="#ffffff"
-            android:id="@+id/TextInputEditText_email"
-            >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:textSize="19dp"
-        android:text="Your Name"
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bin_red"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#ffffff"
-            android:hint="홍길동"
-            android:id="@+id/TextInputEditText_name"
-            >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:textSize="19dp"
-        android:text="Your Password"
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bin_red"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#ffffff"
-            android:hint="Password"
-            android:id="@+id/TextInputEditText_password"
-            >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        />
-
-    <RelativeLayout
-        android:id="@+id/RelativeLayout_login"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@drawable/bin_login"
-        >
-
-        <android.widget.Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#ffffff"
-            android:stateListAnimator="@null"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="25dp"
-            android:text="회원가입"
-            android:id="@+id/Signup_button"
-            android:background="#DB1A21"
-            >
-        </android.widget.Button>
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        >
-
-        <TextView
-            android:layout_width="239dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="이미 계정이 있으십니까?"
-            android:textSize="17sp"></TextView>
+            android:orientation="vertical">
 
-        <android.widget.Button
-            android:id="@+id/back_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="로그인"
-            android:textSize="17sp"
-            android:textColor="#DB1A21"
-            android:background="@color/white"
-            >
-        </android.widget.Button>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:src="@drawable/arrow_48"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                >
+            </ImageView>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원가입"
+                android:textColor="@color/main_color"
+                android:textStyle="bold"
+
+                android:layout_marginBottom="5dp"
+                android:textSize="40sp"
+                >
+            </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16dp"
+                android:textColor="#E48A8888"
+                android:text="회원 계정을 만들고 스타일링 추천을 받아보세요!"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Email"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bin_red"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Email"
+                    android:background="#ffffff"
+                    android:id="@+id/TextInputEditText_email"
+                    >
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Your Name"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bin_red"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff"
+                    android:hint="홍길동"
+                    android:id="@+id/TextInputEditText_name"
+                    >
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Your Password"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bin_red"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff"
+                    android:hint="Password"
+                    android:id="@+id/TextInputEditText_password"
+                    >
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_login"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bin_login"
+                >
+
+                <android.widget.Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="#ffffff"
+                    android:stateListAnimator="@null"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:text="회원가입"
+                    android:id="@+id/Signup_button"
+                    android:background="#DB1A21"
+                    >
+                </android.widget.Button>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                >
+
+                <TextView
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="이미 계정이 있으십니까?"
+                    android:textSize="17sp"></TextView>
+
+                <android.widget.Button
+                    android:id="@+id/back_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:text="로그인"
+                    android:textSize="17sp"
+                    android:textColor="#DB1A21"
+                    android:background="@color/white"
+                    >
+                </android.widget.Button>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>
