@@ -55,21 +55,26 @@
                 android:text="Email"
                 />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bin_red"
                 >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Email"
-                    android:background="#ffffff"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/email_128" />
+
+                <EditText
                     android:id="@+id/TextInputEditText_email"
-                    >
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="295dp"
+                    android:layout_height="50dp"
+                    android:background="#ffffff"
+                    android:hint="abc@naver.com"
+                    android:textStyle="italic" />
+            </LinearLayout>
 
 
             <TextView
@@ -80,21 +85,26 @@
                 android:textSize="19dp"
                 android:text="Your Name"
                 />
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bin_red"
                 >
-                <com.google.android.material.textfield.TextInputEditText
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/user_icon" />
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:background="#ffffff"
                     android:hint="홍길동"
                     android:id="@+id/TextInputEditText_name"
                     >
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
+                </EditText>>
+            </LinearLayout>>
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,21 +114,26 @@
                 android:textSize="19dp"
                 android:text="Your Password"
                 />
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bin_red"
                 >
-                <com.google.android.material.textfield.TextInputEditText
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/lock_icon" />
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:background="#ffffff"
-                    android:hint="Password"
+                    android:hint="********"
                     android:id="@+id/TextInputEditText_password"
                     >
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
+                </EditText>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -144,7 +159,7 @@
                     android:textSize="25dp"
                     android:text="회원가입"
                     android:id="@+id/Signup_button"
-                    android:background="#DB1A21"
+                    android:background="@null"
                     >
                 </android.widget.Button>
             </RelativeLayout>
@@ -156,14 +171,15 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="10"
                 >
 
                 <TextView
-                    android:layout_width="239dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="center"
@@ -175,12 +191,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
-                    android:text="로그인"
-                    android:textSize="17sp"
-                    android:textColor="#DB1A21"
                     android:background="@color/white"
-                    >
-                </android.widget.Button>
+                    android:text="로그인"
+                    android:textStyle="bold"
+                    android:textColor="#DB1A21"
+                    android:textSize="17sp"></android.widget.Button>
 
             </LinearLayout>
         </LinearLayout>

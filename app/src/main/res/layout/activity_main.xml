@@ -30,10 +30,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:textSize="50sp"
+                android:textSize="55sp"
                 android:textStyle="bold"
                 android:textColor="@color/main_color"
-                android:text="Daily Color" />
+                android:text="MoSA" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,15 +44,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:background="@drawable/bin_google"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                >
+                android:paddingRight="12dp">
 
                 <ImageView
                     android:layout_width="37dp"
@@ -124,7 +124,10 @@
                     android:textStyle="bold"></android.widget.Button>
 
             </RelativeLayout>
+
+
         </LinearLayout>
+
     </ScrollView>
 
 
