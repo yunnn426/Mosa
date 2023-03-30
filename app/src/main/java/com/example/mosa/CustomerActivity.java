@@ -79,7 +79,7 @@ public class CustomerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야
         //그냥 엑티비티를 이용해도 될듯?
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item->{
