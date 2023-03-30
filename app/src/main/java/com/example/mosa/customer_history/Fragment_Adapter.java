@@ -7,9 +7,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class Fragment_Adapter extends FragmentStatePagerAdapter {
-
+    int num;
     public Fragment_Adapter(FragmentManager fm, int select){
-        super(fm, select);
+        super(fm);
+        this.num=select;
     }
 
     @NonNull
@@ -17,15 +18,19 @@ public class Fragment_Adapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                break;
+                Fragment_history tab1=new Fragment_history();
+                return tab1;
             case 1:
-                break;
+
+                Fragment_customerinfo tab2=new Fragment_customerinfo();
+                return tab2;
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return num;
     }
 }

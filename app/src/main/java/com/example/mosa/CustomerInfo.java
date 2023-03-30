@@ -6,12 +6,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.mosa.customer_history.Fragment_Adapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,12 +30,42 @@ public class CustomerInfo extends AppCompatActivity {
     MenuItem bottom_1;
     MenuItem bottom_2;
     MenuItem bottom_3;
+
+    Fragment_Adapter adapter;
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_info);
         customer_name=findViewById(R.id.customer_name);
         customer_email=findViewById(R.id.customer_email);
+
+        TabLayout tabLayout=findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("진단기록"));
+        tabLayout.addTab(tabLayout.newTab().setText("회원정보"));
+
+        adapter=new Fragment_Adapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager=findViewById(R.id.view_pager);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         Intent intent=getIntent();
         //이 화면에서 스타일 진단 화면으로 가려면 얼굴 이미지 경로, ml_kit 얼굴 분석정보가 필요하다.
