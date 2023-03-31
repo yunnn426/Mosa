@@ -144,7 +144,7 @@
             android:textSize="25dp"
             android:text="회원가입"
             android:id="@+id/Signup_button"
-            android:background="#DB1A21"
+            android:background="@null"
             >
         </android.widget.Button>
     </RelativeLayout>

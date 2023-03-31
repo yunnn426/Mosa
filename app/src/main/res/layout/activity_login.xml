@@ -83,29 +83,28 @@
         android:textSize="19dp"
         android:text="Your Password"
         />
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bin_red"
         >
-        <com.google.android.material.textfield.TextInputEditText
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/lock_icon" />
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
             android:background="#ffffff"
             android:hint="Password"
             android:id="@+id/TextInputEditText_password"
             >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        </EditText>>
+    </LinearLayout>>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/main_color"
-                android:text="비밀번호 찾기"
-                />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="98dp"
@@ -134,7 +133,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Login"
-            android:background="#DB1A21"
+            android:background="@null"
             >
         </android.widget.Button>
     </RelativeLayout>
@@ -217,7 +216,7 @@
             >
         </android.widget.Button>
 
-            </LinearLayout>
+    </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
