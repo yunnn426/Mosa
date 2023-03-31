@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="로그인"
-                android:textColor="@color/main_color"
+                android:textColor="@color/pont_color"
                 android:textStyle="bold"
 
                 android:layout_marginBottom="5dp"
@@ -62,14 +62,17 @@
                 android:background="@drawable/bin_red"
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/email_128" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/email_icon" />
                 <EditText
                     android:id="@+id/TextInputEditText_email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:background="#ffffff"
                     android:textStyle="italic"
                     android:hint="abc@naver.com"></EditText>
@@ -91,13 +94,16 @@
                 android:background="@drawable/bin_red"
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/lock_icon" />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:background="#ffffff"
                     android:hint="********"
                     android:id="@+id/TextInputEditText_password"
