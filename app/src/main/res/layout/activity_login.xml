@@ -62,16 +62,18 @@
                 android:background="@drawable/bin_red"
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/email_128" />
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/email_icon" />
                 <EditText
                     android:id="@+id/TextInputEditText_email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:background="#ffffff"
-                    android:textStyle="italic"
                     android:hint="abc@naver.com"></EditText>
             </LinearLayout>
 
@@ -91,13 +93,16 @@
                 android:background="@drawable/bin_red"
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/lock_icon" />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:background="#ffffff"
                     android:hint="********"
                     android:id="@+id/TextInputEditText_password"
