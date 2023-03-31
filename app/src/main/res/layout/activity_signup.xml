@@ -8,15 +8,24 @@
     android:paddingTop="16dp"
     >
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@null"
-        android:src="@drawable/arrow_48"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
-        >
-    </ImageView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:src="@drawable/arrow_48"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                >
+            </ImageView>
 
     <TextView
         android:layout_width="match_parent"
@@ -173,6 +182,9 @@
             >
         </android.widget.Button>
 
-    </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>
