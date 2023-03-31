@@ -101,13 +101,13 @@
         >
 
         <ImageView
-            android:layout_width="37dp"
-            android:layout_height="55dp"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
             android:layout_marginRight="1dp"
             android:layout_toLeftOf="@id/GoEmailButton"
             android:background="@null"
             android:gravity="center"
-            android:src="@drawable/email_128"></ImageView>
+            android:src="@drawable/email_icon"></ImageView>
 
         <android.widget.Button
             android:id="@+id/GoEmailButton"
