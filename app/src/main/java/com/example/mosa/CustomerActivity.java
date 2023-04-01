@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.google.firebase.ml.common.modeldownload.*;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +25,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+
+import com.google.firebase.ml.common.modeldownload.*;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
@@ -35,6 +38,9 @@ import com.google.firebase.ml.modeldownloader.CustomModel;
 import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions;
 import com.google.firebase.ml.modeldownloader.DownloadType;
 import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader;
+import org.tensorflow.lite.Interpreter;
+
+
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
@@ -42,7 +48,7 @@ import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
-import org.tensorflow.lite.Interpreter;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -169,13 +175,28 @@ public class CustomerActivity extends AppCompatActivity {
             }
         });
 
+
         /*
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
                 .requireWifi()
                 .build();
 
+        FirebaseModelManager.getInstance().download(
+                new FirebaseCustomRemoteModel.Builder("test").build(),conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("test","test 성공");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("test","test 실패");
+            }
+        });*/
+
+                /*
         FirebaseModelManager.getInstance().downloadRemoteModelIfNeeded(
-                        new FirebaseCustomRemoteModel.Builder("your_model_name").build(),
+                        new FirebaseCustomRemoteModel.Builder("test").build(),
                         conditions)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -190,7 +211,9 @@ public class CustomerActivity extends AppCompatActivity {
                         // 모델 다운로드 실패
                     }
                 });
-                */
+
+                 */
+
     }
 
     public void sendimg_skin_firebase(Bitmap bmp, String faceinfo){
