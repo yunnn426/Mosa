@@ -169,8 +169,28 @@ public class CustomerActivity extends AppCompatActivity {
             }
         });
 
+        /*
+        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
+                .requireWifi()
+                .build();
 
-
+        FirebaseModelManager.getInstance().downloadRemoteModelIfNeeded(
+                        new FirebaseCustomRemoteModel.Builder("your_model_name").build(),
+                        conditions)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void v) {
+                        // 모델 다운로드 성공
+                        // 모델을 사용하는 코드 작성
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // 모델 다운로드 실패
+                    }
+                });
+                */
     }
 
     public void sendimg_skin_firebase(Bitmap bmp, String faceinfo){
