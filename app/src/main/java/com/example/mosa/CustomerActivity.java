@@ -31,9 +31,14 @@ import com.google.firebase.ml.common.modeldownload.*;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
+import com.google.firebase.ml.custom.FirebaseCustomLocalModel;
 import com.google.firebase.ml.custom.FirebaseCustomRemoteModel;
+import com.google.firebase.ml.custom.FirebaseModelDataType;
+import com.google.firebase.ml.custom.FirebaseModelInputOutputOptions;
+import com.google.firebase.ml.custom.FirebaseModelInputs;
 import com.google.firebase.ml.custom.FirebaseModelInterpreter;
 import com.google.firebase.ml.custom.FirebaseModelInterpreterOptions;
+import com.google.firebase.ml.custom.FirebaseModelOutputs;
 import com.google.firebase.ml.modeldownloader.CustomModel;
 import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions;
 import com.google.firebase.ml.modeldownloader.DownloadType;
@@ -52,6 +57,8 @@ import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.List;
 
 public class CustomerActivity extends AppCompatActivity {
@@ -175,14 +182,12 @@ public class CustomerActivity extends AppCompatActivity {
             }
         });
 
-
-        /*
+        FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("test").build();
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
                 .requireWifi()
                 .build();
 
-        FirebaseModelManager.getInstance().download(
-                new FirebaseCustomRemoteModel.Builder("test").build(),conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+        FirebaseModelManager.getInstance().download(remoteModel,conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d("test","test 성공");
@@ -192,27 +197,62 @@ public class CustomerActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Log.d("test","test 실패");
             }
-        });*/
+        });
 
-                /*
-        FirebaseModelManager.getInstance().downloadRemoteModelIfNeeded(
-                        new FirebaseCustomRemoteModel.Builder("test").build(),
-                        conditions)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+/*
+        FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("test").build();
+        FirebaseModelInterpreter firebaseInterpreter = null;
+        try {
+            firebaseInterpreter = FirebaseModelInterpreter.getInstance(new FirebaseModelInterpreterOptions.Builder(remoteModel).build());
+        } catch (FirebaseMLException e) {
+            throw new RuntimeException(e);
+        }
+
+// Define input shape
+        FirebaseModelInputOutputOptions inputOutputOptions = null;
+        try {
+            inputOutputOptions = new FirebaseModelInputOutputOptions.Builder()
+                    .setInputFormat(0, FirebaseModelDataType.FLOAT32, new int[]{1, 784})
+                    .setOutputFormat(0, FirebaseModelDataType.FLOAT32, new int[]{1, 10})
+                    .build();
+        } catch (FirebaseMLException e) {
+            throw new RuntimeException(e);
+        }
+
+// Prepare input data
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * 784);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        float[] input = new float[784];
+// Fill input with your data
+        byteBuffer.asFloatBuffer().put(input);
+
+        FirebaseModelInputs inputs = null;
+        try {
+            inputs = new FirebaseModelInputs.Builder()
+                    .add(byteBuffer)
+                    .build();
+        } catch (FirebaseMLException e) {
+            throw new RuntimeException(e);
+        }
+
+// Run inference
+        firebaseInterpreter.run(inputs, inputOutputOptions)
+                .addOnSuccessListener(new OnSuccessListener<FirebaseModelOutputs>() {
                     @Override
-                    public void onSuccess(Void v) {
-                        // 모델 다운로드 성공
-                        // 모델을 사용하는 코드 작성
+                    public void onSuccess(FirebaseModelOutputs result) {
+                        // Process the inference result
+                        float[][] output = result.getOutput(0);
+                        // Use the output to make decisions
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // 모델 다운로드 실패
+                        // Handle the error
                     }
                 });
-
-                 */
+*/
 
     }
 
