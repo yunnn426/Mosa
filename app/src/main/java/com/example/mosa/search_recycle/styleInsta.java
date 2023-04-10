@@ -2,6 +2,7 @@ package com.example.mosa.search_recycle;
 
 import android.os.AsyncTask;
 import android.telecom.Call;
+import android.util.Log;
 
 
 import com.google.gson.JsonObject;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class styleInsta extends AsyncTask<String, Void, List<String>> {
             Elements elements = doc.select("script[type='text/javascript']").eq(3);
             String script = elements.html().replace("window._sharedData = ", "").replace(";", "");
 
+            Log.d("test",script);
            /*
            jSONObject 데이터를 가져오려는 나의 노력
             String jsonData=null;
