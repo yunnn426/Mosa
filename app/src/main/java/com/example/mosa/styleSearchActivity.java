@@ -123,7 +123,6 @@ public class styleSearchActivity extends AppCompatActivity {
     }
 
     //인스타그램에서 크롤링을 통해서 데이터를 가져오는 함수
-    //추가적인 구현 필요
 
     /*
     jSONObject 데이터를 가져오려는 나의 노력
