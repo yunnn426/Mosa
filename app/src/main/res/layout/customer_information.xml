@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:text="고객님의 가입날짜:"/>
     <TextView
+        android:id="@+id/customer_info_1"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="고객님의 최근접속 일자:"/>
         <TextView
+            android:id="@+id/customer_info_2"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
