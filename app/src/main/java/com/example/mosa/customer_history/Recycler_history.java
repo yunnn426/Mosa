@@ -23,7 +23,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
     ArrayList<String> Mail=new ArrayList<String>();
     ArrayList<String> Diagnosis=new ArrayList<String>();
     ArrayList<String> Diagnosis_result=new ArrayList<String>();
-    ArrayList<Date> Dia_date=new ArrayList<Date>();
+    ArrayList<String> Dia_date=new ArrayList<String>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView his_mail;
@@ -39,7 +39,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         }
 
     }
-    public Recycler_history(ArrayList<String> mail, ArrayList<String> diagnosis, ArrayList<String> diagnosis_result, ArrayList<Date> dia_date){
+    public Recycler_history(ArrayList<String> mail, ArrayList<String> diagnosis, ArrayList<String> diagnosis_result, ArrayList<String> dia_date){
         this.Mail=mail;
         this.Diagnosis=diagnosis;
         this.Diagnosis_result=diagnosis_result;
@@ -58,12 +58,12 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         String mail= Mail.get(position);
         String Diag=Diagnosis.get(position);
         String Diag_rst=Diagnosis_result.get(position);
-        Date Dia_da=Dia_date.get(position);
+        String Dia_da=Dia_date.get(position);
 
         holder.his_mail.setText(mail);
         holder.his_diag.setText(Diag);
         holder.his_diag_result.setText(Diag_rst);
-        holder.his_date.setText(Dia_da.toString());
+        holder.his_date.setText(Dia_da);
 
     }
 
