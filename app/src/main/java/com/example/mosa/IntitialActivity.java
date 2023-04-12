@@ -70,7 +70,7 @@ public class IntitialActivity extends AppCompatActivity {
     MenuItem bottom_3;
     String faceinfo=null;
     BottomNavigationView bottomNavigationView;
-
+    int clickcount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,20 +80,44 @@ public class IntitialActivity extends AppCompatActivity {
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
 
         bottomNavigationView=findViewById(R.id.bottom_navigation);
+        Intent intent_info=getIntent();
+        String choice=intent_info.getStringExtra("choice");
+
 
         btn1=findViewById(R.id.img_button);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickcount++;
+                Intent intent_choice_2 = null;
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
                 BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
                 Bitmap bitmap=bitmapDrawable.getBitmap();
-                inImg=true;
+                inImg = true;
+
+                if (clickcount > 1) {
+                    //사진을 등록하고 클릭해야 실행가능
+                    //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
+                    //여기에서 담고 갈 정보는 사진, 진단 결과
+                    if (choice.equals("컬러진단")) {
+                        intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
+                        Bitmap bitmap_color = bitmap;
+                        File file = BmpToFile(bitmap_color, "image.png");
+                        intent_choice_2.putExtra("img", file.getAbsolutePath());
+                    } else if (choice.equals("얼굴형진단")) {
+                        intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
+                        Bitmap bitmap_face = bitmap;
+                        File file = BmpToFile(bitmap_face, "image.png");
+                        intent_choice_2.putExtra("img", file.getAbsolutePath());
+                    } else {
+                        Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    startActivity(intent_choice_2);
+                }
             }
         });
-
         ActivityResultLauncher<Intent> requestCameraFileLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -106,8 +130,10 @@ public class IntitialActivity extends AppCompatActivity {
         btn3.setOnClickListener(v -> {
             //camera app......................
             //파일 준비...............
+            clickcount++;
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            Intent intent_choice_2 = null;
             try {
                 File file = File.createTempFile(
                         "JPEG_" + timeStamp + "_",
@@ -128,7 +154,27 @@ public class IntitialActivity extends AppCompatActivity {
             }
             BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
             Bitmap bitmap=bitmapDrawable.getBitmap();
-            inImg=true;
+            inImg = true;
+
+            if (clickcount > 1) {
+                //사진을 등록하고 클릭해야 실행가능
+                //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
+                //여기에서 담고 갈 정보는 사진, 진단 결과
+                if (choice.equals("컬러진단")) {
+                    intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
+                    Bitmap bitmap_color = bitmap;
+                    File file = BmpToFile(bitmap_color, "image.png");
+                    intent_choice_2.putExtra("img", file.getAbsolutePath());
+                } else if (choice.equals("얼굴형진단")) {
+                    intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
+                    Bitmap bitmap_face = bitmap;
+                    File file = BmpToFile(bitmap_face, "image.png");
+                    intent_choice_2.putExtra("img", file.getAbsolutePath());
+                } else {
+                    Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                }
+                startActivity(intent_choice_2);
+            }
         });
 
 
@@ -140,12 +186,9 @@ public class IntitialActivity extends AppCompatActivity {
 
                 case R.id.bottom_menu_1:
                 {
-                    Toast.makeText(this,"고객님의 이미지로 스타일 진단 화면으로 이동합니다.(사진등록을 먼저해야합니다.)",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"고객님의 이미지로 스타일 진단 화면으로 이동합니다.(다시 진단 종류를 선택하세요.)",Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_1=new Intent(IntitialActivity.this, CustomerActivity.class);
-                    BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
-                    Bitmap bitmap=bitmapDrawable.getBitmap();
-                    File file=BmpToFile(bitmap,"image.png");
-                    intent_bottom_1.putExtra("img",file.getAbsolutePath());
+                    //이제 따로 뭘 전달할 필요는 없다, 그냥 진단 종류 선택하는 화면으로 만 이동
                     startActivity(intent_bottom_1);
                     break;
                 }

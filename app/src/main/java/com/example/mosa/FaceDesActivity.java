@@ -1,22 +1,43 @@
 package com.example.mosa;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class FaceDesActivity extends AppCompatActivity {
 
     Button btn1;
+    ImageView face_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.face_description_screen);
+        face_img=findViewById(R.id.face_img);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent=getIntent();
+        String image_path=intent.getStringExtra("img");
+        File file=new File(image_path);
+        Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
+
+        try{
+            Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            face_img.setImageBitmap(bitmap);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
         String shape_title=intent.getStringExtra("title");
         String shape_detail=intent.getStringExtra("detail");

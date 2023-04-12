@@ -15,4 +15,10 @@ public class Fragment_history extends Fragment {
         View view=inflater.inflate(R.layout.customer_history,container,false);
         return view;
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        View view = getView();
+    }
 }

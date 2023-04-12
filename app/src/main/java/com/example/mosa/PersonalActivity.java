@@ -3,6 +3,7 @@ package com.example.mosa;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,12 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.example.mosa.recommend.recaccActivity;
 import com.example.mosa.recommend.recclothActivity;
 import com.example.mosa.recommend.reccosActivity;
 import com.example.mosa.recommend.rechairActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class PersonalActivity  extends AppCompatActivity {
     int i;
@@ -28,6 +33,7 @@ public class PersonalActivity  extends AppCompatActivity {
     ImageButton rec_btn_2;
     ImageButton rec_btn_3;
     ImageButton rec_btn_4;
+    ImageView color_title;
     ImageView color_chrt;
     ImageView selected_color;
     @Override
@@ -35,8 +41,19 @@ public class PersonalActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_color);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
+
+        String image_path=intent.getStringExtra("img");
+        File file=new File(image_path);
+        Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
+
+        try{
+            Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            color_title.setImageBitmap(bitmap);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
         String skin_title=intent.getStringExtra("title");
         String skin_detail=intent.getStringExtra("detail");
