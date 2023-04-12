@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/style"
+        android:layout_marginRight="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/history_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고객님의 이메일 정보"
+            android:layout_marginRight="20dp"
+            />
+        <TextView
+            android:id="@+id/history_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고객님의 진단일자"/>
+        <TextView
+            android:id="@+id/history_diag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고객님의 진단종류"
+            android:layout_marginRight="20dp"
+        />
+        <TextView
+            android:id="@+id/history_diag_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="고객님의 진단결과"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="해당 진단 정보를 이용해서 여러 활동을 합니다."/>
+</LinearLayout>
