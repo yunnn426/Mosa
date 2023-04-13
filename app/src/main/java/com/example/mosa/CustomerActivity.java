@@ -96,7 +96,18 @@ public class CustomerActivity extends AppCompatActivity {
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
 
-
+        //String imagePath = intent.getStringExtra("img");
+        //File file=new File(imagePath);
+        //Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
+        /*
+        try{
+            Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            //faceinfo=analyzePicture(bitmap);
+            //여기서 ml kit을 수행해서 얼굴 이미지를 탐지해서 이용하려는데 null이 할당? 왜지?
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        */
 
         //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야
         //그냥 엑티비티를 이용해도 될듯?
