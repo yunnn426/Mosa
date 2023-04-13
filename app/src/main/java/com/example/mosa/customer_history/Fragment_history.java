@@ -26,6 +26,7 @@ import java.util.Date;
 
 public class Fragment_history extends Fragment {
 
+    ArrayList<String> Mail;
     ArrayList<String> Diagnosis;
     ArrayList<String> Diagnosis_result;
     ArrayList<String> Dia_date;
@@ -47,7 +48,10 @@ public class Fragment_history extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference diagnosis_record=db.collection("user_record");
 
+        //'test.email.com'은 테스트용입니다.
         Query query=diagnosis_record.whereEqualTo("user_email",user.getEmail());
+        //Query query=diagnosis_record.whereEqualTo("user_email","test.email.com");
+
         query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryresult) {
@@ -57,7 +61,7 @@ public class Fragment_history extends Fragment {
                     String diagnosisType = documentSnapshot.getString("diagnosis");
                     String diagnosisResult = documentSnapshot.getString("diagnosis_result");
                     String diagnosisDate = documentSnapshot.getString("diagnosis_date");
-
+                    Mail.add(user.getEmail());
                     Diagnosis.add(diagnosisType);
                     Diagnosis_result.add(diagnosisResult);
                     Dia_date.add(diagnosisDate);
