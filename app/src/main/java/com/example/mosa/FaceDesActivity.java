@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -20,11 +23,16 @@ public class FaceDesActivity extends AppCompatActivity {
     Button btn1;
     ImageView face_img;
 
+    FirebaseFirestore db;
+    CollectionReference diagnosesref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.face_description_screen);
         face_img=findViewById(R.id.face_img);
+
+        db=FirebaseFirestore.getInstance();
+        diagnosesref=db.collection("user_record");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent=getIntent();

@@ -101,17 +101,22 @@ public class IntitialActivity extends AppCompatActivity {
                     //사진을 등록하고 클릭해야 실행가능
                     //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
                     //여기에서 담고 갈 정보는 사진, 진단 결과
-                    if (choice.equals("컬러진단")) {
+                    if (choice.equals("컬러진단"))
+                    {
                         intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
                         Bitmap bitmap_color = bitmap;
                         File file = BmpToFile(bitmap_color, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
-                    } else if (choice.equals("얼굴형진단")) {
+                    }
+                    else if (choice.equals("얼굴형진단"))
+                    {
                         intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
                         Bitmap bitmap_face = bitmap;
                         File file = BmpToFile(bitmap_face, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                     }
                     startActivity(intent_choice_2);
@@ -160,17 +165,22 @@ public class IntitialActivity extends AppCompatActivity {
                 //사진을 등록하고 클릭해야 실행가능
                 //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
                 //여기에서 담고 갈 정보는 사진, 진단 결과
-                if (choice.equals("컬러진단")) {
+                if (choice.equals("컬러진단"))
+                {
                     intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
-                } else if (choice.equals("얼굴형진단")) {
+                }
+                else if (choice.equals("얼굴형진단"))
+                {
                     intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
                     Bitmap bitmap_face = bitmap;
                     File file = BmpToFile(bitmap_face, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
-                } else {
+                }
+                else
+                {
                     Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 }
                 startActivity(intent_choice_2);
@@ -263,6 +273,7 @@ public class IntitialActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.top_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
 
 }

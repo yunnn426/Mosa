@@ -21,6 +21,8 @@ import com.example.mosa.recommend.recclothActivity;
 import com.example.mosa.recommend.reccosActivity;
 import com.example.mosa.recommend.rechairActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,6 +38,8 @@ public class PersonalActivity  extends AppCompatActivity {
     ImageView color_title;
     ImageView color_chrt;
     ImageView selected_color;
+    FirebaseFirestore db;
+    CollectionReference diagnosesref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,8 @@ public class PersonalActivity  extends AppCompatActivity {
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
 
+        db=FirebaseFirestore.getInstance();
+        diagnosesref=db.collection("user_record");
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);
         Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
