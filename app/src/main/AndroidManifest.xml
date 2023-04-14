@@ -64,6 +64,11 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="face" />
+        <!-- To use multiple models: android:value="face,model2,model3" -->
+
         <provider android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.mosa.fileprovider"
             android:exported="false"
