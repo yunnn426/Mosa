@@ -107,6 +107,7 @@ public class IntitialActivity extends AppCompatActivity {
                         Bitmap bitmap_color = bitmap;
                         File file = BmpToFile(bitmap_color, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
+                        clickcount=0;
                     }
                     else if (choice.equals("얼굴형진단"))
                     {
@@ -114,10 +115,12 @@ public class IntitialActivity extends AppCompatActivity {
                         Bitmap bitmap_face = bitmap;
                         File file = BmpToFile(bitmap_face, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
+                        clickcount=0;
                     }
                     else
                     {
                         Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                        clickcount=0;
                     }
                     startActivity(intent_choice_2);
                 }
@@ -171,6 +174,7 @@ public class IntitialActivity extends AppCompatActivity {
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
+                    clickcount=0;
                 }
                 else if (choice.equals("얼굴형진단"))
                 {
@@ -178,10 +182,12 @@ public class IntitialActivity extends AppCompatActivity {
                     Bitmap bitmap_face = bitmap;
                     File file = BmpToFile(bitmap_face, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
+                    clickcount=0;
                 }
                 else
                 {
                     Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    clickcount=0;
                 }
                 startActivity(intent_choice_2);
             }
