@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,44 +17,44 @@
         android:theme="@style/Theme.Aiproject"
         tools:targetApi="31">
         <activity
+            android:name=".TutorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".CustomerActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".FaceDesActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".PersonalActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".recommend.reccosActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".recommend.recaccActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".recommend.recclothActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".recommend.rechairActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".styleSearchActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".IntitialActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Signup"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".subSignup"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".CustomerInfo"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Start"
             android:exported="true">
@@ -64,18 +65,18 @@
             </intent-filter>
         </activity>
 
+
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="face" />
-        <!-- To use multiple models: android:value="face,model2,model3" -->
-
-        <provider android:name="androidx.core.content.FileProvider"
+            android:value="face" /> <!-- To use multiple models: android:value="face,model2,model3" -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.mosa.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path" ></meta-data>
+                android:resource="@xml/file_path" />
         </provider>
     </application>
 
