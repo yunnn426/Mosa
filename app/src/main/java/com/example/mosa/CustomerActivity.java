@@ -18,19 +18,49 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.ml.common.modeldownload.*;
+import com.google.firebase.ml.common.FirebaseMLException;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
+import com.google.firebase.ml.custom.FirebaseCustomLocalModel;
+import com.google.firebase.ml.custom.FirebaseCustomRemoteModel;
+import com.google.firebase.ml.custom.FirebaseModelDataType;
+import com.google.firebase.ml.custom.FirebaseModelInputOutputOptions;
+import com.google.firebase.ml.custom.FirebaseModelInputs;
+import com.google.firebase.ml.custom.FirebaseModelInterpreter;
+import com.google.firebase.ml.custom.FirebaseModelInterpreterOptions;
+import com.google.firebase.ml.custom.FirebaseModelOutputs;
+import com.google.firebase.ml.modeldownloader.CustomModel;
+import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions;
+import com.google.firebase.ml.modeldownloader.DownloadType;
+import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader;
+import org.tensorflow.lite.Interpreter;
+
+
+import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.List;
 
 public class CustomerActivity extends AppCompatActivity {
@@ -65,19 +95,19 @@ public class CustomerActivity extends AppCompatActivity {
         img2=findViewById(R.id.example_face_img);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
-        String imagePath = intent.getStringExtra("img");
-        File file=new File(imagePath);
-        Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
 
+        //String imagePath = intent.getStringExtra("img");
+        //File file=new File(imagePath);
+        //Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
+        /*
         try{
             Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-            img1.setImageBitmap(bitmap);
-            img2.setImageBitmap(bitmap);
             //faceinfo=analyzePicture(bitmap);
             //여기서 ml kit을 수행해서 얼굴 이미지를 탐지해서 이용하려는데 null이 할당? 왜지?
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }
+        */
 
         //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야
         //그냥 엑티비티를 이용해도 될듯?
@@ -105,7 +135,6 @@ public class CustomerActivity extends AppCompatActivity {
                     String user_email=user.getEmail();
                     Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_3=new Intent(CustomerActivity.this,CustomerInfo.class);
-                    intent_bottom_3.putExtra("img",imagePath);
                     intent_bottom_3.putExtra("username",user_name);
                     intent_bottom_3.putExtra("useremail",user_email);
                     startActivity(intent_bottom_3);
@@ -119,7 +148,7 @@ public class CustomerActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_1=new Intent(CustomerActivity.this,PersonalActivity.class);
+                Intent intent_1=new Intent(CustomerActivity.this,IntitialActivity.class);
                 //if 파이어 베이스에서 String 형으로 보내줄 경우
                 //String face_color_info_1=sendimg_skin_firebase(bitmap,faceinfo)
                 //if 파이어 베이스에서 Json 형으로 보내줄 경우
@@ -133,6 +162,7 @@ public class CustomerActivity extends AppCompatActivity {
                 intent_1.putExtra("title",face_color_info_1);
                 intent_1.putExtra("detail",face_color_info_2);
                 intent_1.putExtra("recommend",info_rem);
+                intent_1.putExtra("choice","컬러진단");
                 startActivity(intent_1);
             }
         });
@@ -140,7 +170,7 @@ public class CustomerActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_2=new Intent(CustomerActivity.this,FaceDesActivity.class);
+                Intent intent_2=new Intent(CustomerActivity.this,IntitialActivity.class);
                 //if 파이어 베이스에서 String 형으로 보내줄 경우
                 //String info=sendimg_shap_firebase(bitmap,faceinfo)
                 //if 파이어 베이스에서 Json 형으로 보내줄 경우
@@ -150,9 +180,83 @@ public class CustomerActivity extends AppCompatActivity {
                 String face_shape_info_2="테스트용 내용입니다.";
                 intent_2.putExtra("title",face_shape_info_1);
                 intent_2.putExtra("detail",face_shape_info_2);
+                intent_2.putExtra("choice","얼굴형진단");
                 startActivity(intent_2);
             }
         });
+
+/*
+        FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("test").build();
+        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
+                .requireWifi()
+                .build();
+
+        FirebaseModelManager.getInstance().download(remoteModel,conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("test","test 성공");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("test","test 실패");
+            }
+        });
+*/
+
+/*
+        FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("test").build();
+        FirebaseModelInterpreter firebaseInterpreter = null;
+        try {
+            firebaseInterpreter = FirebaseModelInterpreter.getInstance(new FirebaseModelInterpreterOptions.Builder(remoteModel).build());
+        } catch (FirebaseMLException e) {
+            throw new RuntimeException(e);
+        }
+
+// Define input shape
+        FirebaseModelInputOutputOptions inputOutputOptions = null;
+        try {
+            inputOutputOptions = new FirebaseModelInputOutputOptions.Builder()
+                    .setInputFormat(0, FirebaseModelDataType.FLOAT32, new int[]{1, 784})
+                    .setOutputFormat(0, FirebaseModelDataType.FLOAT32, new int[]{1, 10})
+                    .build();
+        } catch (FirebaseMLException e) {
+            throw new RuntimeException(e);
+        }
+
+// Prepare input data
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * 784);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        float[] input = new float[784];
+// Fill input with your data
+        byteBuffer.asFloatBuffer().put(input);
+
+        FirebaseModelInputs inputs = null;
+        try {
+            inputs = new FirebaseModelInputs.Builder()
+                    .add(byteBuffer)
+                    .build();
+        } catch (FirebaseMLException e) {
+            throw new RuntimeException(e);
+        }
+
+// Run inference
+        firebaseInterpreter.run(inputs, inputOutputOptions)
+                .addOnSuccessListener(new OnSuccessListener<FirebaseModelOutputs>() {
+                    @Override
+                    public void onSuccess(FirebaseModelOutputs result) {
+                        // Process the inference result
+                        float[][] output = result.getOutput(0);
+                        // Use the output to make decisions
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle the error
+                    }
+                });
+*/
 
     }
 
