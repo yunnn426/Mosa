@@ -80,8 +80,6 @@ public class styleSearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(styleimge);
 
 
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +101,6 @@ public class styleSearchActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         });
 
@@ -124,34 +121,7 @@ public class styleSearchActivity extends AppCompatActivity {
     }
 
     //인스타그램에서 크롤링을 통해서 데이터를 가져오는 함수
-    //추가적인 구현 필요
-
     /*
-    jSONObject 데이터를 가져오려는 나의 노력
-    public static List<String> Insta_crawl(String tag) throws IOException {
-        String urlStr = "https://www.instagram.com/explore/tags/" + tag + "/";
-        List<String> imgurl = new ArrayList<>();
-        try {
-            Document doc = Jsoup.connect(urlStr).get();
-            Elements elements = doc.select("script[type='text/javascript']").eq(3);
-            String script = elements.html().replace("window._sharedData = ", "").replace(";", "");
-            JSONObject jsonObject = new JSONObject(script);
-            JSONObject entry_data = jsonObject.getJSONObject("entry_data");
-            JSONArray tagPage = entry_data.getJSONArray("TagPage");
-            JSONObject tagPageObj = tagPage.getJSONObject(0);
-            JSONObject graphql = tagPageObj.getJSONObject("graphql");
-            JSONObject hashtag = graphql.getJSONObject("hashtag");
-            JSONObject edge_hashtag_to_media = hashtag.getJSONObject("edge_hashtag_to_media");
-            JSONArray edges = edge_hashtag_to_media.getJSONArray("edges");
-            for (int i = 0; i < edges.length(); i++) {
-                JSONObject node = edges.getJSONObject(i).getJSONObject("node");
-                String imageUrl = node.getString("thumbnail_src");
-                imgurl.add(imageUrl);
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        return imgurl;//이미지url 돌려주기
-    }
+
     */
 }

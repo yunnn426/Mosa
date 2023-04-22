@@ -14,9 +14,17 @@
         android:background="@null"
         android:src="@drawable/arrow_48"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
-        >
-    </ImageView>
+        android:layout_marginBottom="16dp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -46,21 +54,27 @@
         android:text="Email"
         />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bin_red"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Email"
-            android:background="#ffffff"
-            android:id="@+id/TextInputEditText_email"
-            >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bin_red"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/email_icon" />
+                <EditText
+                    android:id="@+id/TextInputEditText_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:background="#ffffff"
+                    android:textStyle="italic"
+                    android:hint="abc@naver.com"></EditText>
+            </LinearLayout>
 
 
     <TextView
@@ -71,21 +85,30 @@
         android:textSize="19dp"
         android:text="Your Password"
         />
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bin_red"
         >
-        <com.google.android.material.textfield.TextInputEditText
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/lock_icon" />
+        <EditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
             android:background="#ffffff"
             android:hint="Password"
             android:id="@+id/TextInputEditText_password"
+            android:inputType="textPassword"
             >
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        </EditText>>
+    </LinearLayout>>
+
 
     <TextView
         android:layout_width="match_parent"
@@ -115,7 +138,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Login"
-            android:background="#DB1A21"
+            android:background="@null"
             >
         </android.widget.Button>
     </RelativeLayout>
@@ -142,14 +165,14 @@
         android:paddingRight="12dp"
         >
 
-        <ImageView
-            android:layout_width="37dp"
-            android:layout_height="55dp"
-            android:layout_marginRight="1dp"
-            android:layout_toLeftOf="@id/GoGoogleButton"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/arrow_48"></ImageView>
+                <ImageView
+                    android:layout_width="37dp"
+                    android:layout_height="55dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_toLeftOf="@id/GoGoogleButton"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/google_48"></ImageView>
 
         <TextView
             android:id="@+id/GoGoogleButton"
@@ -199,5 +222,8 @@
         </android.widget.Button>
 
     </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

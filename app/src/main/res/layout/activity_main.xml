@@ -9,6 +9,14 @@
     tools:context=".Start"
 
     >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -25,7 +33,7 @@
         android:textSize="50sp"
         android:textStyle="bold"
         android:textColor="@color/pont_color"
-        android:text="Daily Color" />
+        android:text="MoSA" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,13 +101,13 @@
         >
 
         <ImageView
-            android:layout_width="37dp"
-            android:layout_height="55dp"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
             android:layout_marginRight="1dp"
             android:layout_toLeftOf="@id/GoEmailButton"
             android:background="@null"
             android:gravity="center"
-            android:src="@drawable/email_128"></ImageView>
+            android:src="@drawable/email_icon"></ImageView>
 
         <android.widget.Button
             android:id="@+id/GoEmailButton"
@@ -116,6 +124,12 @@
             android:textStyle="bold"></android.widget.Button>
 
     </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 
 

@@ -26,7 +26,7 @@ public class Fragment_Adapter extends FragmentStatePagerAdapter {
                 return tab2;
             default:
                 return null;
-        }//
+        }
     }
 
     @Override
