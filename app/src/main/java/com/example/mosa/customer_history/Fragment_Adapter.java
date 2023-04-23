@@ -20,10 +20,6 @@ public class Fragment_Adapter extends FragmentStatePagerAdapter {
             case 0:
                 Fragment_history tab1=new Fragment_history();
                 return tab1;
-            case 1:
-
-                Fragment_customerinfo tab2=new Fragment_customerinfo();
-                return tab2;
             default:
                 return null;
         }

@@ -29,14 +29,18 @@ import java.io.FileNotFoundException;
 
 public class PersonalActivity  extends AppCompatActivity {
     int i;
+    TextView User_color_en;
     TextView User_color;
     TextView User_color_detail;
+    TextView User_face_en;
+    TextView User_face;
     ImageButton rec_btn_1;
     ImageButton rec_btn_2;
     ImageButton rec_btn_3;
     ImageButton rec_btn_4;
     ImageView color_title;
     ImageView color_chrt;
+    ImageView Face_title;
     ImageView selected_color;
     FirebaseFirestore db;
     CollectionReference diagnosesref;
@@ -50,6 +54,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");
+
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);
         Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
@@ -68,6 +73,7 @@ public class PersonalActivity  extends AppCompatActivity {
         //해당 추천된 퍼스널 컬러(skin_title,skin_detail)에 알맞는 컬러 차트 이미지와,
         //추천정보(해당 정보와 매치시켜야)를 불러와야한다.(결국 내 생각에는 이 추천정보는 파일,JSON(?) 형식이 될듯 싶다.)
         //차후 구현 필요
+        User_color_en=findViewById(R.id.user_color_en);
         User_color=findViewById(R.id.user_color);
         User_color_detail=findViewById(R.id.user_color_detail);
         color_chrt=findViewById(R.id.color_chrt);
@@ -81,7 +87,9 @@ public class PersonalActivity  extends AppCompatActivity {
         User_color.setText(skin_title);
         User_color_detail.setText(skin_detail);
 
-
+        Face_title=findViewById(R.id.facedes_img);
+        User_face_en=findViewById(R.id.user_face_en);
+        User_face=findViewById(R.id.user_face);
 
         //각각 추천 UI를 불러오는 버튼
         rec_btn_1=findViewById(R.id.recommand_btn_1);

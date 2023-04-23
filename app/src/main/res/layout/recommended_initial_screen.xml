@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/pont_color"
         android:textSize="25dp"
-        android:text="Personal Color"/>
+        android:text="Personal Color and FaceDes"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
         android:layout_height="250dp"
@@ -34,38 +35,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:text="컬러 진단 받기"/>
+        android:text="종합 진단 받기"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/pont_color"
-        android:textSize="25dp"
-        android:text="얼굴형 분석"/>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center_horizontal"
-        app:cardCornerRadius="125dp"
-        app:cardElevation="5dp"
-        >
-        <ImageView
-            android:id="@+id/example_face_img"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background" />
-    </androidx.cardview.widget.CardView>
-    <Button
-        android:id="@+id/face_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:textSize="20dp"
-        android:text="자신의 얼굴형 분석하기"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

@@ -101,19 +101,11 @@ public class IntitialActivity extends AppCompatActivity {
                     //사진을 등록하고 클릭해야 실행가능
                     //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
                     //여기에서 담고 갈 정보는 사진, 진단 결과
-                    if (choice.equals("컬러진단"))
+                    if (choice.equals("종합진단"))
                     {
                         intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
                         Bitmap bitmap_color = bitmap;
                         File file = BmpToFile(bitmap_color, "image.png");
-                        intent_choice_2.putExtra("img", file.getAbsolutePath());
-                        clickcount=0;
-                    }
-                    else if (choice.equals("얼굴형진단"))
-                    {
-                        intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
-                        Bitmap bitmap_face = bitmap;
-                        File file = BmpToFile(bitmap_face, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
                         clickcount=0;
                     }
@@ -168,19 +160,11 @@ public class IntitialActivity extends AppCompatActivity {
                 //사진을 등록하고 클릭해야 실행가능
                 //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
                 //여기에서 담고 갈 정보는 사진, 진단 결과
-                if (choice.equals("컬러진단"))
+                if (choice.equals("종합진단"))
                 {
                     intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
-                    intent_choice_2.putExtra("img", file.getAbsolutePath());
-                    clickcount=0;
-                }
-                else if (choice.equals("얼굴형진단"))
-                {
-                    intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
-                    Bitmap bitmap_face = bitmap;
-                    File file = BmpToFile(bitmap_face, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
                     clickcount=0;
                 }
