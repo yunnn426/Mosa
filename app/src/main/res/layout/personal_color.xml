@@ -97,18 +97,20 @@
             android:layout_height="wrap_content"
             android:textSize="25dp"
             android:text="Recommendations"/>
-
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="2"
+            android:columnCount="4"
+            android:rowCount="1"
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false"
             android:rowOrderPreserved="false">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
@@ -116,7 +118,7 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="100dp"
@@ -139,7 +141,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
@@ -147,7 +149,7 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="100dp"
@@ -170,7 +172,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
@@ -178,7 +180,7 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="100dp"
@@ -201,7 +203,7 @@
 
             </LinearLayout>
             <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -209,7 +211,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="100dp"
@@ -232,7 +234,7 @@
 
         </LinearLayout>
         </GridLayout>
+    </HorizontalScrollView>
     </LinearLayout>
-
 
 </ScrollView>
