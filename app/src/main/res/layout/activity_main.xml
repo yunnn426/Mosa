@@ -1,92 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingTop="50dp"
-    tools:context=".Start"
+    tools:context=".Start">
 
-    >
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="Welcome to" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:textColor="@color/pont_color"
-        android:text="MoSA" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:textSize="16dp"
-        android:textColor="#E48A8888"
-        android:text="이미지를 업로드하고 오늘의 퍼스널 컬러를 알아보세요!" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="250dp" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@drawable/bin_google"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="Welcome to" />
 
-        <ImageView
-            android:layout_width="37dp"
-            android:layout_height="55dp"
-            android:layout_marginRight="1dp"
-            android:layout_toLeftOf="@id/GoGoogleButton"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/google_48"></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:textColor="@color/pont_color"
+                android:text="MoSA" />
 
-        <TextView
-            android:id="@+id/GoGoogleButton"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:stateListAnimator="@null"
-            android:text="Continue with Google"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                android:textColor="#E48A8888"
+                android:text="이미지를 업로드하고 오늘의 퍼스널 컬러를 알아보세요!" />
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bin_google"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/GoEmailButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        >
+                <ImageView
+                    android:layout_width="37dp"
+                    android:layout_height="55dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_toLeftOf="@id/GoGoogleButton"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/google_48" />
+
+                <TextView
+                    android:id="@+id/GoGoogleButton"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:stateListAnimator="@null"
+                    android:text="Continue with Google"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
     </TextView>
 
     <RelativeLayout
@@ -97,8 +102,7 @@
         android:gravity="center"
         android:background="@drawable/bin_google"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        >
+        android:paddingRight="12dp">
 
         <ImageView
             android:layout_width="20dp"
@@ -124,15 +128,7 @@
             android:textStyle="bold"></android.widget.Button>
 
     </RelativeLayout>
-
-
         </LinearLayout>
-
     </ScrollView>
 
-
-
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

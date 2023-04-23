@@ -106,8 +106,8 @@
                     android:hint="홍길동"
                     android:id="@+id/TextInputEditText_name"
                     >
-                </EditText>>
-            </LinearLayout>>
+                </EditText>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
