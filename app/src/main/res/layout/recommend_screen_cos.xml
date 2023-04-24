@@ -22,29 +22,18 @@
             android:textSize="20dp"
             android:layout_marginBottom="20dp"
             android:text="립"/>
+
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_foreground"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_foreground"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_foreground"/>
-        </GridLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/itemlist_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </HorizontalScrollView>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

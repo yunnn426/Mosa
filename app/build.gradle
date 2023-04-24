@@ -50,6 +50,7 @@ dependencies {
 //=======
     implementation 'com.google.mlkit:vision-common:17.3.0'
     implementation 'com.google.android.gms:play-services-mlkit-face-detection:17.1.0'
+    implementation 'com.google.firebase:firebase-storage:20.1.0'
 //>>>>>>> hk
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'org.jsoup:jsoup:1.14.3'
