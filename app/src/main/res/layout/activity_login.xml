@@ -104,6 +104,7 @@
             android:background="#ffffff"
             android:hint="Password"
             android:id="@+id/TextInputEditText_password"
+            android:inputType="textPassword"
             >
         </EditText>>
     </LinearLayout>>
