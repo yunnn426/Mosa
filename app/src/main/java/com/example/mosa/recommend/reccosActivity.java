@@ -42,7 +42,6 @@ public class reccosActivity extends AppCompatActivity {
     item_Recycler recycler;
     RecyclerView itemlist;
     FirebaseStorage storage;
-    FirebaseStorage storage1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +61,7 @@ public class reccosActivity extends AppCompatActivity {
         //String filesname=result_value;
         storage=FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child("test/");
+        StorageReference storageReference1 =storage.getReference().child("text_ex/");
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
@@ -87,8 +87,6 @@ public class reccosActivity extends AppCompatActivity {
             }
         });
 
-        storage1=FirebaseStorage.getInstance();
-        StorageReference storageReference1 =storage1.getReference().child("test_ex/");
         storageReference1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
