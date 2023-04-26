@@ -45,8 +45,8 @@ import java.util.ArrayList;
 //이 엑티비티는 화장품 추천정보를 보여준다.
 public class reccosActivity extends AppCompatActivity {
 
-    ArrayList<Bitmap> itemfile=new ArrayList<Bitmap>();
-    ArrayList<String> itemfile_ex=new ArrayList<String>();
+    ArrayList<Bitmap> itemfile=new ArrayList<>();
+    ArrayList<String> itemfile_ex=new ArrayList<>();
     item_Recycler recycler;
     RecyclerView itemlist;
     FirebaseStorage storage;
