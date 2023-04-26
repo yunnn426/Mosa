@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -23,11 +25,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -42,6 +46,7 @@ public class reccosActivity extends AppCompatActivity {
     item_Recycler recycler;
     RecyclerView itemlist;
     FirebaseStorage storage;
+    File path;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,22 +67,39 @@ public class reccosActivity extends AppCompatActivity {
         storage=FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child("test/");
         StorageReference storageReference1 =storage.getReference().child("text_ex/");
+        File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
+                path=new File(result_path.getAbsolutePath());
                 for (StorageReference item : listResult.getItems()) {
-                    item.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                        @Override
-                        public void onSuccess(byte[] bytes) {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            itemfile.add(bitmap);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(reccosActivity.this,"저장된 이미지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    //다운로드 받을 파일의 이름을 지정
+                    File download=new File(path,item.getName());
+                    if(!path.exists()){
+                        path.getParentFile().mkdirs();
+                    }
+                    try {
+                        //파일을 생성
+                        download.createNewFile();
+                        //파일을 다운로드할 작업을 정의
+                        FileDownloadTask fileDownloadTask=item.getFile(download);
+                        fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                //제대로 파일을 받아온것을 확인, 실제 경로상에 파일이 존재
+                                Toast.makeText(reccosActivity.this,download.getAbsolutePath(),Toast.LENGTH_SHORT).show();
+                                Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                itemfile.add(bitmap);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -90,34 +112,29 @@ public class reccosActivity extends AppCompatActivity {
         storageReference1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
+                path=new File(result_path.getAbsolutePath());
                 for(StorageReference item : listResult.getItems()){
-                    item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            try{
-                                URL url=new URL(uri.toString());
-                                BufferedReader in =new BufferedReader(new InputStreamReader(url.openStream()));
-                                String inputline;
-                                StringBuilder content=new StringBuilder();
-
-                                while((inputline=in.readLine())!=null){
-                                    content.append(inputline);
-                                }
-                                in.close();
-                                String text_ex=content.toString();
-                                itemfile_ex.add(text_ex);
-
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
+                    File download=new File(path,item.getName());
+                    if(!path.exists()){
+                        path.getParentFile().mkdirs();
+                    }
+                    try {
+                        download.createNewFile();
+                        FileDownloadTask fileDownloadTask=item.getFile(download);
+                        fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                //제대로 파일을 받아온것을 확인, 실제 경로상에 파일이 존재
+                                Toast.makeText(reccosActivity.this,download.getAbsolutePath(),Toast.LENGTH_SHORT).show();
                             }
-
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(reccosActivity.this,"저장된 텍스트를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -126,6 +143,7 @@ public class reccosActivity extends AppCompatActivity {
                 Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
             }
         });
+
         recycler=new item_Recycler(itemfile,itemfile_ex);
         itemlist.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
         itemlist.setAdapter(recycler);
