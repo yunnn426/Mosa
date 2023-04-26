@@ -52,6 +52,7 @@ public class reccosActivity extends AppCompatActivity {
     FirebaseStorage storage;
     File path;
     ImageView test;
+    TextView test_ex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,7 @@ public class reccosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         test=findViewById(R.id.test);
+        test_ex=findViewById(R.id.test_ex);
         //나중에 폴더 이름으로 따로 분류하고 그러면 될듯
         //String filesname="test_com_";
         //String filesname=result_value;
@@ -91,8 +93,8 @@ public class reccosActivity extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
-                                test.setImageBitmap(bitmap);
                                 itemfile.add(bitmap);
+                                test.setImageBitmap(bitmap);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -133,6 +135,7 @@ public class reccosActivity extends AppCompatActivity {
                                     BufferedReader text=new BufferedReader(new FileReader(download));
                                     while ((str = text.readLine()) != null) {
                                         itemfile_ex.add(str);
+                                        test_ex.setText(str);
                                     }
 
                                 } catch (IOException e) {
