@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -41,8 +45,8 @@ import java.util.ArrayList;
 //이 엑티비티는 화장품 추천정보를 보여준다.
 public class reccosActivity extends AppCompatActivity {
 
-    ArrayList<Bitmap> itemfile;
-    ArrayList<String> itemfile_ex;
+    ArrayList<Bitmap> itemfile=new ArrayList<Bitmap>();
+    ArrayList<String> itemfile_ex=new ArrayList<String>();
     item_Recycler recycler;
     RecyclerView itemlist;
     FirebaseStorage storage;
@@ -58,8 +62,6 @@ public class reccosActivity extends AppCompatActivity {
         //String result_value=intent.getStringExtra("result");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        itemfile=new ArrayList<Bitmap>();
-        itemfile_ex=new ArrayList<String>();
 
         //나중에 폴더 이름으로 따로 분류하고 그러면 될듯
         //String filesname="test_com_";
@@ -86,8 +88,7 @@ public class reccosActivity extends AppCompatActivity {
                         fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                //제대로 파일을 받아온것을 확인, 실제 경로상에 파일이 존재
-                                Toast.makeText(reccosActivity.this,download.getAbsolutePath(),Toast.LENGTH_SHORT).show();
+                                //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile.add(bitmap);
                             }
@@ -124,8 +125,17 @@ public class reccosActivity extends AppCompatActivity {
                         fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                //제대로 파일을 받아온것을 확인, 실제 경로상에 파일이 존재
-                                Toast.makeText(reccosActivity.this,download.getAbsolutePath(),Toast.LENGTH_SHORT).show();
+                                String str;
+                                //제대로 텍스트 내용을 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
+                                try {
+                                    BufferedReader text=new BufferedReader(new FileReader(download));
+                                    while ((str = text.readLine()) != null) {
+                                        itemfile_ex.add(str);
+                                    }
+
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -144,6 +154,7 @@ public class reccosActivity extends AppCompatActivity {
             }
         });
 
+        Toast.makeText(reccosActivity.this,itemfile.size()+" and "+itemfile_ex.size(),Toast.LENGTH_SHORT).show();
         recycler=new item_Recycler(itemfile,itemfile_ex);
         itemlist.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
         itemlist.setAdapter(recycler);
