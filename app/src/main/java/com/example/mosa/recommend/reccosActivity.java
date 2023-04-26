@@ -44,28 +44,29 @@ import java.util.ArrayList;
 
 //이 엑티비티는 화장품 추천정보를 보여준다.
 public class reccosActivity extends AppCompatActivity {
-
-    ArrayList<Bitmap> itemfile=new ArrayList<>();
-    ArrayList<String> itemfile_ex=new ArrayList<>();
-    item_Recycler recycler;
-    RecyclerView itemlist;
+    RecyclerView itemlist_1;
+    RecyclerView itemlist_2;
+    RecyclerView itemlist_3;
     FirebaseStorage storage;
     File path;
-    ImageView test;
-    TextView test_ex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //기본적으로 리사이클러 뷰는 이것을 같이 써도 될듯 싶다. 왜냐하면 데이터의 형식은 같다(이미지, 설명)
+        item_Recycler recycler=new item_Recycler();
+        ArrayList<Bitmap> itemfile=new ArrayList<>();
+        ArrayList<String> itemfile_ex=new ArrayList<>();
         setContentView(R.layout.recommend_screen_cos);
-        itemlist=findViewById(R.id.itemlist_view);
+        //이거는 화장품의 종류 별로 각각 리사이클러 뷰를 표시한다.
+        itemlist_1=findViewById(R.id.itemlist_view_1);
+        itemlist_2=findViewById(R.id.itemlist_view_2);
+        itemlist_3=findViewById(R.id.itemlist_view_3);
         int itemnum=10;
         //여기서 결과 값을 받고 이 결과값을 이용해서 추천아이템을 검색
         Intent intent=getIntent();
         //String result_value=intent.getStringExtra("result");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        test=findViewById(R.id.test);
-        test_ex=findViewById(R.id.test_ex);
         //나중에 폴더 이름으로 따로 분류하고 그러면 될듯
         //String filesname="test_com_";
         //String filesname=result_value;
@@ -94,7 +95,6 @@ public class reccosActivity extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile.add(bitmap);
-                                test.setImageBitmap(bitmap);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -135,7 +135,16 @@ public class reccosActivity extends AppCompatActivity {
                                     BufferedReader text=new BufferedReader(new FileReader(download));
                                     while ((str = text.readLine()) != null) {
                                         itemfile_ex.add(str);
-                                        test_ex.setText(str);
+                                        if(itemfile.size()==4 && itemfile_ex.size()==4){
+                                            recycler.setrecycler(itemfile, itemfile_ex);
+                                            itemlist_1.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
+                                            itemlist_1.setAdapter(recycler);
+                                            //아래 2개의 리사이클러뷰는 테스트용이고 1에서 불러온것과 동일하게 코드를 짜면된다.
+                                            itemlist_2.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
+                                            itemlist_2.setAdapter(recycler);
+                                            itemlist_3.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
+                                            itemlist_3.setAdapter(recycler);
+                                        }
                                     }
 
                                 } catch (IOException e) {
@@ -159,10 +168,7 @@ public class reccosActivity extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(reccosActivity.this,itemfile.size()+" and "+itemfile_ex.size(),Toast.LENGTH_SHORT).show();
-        recycler=new item_Recycler(itemfile,itemfile_ex);
-        itemlist.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
-        itemlist.setAdapter(recycler);
+        Toast.makeText(reccosActivity.this, itemfile.size() + " and " + itemfile_ex.size(), Toast.LENGTH_SHORT).show();
 
     }
     @Override

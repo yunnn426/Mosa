@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder_item>{
 
-    ArrayList<Bitmap> itemfile;
-    ArrayList<String> itemfile_ex;
+    ArrayList<Bitmap> itemfile=new ArrayList<Bitmap>();
+    ArrayList<String> itemfile_ex=new ArrayList<String>();
 
 
     @Override
@@ -26,7 +26,6 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
         ViewHolder_item myView=new ViewHolder_item(view);
         return myView;
     }
-
     @Override
     public void onBindViewHolder(ViewHolder_item holder, int position) {
         Bitmap item=itemfile.get(position);
@@ -35,16 +34,9 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
         holder.item_img.setImageBitmap(item);
         holder.item_ex.setText(item_ex);
     }
-
-    @Override
-    public int getItemCount() {
-        return itemfile.size();
-    }
-
     public class ViewHolder_item extends RecyclerView.ViewHolder{
         ImageView item_img;
         TextView item_ex;
-
         public ViewHolder_item(View itemView) {
             super(itemView);
             item_img=itemView.findViewById(R.id.prodouct_id);
@@ -56,6 +48,17 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
         this.itemfile=itemfile_list;
         this.itemfile_ex=itemfile_ex_list;
     }
+    public  item_Recycler(){
 
+    }
+
+    public void setrecycler(ArrayList<Bitmap> itemfile_list, ArrayList<String> itemfile_ex_list){
+        this.itemfile=itemfile_list;
+        this.itemfile_ex=itemfile_ex_list;
+    }
+    @Override
+    public int getItemCount() {
+        return itemfile.size();
+    }
 
 }
