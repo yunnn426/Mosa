@@ -30,7 +30,7 @@ import java.io.FileNotFoundException;
 public class PersonalActivity  extends AppCompatActivity {
 
     //앱에서 나올수 있는 진단의 결과 값
-    final static String[] result_color={"springworm_Bright","springworm_Light",
+    final static String[] result_color={"spring worm_Bright","spring worm_Light",
             "summer cool_Bright","summer cool_Light","summer cool_Mute","autumn worm_Deep","autumn worm_Mute",
             "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep","알 수 없는 오류 발생!!!"};
     final static String[] result_face={"square","round","oval","oblong","heart","알 수 없는 오류 발생!!!"};
