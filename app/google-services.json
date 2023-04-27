@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "735055021565",
+    "project_id": "mosa-352c3",
+    "storage_bucket": "mosa-352c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735055021565:android:3f38b49c6a6d1b5a308594",
+        "android_client_info": {
+          "package_name": "com.example.mosa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735055021565-9ie5pg7kns5fakc8vn9lkn3n78u1jkfm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mosa",
+            "certificate_hash": "2b0611ca6aed992484560ab92603e20b7ec322d6"
+          }
+        },
+        {
+          "client_id": "735055021565-v74io10plk0il4ljamnqc6jstdu9618d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeiwQTniBdldbL-97cz6vXQ005BFjE5Qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735055021565-v74io10plk0il4ljamnqc6jstdu9618d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

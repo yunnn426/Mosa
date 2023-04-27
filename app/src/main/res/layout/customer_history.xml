@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<TextView
+    android:id="@+id/history_fail_msg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:text="기록이 없거나, 기록을 불러오는 것에 실패했습니다."/>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/history_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    />
+</LinearLayout>

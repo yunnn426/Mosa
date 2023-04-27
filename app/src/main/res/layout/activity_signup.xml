@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:ignore="MissingConstraints"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원가입"
+                android:textColor="@color/pont_color"
+                android:textStyle="bold"
+
+                android:layout_marginBottom="5dp"
+                android:textSize="40sp"
+                >
+            </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16dp"
+                android:textColor="#E48A8888"
+                android:text="회원 계정을 만들고 스타일링 추천을 받아보세요!"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Email"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bin_red">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/email_icon" />
+
+                <EditText
+                    android:id="@+id/TextInputEditText_email"
+                    android:layout_width="295dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ffffff"
+                    android:hint="abc@naver.com" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Your Name"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bin_red"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/user_icon" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ffffff"
+                    android:hint="홍길동"
+                    android:id="@+id/TextInputEditText_name"
+                    >
+                </EditText>>
+            </LinearLayout>>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Your Password"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bin_red"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/lock_icon" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ffffff"
+                    android:hint="********"
+                    android:id="@+id/TextInputEditText_password"
+                    >
+                </EditText>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_login"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bin_login"
+                >
+
+                <android.widget.Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="#ffffff"
+                    android:stateListAnimator="@null"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:text="회원가입"
+                    android:id="@+id/Signup_button"
+                    android:background="@null"
+                    >
+                </android.widget.Button>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                />
+
+
+            <LinearLayout
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                >
+
+                <TextView
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="이미 계정이 있으십니까?"
+                    android:textSize="17sp"></TextView>
+
+                <android.widget.Button
+                    android:id="@+id/back_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:background="@color/white"
+                    android:text="로그인"
+                    android:textStyle="bold"
+                    android:textColor="#DB1A21"
+                    android:textSize="17sp"></android.widget.Button>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
