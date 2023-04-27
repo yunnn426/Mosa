@@ -32,8 +32,8 @@ public class PersonalActivity  extends AppCompatActivity {
     //앱에서 나올수 있는 진단의 결과 값
     final static String[] result_color={"springworm_Bright","springworm_Light",
             "summer cool_Bright","summer cool_Light","summer cool_Mute","autumn worm_Deep","autumn worm_Mute",
-            "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep"};
-    final static String[] result_face={"square","round","oval","oblong","heart"};
+            "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep","알 수 없는 오류 발생!!!"};
+    final static String[] result_face={"square","round","oval","oblong","heart","알 수 없는 오류 발생!!!"};
     int i;
     TextView User_color_en;
     TextView User_color;
@@ -58,9 +58,6 @@ public class PersonalActivity  extends AppCompatActivity {
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
 
-        db=FirebaseFirestore.getInstance();
-        diagnosesref=db.collection("user_record");
-        //아래에 db에 기록하는 코드를 추가
 
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);
@@ -73,7 +70,10 @@ public class PersonalActivity  extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //String skin_title=intent.getStringExtra("title");
+        //진단 실행화면에서 결과값을 받아오고 그 결과값(숫자)에 맞는 문자열을 매칭 시킨다
+        //int skin_int=intent.getIntExtra("result",10);
+        //String skin_title=result_color[skin_int];
+        //잠시 임의로 지정
         String skin_title=result_color[0];
         String skin_detail=intent.getStringExtra("detail");
         Bitmap color_chrt_bmp;//퍼스널 컬러(skin_title)에 알맞는 chrt 이미지 정보를 bitmap의 배열 형식으로 받아온다.
@@ -104,6 +104,9 @@ public class PersonalActivity  extends AppCompatActivity {
         rec_btn_3=findViewById(R.id.recommand_btn_3);
         rec_btn_4=findViewById(R.id.recommand_btn_4);
 
+        db=FirebaseFirestore.getInstance();
+        diagnosesref=db.collection("user_record");
+        //아래에 db에 기록하는 코드를 추가
 
         //각각 의 추천 엑티비티를 불러오는 리스너
         rec_btn_1.setOnClickListener(new View.OnClickListener() {
@@ -141,8 +144,7 @@ public class PersonalActivity  extends AppCompatActivity {
     public Bitmap match_color_chrt(String your_color){
         Log.d("User","당신의 퍼스널 컬러에 맞는 chrt 정보를 불러옵니다.");
         Bitmap your_color_chart;
-        //여기도 차후에 구현
-        //일단 아무거나 넣었다.
+        //스토리지에 컬러 차트 이미지 저장하고 불러온다.
 
         return your_color_chart;
     }
