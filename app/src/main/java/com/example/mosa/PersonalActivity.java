@@ -28,6 +28,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class PersonalActivity  extends AppCompatActivity {
+
+    //앱에서 나올수 있는 진단의 결과 값
+    final static String[] result_color={"springworm_Bright","springworm_Light",
+            "summer cool_Bright","summer cool_Light","summer cool_Mute","autumn worm_Deep","autumn worm_Mute",
+            "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep"};
+    final static String[] result_face={"square","round","oval","oblong","heart"};
     int i;
     TextView User_color_en;
     TextView User_color;
@@ -54,6 +60,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");
+        //아래에 db에 기록하는 코드를 추가
 
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);
@@ -66,12 +73,12 @@ public class PersonalActivity  extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String skin_title=intent.getStringExtra("title");
+        //String skin_title=intent.getStringExtra("title");
+        String skin_title=result_color[0];
         String skin_detail=intent.getStringExtra("detail");
         Bitmap color_chrt_bmp;//퍼스널 컬러(skin_title)에 알맞는 chrt 이미지 정보를 bitmap의 배열 형식으로 받아온다.
-        String recommend_info=intent.getStringExtra("recommend");
-        //해당 추천된 퍼스널 컬러(skin_title,skin_detail)에 알맞는 컬러 차트 이미지와,
-        //추천정보(해당 정보와 매치시켜야)를 불러와야한다.(결국 내 생각에는 이 추천정보는 파일,JSON(?) 형식이 될듯 싶다.)
+        //해당 추천된 퍼스널 컬러(skin_title,skin_detail)에 알맞는 컬러 차트 이미지와, 컬러 이미지를 스토리지에서 불러옴
+        //추천정보(해당 정보와 매치시켜야)를 불러와야한다. 결과값을 인텐트에 담고, 그것을 추천 클래스로 보내면 된다.
         //차후 구현 필요
         User_color_en=findViewById(R.id.user_color_en);
         User_color=findViewById(R.id.user_color);
@@ -103,7 +110,7 @@ public class PersonalActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(PersonalActivity.this, reccosActivity.class);
-                intent.putExtra("Usercolor",skin_title);
+                intent.putExtra("result",skin_title);
                 startActivity(intent);
             }
         });
@@ -125,7 +132,6 @@ public class PersonalActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(PersonalActivity.this, recclothActivity.class);
-                //근데 이거는 퍼스널 컬러+ 체형(?)도 고려해야 하지 않나?
             }
         });
     }

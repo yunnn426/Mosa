@@ -64,15 +64,19 @@ public class reccosActivity extends AppCompatActivity {
         int itemnum=10;
         //여기서 결과 값을 받고 이 결과값을 이용해서 추천아이템을 검색
         Intent intent=getIntent();
-        //String result_value=intent.getStringExtra("result");
+        String result=intent.getStringExtra("result");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //나중에 폴더 이름으로 따로 분류하고 그러면 될듯
-        //String filesname="test_com_";
-        //String filesname=result_value;
+        //test용입니다.
         storage=FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child("test/");
         StorageReference storageReference1 =storage.getReference().child("text_ex/");
+
+        //아래에 이런 식으로 인텐트로 받아온 결과값+추천아이템 종류+세부 종류 이런식으로 구현하면 될듯
+        //StorageReference storageReference=storage.getReference().child(result+"cosmetics/"+"rip/");
+        //StorageReference storageReference1=storage.getReference().child(result+"cosmetics/"+"blusher/");
+        //StorageReference storageReference2=storage.getReference().child(result+"cosmetics"+"shadow/");
+
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
