@@ -41,6 +41,10 @@
             android:name=".recommend.rechairActivity"
             android:exported="false" />
         <activity
+            android:name=".recommend.FullitemImage"
+            android:exported="false"/>
+
+        <activity
             android:name=".styleSearchActivity"
             android:exported="false" />
         <activity

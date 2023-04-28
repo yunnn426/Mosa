@@ -52,14 +52,13 @@ public class reccosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //기본적으로 리사이클러 뷰는 이것을 같이 써도 될듯 싶다. 왜냐하면 데이터의 형식은 같다(이미지, 설명)
-        item_Recycler recycler=new item_Recycler();
+
+        item_Recycler recycler_1=new item_Recycler();
+        item_Recycler recycler_2=new item_Recycler();
+        item_Recycler recycler_3=new item_Recycler();
         ArrayList<Bitmap> itemfile_1=new ArrayList<>();
-        ArrayList<String> itemfile_ex_1=new ArrayList<>();
         ArrayList<Bitmap> itemfile_2=new ArrayList<>();
-        ArrayList<String> itemfile_ex_2=new ArrayList<>();
         ArrayList<Bitmap> itemfile_3=new ArrayList<>();
-        ArrayList<String> itemfile_ex_3=new ArrayList<>();
         setContentView(R.layout.recommend_screen_cos);
         //이거는 화장품의 종류 별로 각각 리사이클러 뷰를 표시한다.
         itemlist_1=findViewById(R.id.itemlist_view_1);
@@ -76,17 +75,10 @@ public class reccosActivity extends AppCompatActivity {
         //StorageReference storageReference = storage.getReference().child("test/");
         //StorageReference storageReference1 =storage.getReference().child("text_ex/");
 
-        /*
-        아래에 이런 식으로 인텐트로 받아온 결과값+추천아이템 종류+세부 종류 이런식으로 구현하면 될듯
-        그런데 순서가 꼬일수도 있어서 되도록이면 이미지만 다운로드 받고 싶다.
-        */
 
         StorageReference storageReference=storage.getReference().child(result+"/cosmetics/"+"rip/");
-        StorageReference storageReference_1=storage.getReference().child(result+"/cosmetics/"+"rip_ex/");
         StorageReference storageReference1=storage.getReference().child(result+"/cosmetics/"+"blusher/");
-        StorageReference storageReference1_1=storage.getReference().child(result+"/cosmetics/"+"blusher_ex/");
-        StorageReference storageReference2=storage.getReference().child(result+"cosmetics"+"shadow/");
-        StorageReference storageReference2_1=storage.getReference().child(result+"/cosmetics/"+"shadow_ex/");
+        StorageReference storageReference2=storage.getReference().child(result+"/cosmetics/"+"shadow/");
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -110,55 +102,10 @@ public class reccosActivity extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_1.add(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        storageReference_1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                path=new File(result_path.getAbsolutePath());
-                for(StorageReference item : listResult.getItems()){
-                    File download=new File(path,item.getName());
-                    if(!path.exists()){
-                        path.getParentFile().mkdirs();
-                    }
-                    try {
-                        download.createNewFile();
-                        FileDownloadTask fileDownloadTask=item.getFile(download);
-                        fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                String str;
-                                //제대로 텍스트 내용을 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
-                                try {
-                                    BufferedReader text=new BufferedReader(new FileReader(download));
-                                    while ((str = text.readLine()) != null) {
-                                        itemfile_ex_1.add(str);
-                                        if(itemfile_1.size()==4 && itemfile_ex_1.size()==4){
-                                            recycler.setrecycler(itemfile_1, itemfile_ex_1);
-                                            itemlist_1.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
-                                            itemlist_1.setAdapter(recycler);
-                                        }
-                                    }
-
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
+                                if(itemfile_1.size()==4){
+                                    recycler_1.setrecycler(itemfile_1);
+                                    itemlist_1.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
+                                    itemlist_1.setAdapter(recycler_1);
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -166,6 +113,7 @@ public class reccosActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                             }
                         });
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -177,6 +125,7 @@ public class reccosActivity extends AppCompatActivity {
                 Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
         storageReference1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -200,55 +149,10 @@ public class reccosActivity extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_2.add(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        storageReference1_1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                path=new File(result_path.getAbsolutePath());
-                for(StorageReference item : listResult.getItems()){
-                    File download=new File(path,item.getName());
-                    if(!path.exists()){
-                        path.getParentFile().mkdirs();
-                    }
-                    try {
-                        download.createNewFile();
-                        FileDownloadTask fileDownloadTask=item.getFile(download);
-                        fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                String str;
-                                //제대로 텍스트 내용을 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
-                                try {
-                                    BufferedReader text=new BufferedReader(new FileReader(download));
-                                    while ((str = text.readLine()) != null) {
-                                        itemfile_ex_2.add(str);
-                                        if(itemfile_2.size()==4 && itemfile_ex_2.size()==4){
-                                            recycler.setrecycler(itemfile_2, itemfile_ex_2);
-                                            itemlist_2.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
-                                            itemlist_2.setAdapter(recycler);
-                                        }
-                                    }
-
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
+                                if(itemfile_2.size()==4 ){
+                                    recycler_2.setrecycler(itemfile_2);
+                                    itemlist_2.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
+                                    itemlist_2.setAdapter(recycler_2);
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -256,6 +160,7 @@ public class reccosActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                             }
                         });
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -267,6 +172,7 @@ public class reccosActivity extends AppCompatActivity {
                 Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
             }
         });
+
         storageReference2.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
@@ -288,55 +194,10 @@ public class reccosActivity extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_3.add(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        storageReference2_1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                path=new File(result_path.getAbsolutePath());
-                for(StorageReference item : listResult.getItems()){
-                    File download=new File(path,item.getName());
-                    if(!path.exists()){
-                        path.getParentFile().mkdirs();
-                    }
-                    try {
-                        download.createNewFile();
-                        FileDownloadTask fileDownloadTask=item.getFile(download);
-                        fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                String str;
-                                //제대로 텍스트 내용을 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
-                                try {
-                                    BufferedReader text=new BufferedReader(new FileReader(download));
-                                    while ((str = text.readLine()) != null) {
-                                        itemfile_ex_3.add(str);
-                                        if(itemfile_3.size()==4 && itemfile_ex_3.size()==4){
-                                            recycler.setrecycler(itemfile_3, itemfile_ex_3);
-                                            itemlist_3.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
-                                            itemlist_3.setAdapter(recycler);
-                                        }
-                                    }
-
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
+                                if(itemfile_3.size()==4){
+                                    recycler_3.setrecycler(itemfile_3);
+                                    itemlist_3.setLayoutManager(new LinearLayoutManager(reccosActivity.this, RecyclerView.HORIZONTAL, false));
+                                    itemlist_3.setAdapter(recycler_3);
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -344,6 +205,7 @@ public class reccosActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                             }
                         });
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -355,6 +217,7 @@ public class reccosActivity extends AppCompatActivity {
                 Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
     @Override
