@@ -1,67 +1,178 @@
 package com.example.mosa;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class subSignup extends AppCompatActivity {
-    private EditText email_join;
-    private EditText pwd_join;
-    private EditText name_join;
-    private Button btn;
-    FirebaseAuth firebaseAuth;
-    private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private final DatabaseReference databaseReference = firebaseDatabase.getReference();
+import java.util.HashMap;
 
-    @SuppressLint("MissingInflatedId")
+public class subSignup extends AppCompatActivity {
+    private static final String TAG = "RegisterActivity";
+    EditText mEmailText, mPasswordText, mPasswordcheckText, mName;
+    Button mregisterBtn;
+    private FirebaseAuth firebaseAuth;
+
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        email_join = findViewById(R.id.TextInputEditText_email);
-        pwd_join = findViewById(R.id.TextInputEditText_password);
-        name_join = findViewById(R.id.TextInputEditText_name);
-        btn = findViewById(R.id.Signup_button);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        //파이어베이스 접근 설정
+        // user = firebaseAuth.getCurrentUser();
+        firebaseAuth =  FirebaseAuth.getInstance();
+        //firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
-        btn.setOnClickListener(v -> {
-            final String email = email_join.getText().toString().trim();
-            final String pwd = pwd_join.getText().toString().trim();
-            final String name = name_join.getText().toString().trim();
-            //공백인 부분을 제거하고 보여주는 trim();
+        mEmailText = findViewById(R.id.TextInputEditText_email);
+        mPasswordText = findViewById(R.id.TextInputEditText_password);
+        mPasswordcheckText = findViewById(R.id.TextInputEditText_passwordcheck);
+        mregisterBtn = findViewById(R.id.Signup_button);
+        mName = findViewById(R.id.TextInputEditText_name);
+
+        //파이어베이스 user 로 접글
+
+        //가입버튼 클릭리스너   -->  firebase에 데이터를 저장한다.
+        mregisterBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                //가입 정보 가져오기
+                final String email = mEmailText.getText().toString().trim();
+                String pwd = mPasswordText.getText().toString().trim();
+                String pwdcheck = mPasswordcheckText.getText().toString().trim();
 
 
-            firebaseAuth.createUserWithEmailAndPassword(email, pwd)
-                    .addOnCompleteListener(subSignup.this, task -> {
+                if(pwd.equals(pwdcheck)) {
+                    Log.d(TAG, "등록 버튼 " + email + " , " + pwd);
+                    final ProgressDialog mDialog = new ProgressDialog(subSignup.this);
+                    mDialog.setMessage("가입중입니다...");
+                    mDialog.show();
 
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(subSignup.this, Signup.class);
-                            startActivity(intent);
-                            finish();
+                    //파이어베이스에 신규계정 등록하기
+                    firebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(subSignup.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        } else {
-                            Toast.makeText(subSignup.this, "등록 에러 :"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
+                            //가입 성공시
+                            if (task.isSuccessful()) {
+                                mDialog.dismiss();
+
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                String email = user.getEmail();
+                                String uid = user.getUid();
+                                String name = mName.getText().toString().trim();
+
+                                //해쉬맵 테이블을 파이어베이스 데이터베이스에 저장
+                                HashMap<Object,String> hashMap = new HashMap<>();
+
+                                hashMap.put("uid",uid);
+                                hashMap.put("email",email);
+                                hashMap.put("name",name);
+
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference reference = database.getReference("Users");
+                                reference.child(uid).setValue(hashMap);
+
+
+                                //가입이 이루어져을시 가입 화면을 빠져나감.
+                                Intent intent = new Intent(subSignup.this, Signup.class);
+                                startActivity(intent);
+                                finish();
+                                Toast.makeText(subSignup.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                mDialog.dismiss();
+                                Toast.makeText(subSignup.this, "이미 존재하는 아이디 입니다.", Toast.LENGTH_SHORT).show();
+                                return;  //해당 메소드 진행을 멈추고 빠져나감.
+
+                            }
+
                         }
                     });
 
-            });
-        Button imageButton = findViewById(R.id.back_login);
-        imageButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(),
-                    Signup.class);
-            startActivity(intent);
+                    //비밀번호 오류시
+                }else{
+
+                    Toast.makeText(subSignup.this, "비밀번호가 틀렸습니다. 다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
         });
+
     }
+
+    public boolean onSupportNavigateUp(){
+        onBackPressed();; // 뒤로가기 버튼이 눌렸을시
+        return super.onSupportNavigateUp(); // 뒤로가기 버튼
+    }
+
+
+//    private EditText email_join;
+//    private EditText pwd_join;
+//    private EditText name_join;
+//    private Button btn;
+//    FirebaseAuth firebaseAuth;
+//    private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//    private final DatabaseReference databaseReference = firebaseDatabase.getReference();
+//
+//    @SuppressLint("MissingInflatedId")
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_signup);
+//        email_join = findViewById(R.id.TextInputEditText_email);
+//        pwd_join = findViewById(R.id.TextInputEditText_password);
+//        name_join = findViewById(R.id.TextInputEditText_name);
+//        btn = findViewById(R.id.Signup_button);
+//
+//        firebaseAuth = FirebaseAuth.getInstance();
+//
+//        btn.setOnClickListener(v -> {
+//            final String email = email_join.getText().toString().trim();
+//            final String pwd = pwd_join.getText().toString().trim();
+//            final String name = name_join.getText().toString().trim();
+//            //공백인 부분을 제거하고 보여주는 trim();
+//
+//
+//            firebaseAuth.createUserWithEmailAndPassword(email, pwd)
+//                    .addOnCompleteListener(subSignup.this, task -> {
+//
+//                        if (task.isSuccessful()) {
+//                            Intent intent = new Intent(subSignup.this, Signup.class);
+//                            startActivity(intent);
+//                            finish();
+//
+//                        } else {
+//                            Toast.makeText(subSignup.this, "등록 에러 :"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    });
+//
+//            });
+//        Button imageButton = findViewById(R.id.back_login);
+//        imageButton.setOnClickListener(view -> {
+//            Intent intent = new Intent(getApplicationContext(),
+//                    Signup.class);
+//            startActivity(intent);
+//        });
+//    }
 }
