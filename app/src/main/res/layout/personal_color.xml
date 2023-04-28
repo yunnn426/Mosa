@@ -232,6 +232,43 @@
 
             </LinearLayout>
         </GridLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="화장품 추천"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cos_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="헤어 추천"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hair_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="악세서리 추천"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/acc_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="옷 추천"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cloth_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
