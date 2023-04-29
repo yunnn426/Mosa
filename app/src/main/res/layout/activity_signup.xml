@@ -39,6 +39,7 @@
                 android:textColor="#E48A8888"
                 android:text="회원 계정을 만들고 스타일링 추천을 받아보세요!"
                 />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -135,7 +136,37 @@
                     >
                 </EditText>
             </LinearLayout>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="19dp"
+                android:text="Password Check"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bin_red"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/lock_icon" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ffffff"
+                    android:hint="********"
+                    android:id="@+id/TextInputEditText_passwordcheck"
+                    >
+                </EditText>
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
