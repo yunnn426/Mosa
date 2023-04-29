@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mosa.customer_history.Fragment_Adapter;
 import com.example.mosa.recommend.item_Recycler;
 import com.example.mosa.recommend.recaccActivity;
 import com.example.mosa.recommend.recclothActivity;
@@ -29,6 +30,13 @@ import com.example.mosa.recommend.rechairActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
@@ -47,13 +55,18 @@ public class PersonalActivity  extends AppCompatActivity {
     final static String[] result_color={"spring worm_Bright","spring worm_Light",
             "summer cool_Bright","summer cool_Light","summer cool_Mute","autumn worm_Deep","autumn worm_Mute",
             "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep","알 수 없는 오류 발생!!!"};
+    final static String[] result_color_ko={"봄윔 라이트","봄윔 브라이트","여름쿨 라이트","여름쿨 브라이트","여름쿨 뮤트",
+            "가을웜 딥","가을웜 스트롱","가을웜 뮤트","겨울 브라이트","겨울 딥","알 수 없는 오류 발생!!!"};
     final static String[] result_face={"square","round","oval","oblong","heart","알 수 없는 오류 발생!!!"};
-    int i;
+    final static String[] result_face_ko={"사각형 얼굴형","둥근 얼굴형","계란 얼굴형","직사각형 얼굴형","하트 얼굴형","알 수 없는 오류 발생!!!"};
     TextView User_color_en;
     TextView User_color;
     TextView User_color_detail;
     TextView User_face_en;
     TextView User_face;
+    TextView User_color_recom;
+    TextView User_name;
+    FirebaseDatabase firebaseDatabase;
     ImageButton rec_btn_1;
     ImageButton rec_btn_2;
     ImageButton rec_btn_3;
@@ -78,6 +91,10 @@ public class PersonalActivity  extends AppCompatActivity {
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
 
+        //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
+        //int color=intent.getIntExtra("result_color",10);
+        //int face=intent.getIntExtra("result_face", 10);
+
         item_Recycler recycler_1=new item_Recycler();
         item_Recycler recycler_2=new item_Recycler();
         item_Recycler recycler_3=new item_Recycler();
@@ -88,11 +105,35 @@ public class PersonalActivity  extends AppCompatActivity {
         ArrayList<Bitmap> itemfile_3=new ArrayList<Bitmap>();
         ArrayList<Bitmap> itemfile_4=new ArrayList<Bitmap>();
 
+        User_color_recom=findViewById(R.id.recom_user_color);
+        User_name=findViewById(R.id.recom_user_name);
+
+
+        User_color_recom.setText(result_color_ko[0]);
+        // 여기서 실제 이름을 가져와서 넣는다.
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Users");
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                User_name.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         itemlist_1=findViewById(R.id.cos_list);
         itemlist_2=findViewById(R.id.hair_list);
         itemlist_3=findViewById(R.id.acc_list);
         itemlist_4=findViewById(R.id.cloth_list);
 
+        //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
         StorageReference storageReference_1=storage.getReference().child(result_color[0]+"/cosmetics/"+"rip/");
         StorageReference storageReference_2=storage.getReference().child(result_color[0]+"/cosmetics/"+"blusher/");
@@ -121,7 +162,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_1.add(bitmap);
-                                if(itemfile_1.size()==4){
+                                if(itemfile_1.size()==8){
                                     recycler_1.setrecycler(itemfile_1);
                                     itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_1.setAdapter(recycler_1);
@@ -168,7 +209,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_2.add(bitmap);
-                                if(itemfile_2.size()==4 ){
+                                if(itemfile_2.size()==8){
                                     recycler_2.setrecycler(itemfile_2);
                                     itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_2.setAdapter(recycler_2);
@@ -213,7 +254,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_3.add(bitmap);
-                                if(itemfile_3.size()==4){
+                                if(itemfile_3.size()==8){
                                     recycler_3.setrecycler(itemfile_3);
                                     itemlist_3.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_3.setAdapter(recycler_3);
@@ -258,7 +299,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_4.add(bitmap);
-                                if(itemfile_4.size()==4){
+                                if(itemfile_4.size()==8){
                                     recycler_4.setrecycler(itemfile_4);
                                     itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_4.setAdapter(recycler_4);
