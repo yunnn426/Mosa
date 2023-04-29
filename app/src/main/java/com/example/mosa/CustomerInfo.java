@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -18,6 +19,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.mosa.customer_history.Fragment_Adapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +40,7 @@ public class CustomerInfo extends AppCompatActivity {
     MenuItem bottom_2;
     MenuItem bottom_3;
 
+    FirebaseDatabase firebaseDatabase;
     Fragment_Adapter adapter;
     ViewPager viewPager;
     @Override
@@ -70,6 +79,22 @@ public class CustomerInfo extends AppCompatActivity {
             }
         });
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Users");
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                customer_name.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         Intent intent=getIntent();
         //이 화면에서 스타일 진단 화면으로 가려면 얼굴 이미지 경로, ml_kit 얼굴 분석정보가 필요하다.
         String img=intent.getStringExtra("img");
@@ -77,7 +102,7 @@ public class CustomerInfo extends AppCompatActivity {
         String email=intent.getStringExtra("useremail");
 
 
-        customer_name.setText(name);
+
         customer_email.setText(email);
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item->{
