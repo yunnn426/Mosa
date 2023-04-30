@@ -91,9 +91,15 @@ public class PersonalActivity  extends AppCompatActivity {
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
 
+        /*
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
-        //int color=intent.getIntExtra("result_color",10);
-        //int face=intent.getIntExtra("result_face", 10);
+        int color=intent.getIntExtra("result_color",10);
+        int face=intent.getIntExtra("result_face", 10);
+        String color_str=result_color[color];
+        String color_str_ko=result_color_ko[color];
+        String face_str=result_face[face];
+        String face_str_ko=result_face_ko[face];
+        */
 
         item_Recycler recycler_1=new item_Recycler();
         item_Recycler recycler_2=new item_Recycler();
@@ -110,6 +116,8 @@ public class PersonalActivity  extends AppCompatActivity {
 
 
         User_color_recom.setText(result_color_ko[0]);
+        //User_color_recom.setText(color_str_ko);
+
         // 여기서 실제 이름을 가져와서 넣는다.
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
@@ -135,6 +143,11 @@ public class PersonalActivity  extends AppCompatActivity {
 
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
+        //StorageReference storageReference_color_cos=storage.getReference().child(color_str+"cosmetics/");
+        //StorageReference storageReference_face_hair=storage.getReference().child(face_str+"/hair/");
+        //StorageReference storageReference_color_cloth=storage.getReference().child(color_str+"clothes/");
+        //StorageReference storageReference_face_acc=storage.getReference().child(face_str+"/accessory/");
+
         StorageReference storageReference_1=storage.getReference().child(result_color[0]+"/cosmetics/"+"rip/");
         StorageReference storageReference_2=storage.getReference().child(result_color[0]+"/cosmetics/"+"blusher/");
         StorageReference storageReference_3=storage.getReference().child(result_color[0]+"/cosmetics/"+"shadow/");
