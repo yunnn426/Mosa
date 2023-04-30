@@ -100,11 +100,11 @@ public class IntitialActivity extends AppCompatActivity {
                     if (choice.equals("종합진단"))
                     {
                         //여기에는 진단 실행화면으로 넘어가는 인텐트를 대신 넣으면 된다.
-                        intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
+                        intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
                         Bitmap bitmap_color = bitmap;
                         File file = BmpToFile(bitmap_color, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
-                        intent_choice_2.putExtra("result_color",9);
+                        //intent_choice_2.putExtra("result_color",9);
                         clickcount=0;
                     }
                     else
@@ -160,11 +160,11 @@ public class IntitialActivity extends AppCompatActivity {
                 if (choice.equals("종합진단"))
                 {
                     //이제 여기에 진단 실행화면으로 넘어가는 인텐트를 넣으면 된다.
-                    intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
+                    intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
-                    intent_choice_2.putExtra("result_color",9);
+                    //intent_choice_2.putExtra("result_color",9);
                     clickcount=0;
                 }
                 else
