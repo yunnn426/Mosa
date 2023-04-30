@@ -57,6 +57,7 @@ public class PersonalActivity  extends AppCompatActivity {
             "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep","알 수 없는 오류 발생!!!"};
     final static String[] result_color_ko={"봄윔 라이트","봄윔 브라이트","여름쿨 라이트","여름쿨 브라이트","여름쿨 뮤트",
             "가을웜 딥","가을웜 스트롱","가을웜 뮤트","겨울 브라이트","겨울 딥","알 수 없는 오류 발생!!!"};
+    //일단 face의 결과값도 추가로 정하기는 했는데 향후 바뀔 가능성이 존재
     final static String[] result_face={"square","round","oval","oblong","heart","알 수 없는 오류 발생!!!"};
     final static String[] result_face_ko={"사각형 얼굴형","둥근 얼굴형","계란 얼굴형","직사각형 얼굴형","하트 얼굴형","알 수 없는 오류 발생!!!"};
     TextView User_color_en;
@@ -66,15 +67,22 @@ public class PersonalActivity  extends AppCompatActivity {
     TextView User_face;
     TextView User_color_recom;
     TextView User_name;
+    TextView Title_User_name;
+    TextView Title_User_color;
     FirebaseDatabase firebaseDatabase;
+
+    /*
     ImageButton rec_btn_1;
     ImageButton rec_btn_2;
     ImageButton rec_btn_3;
     ImageButton rec_btn_4;
+    */
+
     ImageView color_title;
     ImageView color_chrt;
     ImageView Face_title;
-    ImageView selected_color;
+    ImageView selected_color_1;
+    ImageView selected_color_2;
     FirebaseFirestore db;
     CollectionReference diagnosesref;
     FirebaseStorage storage;
@@ -91,15 +99,15 @@ public class PersonalActivity  extends AppCompatActivity {
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
 
-        /*
+
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
         int color=intent.getIntExtra("result_color",10);
-        int face=intent.getIntExtra("result_face", 10);
+        //int face=intent.getIntExtra("result_face", 10);
         String color_str=result_color[color];
         String color_str_ko=result_color_ko[color];
-        String face_str=result_face[face];
-        String face_str_ko=result_face_ko[face];
-        */
+        //String face_str=result_face[face];
+        //String face_str_ko=result_face_ko[face];
+
 
         item_Recycler recycler_1=new item_Recycler();
         item_Recycler recycler_2=new item_Recycler();
@@ -113,11 +121,12 @@ public class PersonalActivity  extends AppCompatActivity {
 
         User_color_recom=findViewById(R.id.recom_user_color);
         User_name=findViewById(R.id.recom_user_name);
+        Title_User_name=findViewById(R.id.title_username);
+        Title_User_color=findViewById(R.id.title_usercolor);
 
-
-        User_color_recom.setText(result_color_ko[0]);
-        //User_color_recom.setText(color_str_ko);
-
+        //User_color_recom.setText(result_color_ko[0]);
+        User_color_recom.setText(color_str_ko);
+        Title_User_color.setText(color_str_ko);
         // 여기서 실제 이름을 가져와서 넣는다.
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
@@ -127,6 +136,7 @@ public class PersonalActivity  extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String value = snapshot.getValue(String.class);
                 User_name.setText(value);
+                Title_User_name.setText(value);
             }
 
             @Override
@@ -357,33 +367,31 @@ public class PersonalActivity  extends AppCompatActivity {
         //해당 추천된 퍼스널 컬러(skin_title,skin_detail)에 알맞는 컬러 차트 이미지와, 컬러 이미지를 스토리지에서 불러옴
         //추천정보(해당 정보와 매치시켜야)를 불러와야한다. 결과값을 인텐트에 담고, 그것을 추천 클래스로 보내면 된다.
         //차후 구현 필요
-        User_color_en=findViewById(R.id.user_color_en);
-        User_color=findViewById(R.id.user_color);
-        User_color_detail=findViewById(R.id.user_color_detail);
+
         color_chrt=findViewById(R.id.color_chrt);
-        selected_color=findViewById(R.id.selected_color_chrt);
+        selected_color_1=findViewById(R.id.selected_color_chrt_1);
+        selected_color_2=findViewById(R.id.selected_color_chrt_2);
+
         /*
         color_chrt_bmp=match_color_chrt(skin_title);
         color_chrt.setImageBitmap(color_chrt_bmp);
 
         */
 
-        User_color.setText(skin_title);
-        User_color_detail.setText(skin_detail);
-
         Face_title=findViewById(R.id.facedes_img);
         User_face_en=findViewById(R.id.user_face_en);
         User_face=findViewById(R.id.user_face);
 
+        db=FirebaseFirestore.getInstance();
+        diagnosesref=db.collection("user_record");
+        //아래에 db에 기록하는 코드를 추가
+
+        /*
         //각각 추천 UI를 불러오는 버튼
         rec_btn_1=findViewById(R.id.recommand_btn_1);
         rec_btn_2=findViewById(R.id.recommand_btn_2);
         rec_btn_3=findViewById(R.id.recommand_btn_3);
         rec_btn_4=findViewById(R.id.recommand_btn_4);
-
-        db=FirebaseFirestore.getInstance();
-        diagnosesref=db.collection("user_record");
-        //아래에 db에 기록하는 코드를 추가
 
         //각각 의 추천 엑티비티를 불러오는 리스너
         rec_btn_1.setOnClickListener(new View.OnClickListener() {
@@ -413,7 +421,7 @@ public class PersonalActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(PersonalActivity.this, recclothActivity.class);
             }
-        });
+        });*/
     }
 
     //고객의 퍼스널 컬러 정보를 받아서 해당 컬러에 맞는 chrt 정보를 불러온다.

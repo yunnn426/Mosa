@@ -104,6 +104,7 @@ public class IntitialActivity extends AppCompatActivity {
                         Bitmap bitmap_color = bitmap;
                         File file = BmpToFile(bitmap_color, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
+                        intent_choice_2.putExtra("result_color",9);
                         clickcount=0;
                     }
                     else
@@ -163,6 +164,7 @@ public class IntitialActivity extends AppCompatActivity {
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
+                    intent_choice_2.putExtra("result_color",9);
                     clickcount=0;
                 }
                 else
@@ -200,14 +202,12 @@ public class IntitialActivity extends AppCompatActivity {
                 }
                 case R.id.bottom_menu_3:
                 {
-                    String user_name=user.getDisplayName();
                     String user_email=user.getEmail();
                     Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_3=new Intent(IntitialActivity.this,CustomerInfo.class);
                     BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
                     Bitmap bitmap=bitmapDrawable.getBitmap();
                     File file=BmpToFile(bitmap,"image.png");
-                    intent_bottom_3.putExtra("username",user_name);
                     intent_bottom_3.putExtra("useremail",user_email);
                     intent_bottom_3.putExtra("img",file.getAbsolutePath());
                     startActivity(intent_bottom_3);
