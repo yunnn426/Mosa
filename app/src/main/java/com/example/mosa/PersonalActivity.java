@@ -60,10 +60,6 @@ public class PersonalActivity  extends AppCompatActivity {
     //일단 face의 결과값도 추가로 정하기는 했는데 향후 바뀔 가능성이 존재
     final static String[] result_face={"square","round","oval","oblong","heart","알 수 없는 오류 발생!!!"};
     final static String[] result_face_ko={"사각형 얼굴형","둥근 얼굴형","계란 얼굴형","직사각형 얼굴형","하트 얼굴형","알 수 없는 오류 발생!!!"};
-    TextView User_color_en;
-    TextView User_color;
-    TextView User_color_detail;
-    TextView User_face_en;
     TextView User_face;
     TextView User_color_recom;
     TextView User_name;
@@ -102,11 +98,11 @@ public class PersonalActivity  extends AppCompatActivity {
 
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
         int color=intent.getIntExtra("result_color",10);
-        //int face=intent.getIntExtra("result_face", 10);
+        int face=intent.getIntExtra("result_face", 6);
         String color_str=result_color[color];
         String color_str_ko=result_color_ko[color];
-        //String face_str=result_face[face];
-        //String face_str_ko=result_face_ko[face];
+        String face_str=result_face[face];
+        String face_str_ko=result_face_ko[face];
 
 
         item_Recycler recycler_1=new item_Recycler();
@@ -379,8 +375,8 @@ public class PersonalActivity  extends AppCompatActivity {
         */
 
         Face_title=findViewById(R.id.facedes_img);
-        User_face_en=findViewById(R.id.user_face_en);
         User_face=findViewById(R.id.user_face);
+        User_face.setText(face_str_ko);
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");

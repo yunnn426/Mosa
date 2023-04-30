@@ -102,7 +102,7 @@ public class loadingActivity extends AppCompatActivity {
                             Intent intent_result=new Intent(loadingActivity.this,PersonalActivity.class);
                             intent_result.putExtra("img",image_path);
                             intent_result.putExtra("result_color",6);
-                            intent_result.putExtra("result_face",10);
+                            intent_result.putExtra("result_face",3);
                             startActivity(intent_result);
                             return true;
                         }
