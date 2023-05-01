@@ -86,15 +86,13 @@ public class loadingActivity extends AppCompatActivity {
                 loading_img.setVisibility(View.INVISIBLE);
                 res_img.setVisibility(View.VISIBLE);
 
-                if(res_img.getVisibility()==View.VISIBLE){
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                cons.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //이곳을 나중에 퍼스널 컬러별 색으로 바꾸면 될듯
+                        cons.setBackgroundColor(Color.RED);
                     }
-                    //이곳을 나중에 퍼스널 컬러별 색으로 바꾸면 될듯
-                    cons.setBackgroundColor(Color.RED);
-                }
+                }, 3000);
                 cons.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
@@ -125,7 +123,9 @@ public class loadingActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // 뒤로가기 버튼을 눌렀을 때 , 바로 이전 화면으로 이동
+            Intent intent=new Intent(loadingActivity.this,IntitialActivity.class);
+            intent.putExtra("choice","종합진단");
+            startActivity(intent);// 뒤로가기 버튼을 눌렀을 때 , 바로 사진 선택 화면으로 이동
             return true;
         }
         return super.onOptionsItemSelected(item);

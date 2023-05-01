@@ -438,7 +438,9 @@ public class PersonalActivity  extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // 뒤로가기 버튼을 눌렀을 때 , 바로 이전 화면으로 이동
+            Intent intent=new Intent(PersonalActivity.this,IntitialActivity.class);
+            intent.putExtra("choice","종합진단");
+            startActivity(intent);// 뒤로가기 버튼을 눌렀을 때 , 바로 사진 선택 화면으로 이동
             return true;
         }
         return super.onOptionsItemSelected(item);
