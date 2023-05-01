@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -88,6 +89,15 @@ public class loadingActivity extends AppCompatActivity {
                 loading_img.setVisibility(View.INVISIBLE);
                 res_img.setVisibility(View.VISIBLE);
 
+                //결과 값을 받아서 그거에 맞는 ui 요소를 표시
+                /*
+                String rst_color="result_"+result_color;
+                int drawable_id=getResources().getIdentifier(rst_color,"drawable",getPackageName());
+                res_img.setImageResource(drawable_id);
+                */
+                //임시로 표시
+                res_img.setImageResource(R.drawable.result_1);
+
                 cons.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -101,6 +111,10 @@ public class loadingActivity extends AppCompatActivity {
                         if(event.getAction()==event.ACTION_DOWN){
                             Intent intent_result=new Intent(loadingActivity.this,PersonalActivity.class);
                             intent_result.putExtra("img",image_path);
+                            /*
+                            intent_result.putExtra("result_color",result_color);
+                            intent_result.putExtra("result_face",result_face);
+                            */
                             intent_result.putExtra("result_color",6);
                             intent_result.putExtra("result_face",3);
                             startActivity(intent_result);
