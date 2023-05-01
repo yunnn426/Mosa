@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 
+import com.google.firebase.database.collection.LLRBNode;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -90,7 +92,7 @@ public class loadingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //이곳을 나중에 퍼스널 컬러별 색으로 바꾸면 될듯
-                        cons.setBackgroundColor(Color.RED);
+                        cons.setBackgroundColor(Color.parseColor("#FF4D4D"));
                     }
                 }, 3000);
                 cons.setOnTouchListener(new View.OnTouchListener() {
