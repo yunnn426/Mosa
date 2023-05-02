@@ -21,112 +21,112 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="Welcome to" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:textColor="@color/pont_color"
-        android:text="MoSA" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:textSize="16dp"
-        android:textColor="#E48A8888"
-        android:text="이미지를 업로드하고 오늘의 퍼스널 컬러를 알아보세요!" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="250dp" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@drawable/bin_google"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="Welcome to" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:textColor="@color/pont_color"
+                android:text="MoSA" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                android:textColor="#E48A8888"
+                android:text="이미지를 업로드하고 오늘의 퍼스널 컬러를 알아보세요!" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bin_google"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                >
 
-        <ImageView
-            android:layout_width="37dp"
-            android:layout_height="55dp"
-            android:layout_marginRight="1dp"
-            android:layout_toLeftOf="@id/GoGoogleButton"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/google_48"></ImageView>
+                <ImageView
+                    android:layout_width="37dp"
+                    android:layout_height="55dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_toLeftOf="@id/GoGoogleButton"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/google_48"></ImageView>
 
-        <TextView
-            android:id="@+id/GoGoogleButton"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:stateListAnimator="@null"
-            android:text="Continue with Google"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+                <TextView
+                    android:id="@+id/GoGoogleButton"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:stateListAnimator="@null"
+                    android:text="Continue with Google"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
 
-        >
-    </TextView>
+                >
+            </TextView>
 
-    <RelativeLayout
-        android:id="@+id/ToEmail"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@drawable/bin_google"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        >
+            <RelativeLayout
+                android:id="@+id/ToEmail"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bin_google"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                >
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="1dp"
-            android:layout_toLeftOf="@id/GoEmailButton"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/email_icon"></ImageView>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_toLeftOf="@id/GoEmailButton"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/email_icon"></ImageView>
 
-        <android.widget.Button
-            android:id="@+id/GoEmailButton"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:stateListAnimator="@null"
-            android:text="Continue with Email"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:background="@color/white"
-            android:textStyle="bold"></android.widget.Button>
+                <android.widget.Button
+                    android:id="@+id/GoEmailButton"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:stateListAnimator="@null"
+                    android:text="Continue with Email"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:background="@color/white"
+                    android:textStyle="bold"></android.widget.Button>
 
-    </RelativeLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>

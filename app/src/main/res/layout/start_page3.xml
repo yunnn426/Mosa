@@ -58,10 +58,10 @@
             app:layout_constraintTop_toBottomOf="@+id/third_page_text"
             />
 
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="55dp"-->
-<!--            android:layout_marginHorizontal="40dp"-->
-<!--            android:background="@drawable/third_page_start" />-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="55dp"-->
+        <!--            android:layout_marginHorizontal="40dp"-->
+        <!--            android:background="@drawable/third_page_start" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

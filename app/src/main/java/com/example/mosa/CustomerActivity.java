@@ -26,7 +26,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -79,7 +78,6 @@ public class CustomerActivity extends AppCompatActivity {
 
     FaceDetector detector = FaceDetection.getClient(highAccuracyOpts);
     ImageView img1;
-    ImageView img2;
 
     Button btn1;
     Button btn2;
@@ -94,7 +92,6 @@ public class CustomerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         img1=findViewById(R.id.example_skin_img);
-        img2=findViewById(R.id.example_face_img);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
 
@@ -164,26 +161,8 @@ public class CustomerActivity extends AppCompatActivity {
                 intent_1.putExtra("title",face_color_info_1);
                 intent_1.putExtra("detail",face_color_info_2);
                 intent_1.putExtra("recommend",info_rem);
-                intent_1.putExtra("choice","컬러진단");
+                intent_1.putExtra("choice","종합진단");
                 startActivity(intent_1);
-            }
-        });
-        btn2=findViewById(R.id.face_btn);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_2=new Intent(CustomerActivity.this,IntitialActivity.class);
-                //if 파이어 베이스에서 String 형으로 보내줄 경우
-                //String info=sendimg_shap_firebase(bitmap,faceinfo)
-                //if 파이어 베이스에서 Json 형으로 보내줄 경우
-                //JSONObject jsonob=(JSONObject)sendimg_shap_firebase(bitmap,faceinfo)
-                //일단 모르기 때문에 String 형으로 아무거나 전달
-                String face_shape_info_1="테스트용 제목";
-                String face_shape_info_2="테스트용 내용입니다.";
-                intent_2.putExtra("title",face_shape_info_1);
-                intent_2.putExtra("detail",face_shape_info_2);
-                intent_2.putExtra("choice","얼굴형진단");
-                startActivity(intent_2);
             }
         });
 

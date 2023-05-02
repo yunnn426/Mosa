@@ -47,14 +47,14 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
     }
 
     @Override
-    public Recycler_history.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item,parent,false);
-        Recycler_history.ViewHolder myview=new Recycler_history.ViewHolder(view);
+        ViewHolder myview=new ViewHolder(view);
         return myview;
     }
 
     @Override
-    public void onBindViewHolder(Recycler_history.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         String mail= Mail.get(position);
         String Diag=Diagnosis.get(position);
         String Diag_rst=Diagnosis_result.get(position);

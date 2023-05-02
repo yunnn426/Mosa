@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Aiproject"
         tools:targetApi="31">
         <activity
+            android:name=".loadingActivity"
+            android:exported="false"/>
+        <activity
             android:name=".TutorialActivity"
             android:exported="false" />
         <activity
@@ -40,6 +43,10 @@
         <activity
             android:name=".recommend.rechairActivity"
             android:exported="false" />
+        <activity
+            android:name=".recommend.FullitemImage"
+            android:exported="false"/>
+
         <activity
             android:name=".styleSearchActivity"
             android:exported="false" />

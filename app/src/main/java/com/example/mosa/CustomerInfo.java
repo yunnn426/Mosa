@@ -54,7 +54,6 @@ public class CustomerInfo extends AppCompatActivity {
 
         TabLayout tabLayout=findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("진단기록"));
-        tabLayout.addTab(tabLayout.newTab().setText("회원정보"));
 
         adapter=new Fragment_Adapter(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager=findViewById(R.id.view_pager);

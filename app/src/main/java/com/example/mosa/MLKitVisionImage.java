@@ -131,7 +131,7 @@ public class MLKitVisionImage {
         return rotationCompensation;
     }
     // [END get_rotation]
-
+//
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void getCompensation(Activity activity, boolean isFrontFacing) throws CameraAccessException {
         // Get the ID of the camera using CameraManager. Then:

@@ -48,11 +48,8 @@ public class IntitialActivity extends AppCompatActivity {
     Intent intent=getIntent();
 
     /*
-    로그인 화면을 통해서 여기로 넘어오고, 여기서 회원 관련 정보를 받아야한다.
-    Signup.java에서 인텐트를 통해서 로그인에 성공한 경우 여기로 넘어온다.
-    그리고 회원 관련정보(닉네임, 이메일, 최초 가입기간 등)도 인텐트로 받아야한다.
-    추가로 시간이 되면 자동 로그인 기능도 넣어도 될듯
-    추후협의
+    이 엑티비티는 진단 선택화면에서 넘어온다. 주로 사진을 등록하고나서, 한번더 등록버튼을 누르면
+    진단 실행화면으로 넘어간다.
     */
 
     private final static int scaling_Facter=10;
@@ -99,22 +96,15 @@ public class IntitialActivity extends AppCompatActivity {
 
                 if (clickcount > 1) {
                     //사진을 등록하고 클릭해야 실행가능
-                    //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
-                    //여기에서 담고 갈 정보는 사진, 진단 결과
-                    if (choice.equals("컬러진단"))
+                    //여기에서 담고 갈 정보는 사진
+                    if (choice.equals("종합진단"))
                     {
-                        intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
+                        //여기에는 진단 실행화면으로 넘어가는 인텐트를 대신 넣으면 된다.
+                        intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
                         Bitmap bitmap_color = bitmap;
                         File file = BmpToFile(bitmap_color, "image.png");
                         intent_choice_2.putExtra("img", file.getAbsolutePath());
-                        clickcount=0;
-                    }
-                    else if (choice.equals("얼굴형진단"))
-                    {
-                        intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
-                        Bitmap bitmap_face = bitmap;
-                        File file = BmpToFile(bitmap_face, "image.png");
-                        intent_choice_2.putExtra("img", file.getAbsolutePath());
+                        //intent_choice_2.putExtra("result_color",9);
                         clickcount=0;
                     }
                     else
@@ -166,22 +156,15 @@ public class IntitialActivity extends AppCompatActivity {
 
             if (clickcount > 1) {
                 //사진을 등록하고 클릭해야 실행가능
-                //여기서 이제 진단 선택에따라 이동하는 화면이 달라진다.(컬러진단, 얼굴형진단)
-                //여기에서 담고 갈 정보는 사진, 진단 결과
-                if (choice.equals("컬러진단"))
+                //여기에서 담고 갈 정보는 사진
+                if (choice.equals("종합진단"))
                 {
-                    intent_choice_2 = new Intent(IntitialActivity.this, PersonalActivity.class);
+                    //이제 여기에 진단 실행화면으로 넘어가는 인텐트를 넣으면 된다.
+                    intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
-                    clickcount=0;
-                }
-                else if (choice.equals("얼굴형진단"))
-                {
-                    intent_choice_2 = new Intent(IntitialActivity.this, FaceDesActivity.class);
-                    Bitmap bitmap_face = bitmap;
-                    File file = BmpToFile(bitmap_face, "image.png");
-                    intent_choice_2.putExtra("img", file.getAbsolutePath());
+                    //intent_choice_2.putExtra("result_color",9);
                     clickcount=0;
                 }
                 else
@@ -219,14 +202,12 @@ public class IntitialActivity extends AppCompatActivity {
                 }
                 case R.id.bottom_menu_3:
                 {
-                    String user_name=user.getDisplayName();
                     String user_email=user.getEmail();
                     Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_3=new Intent(IntitialActivity.this,CustomerInfo.class);
                     BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
                     Bitmap bitmap=bitmapDrawable.getBitmap();
                     File file=BmpToFile(bitmap,"image.png");
-                    intent_bottom_3.putExtra("username",user_name);
                     intent_bottom_3.putExtra("useremail",user_email);
                     intent_bottom_3.putExtra("img",file.getAbsolutePath());
                     startActivity(intent_bottom_3);
