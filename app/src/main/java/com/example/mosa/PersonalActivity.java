@@ -43,11 +43,16 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PersonalActivity  extends AppCompatActivity {
 
@@ -87,6 +92,7 @@ public class PersonalActivity  extends AppCompatActivity {
     RecyclerView itemlist_3;
     RecyclerView itemlist_4;
     File path;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +105,77 @@ public class PersonalActivity  extends AppCompatActivity {
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
         int color=intent.getIntExtra("result_color",10);
         int face=intent.getIntExtra("result_face", 6);
+        String img_file_path=intent.getStringExtra("img");
+
         String color_str=result_color[color];
         String color_str_ko=result_color_ko[color];
         String face_str=result_face[face];
         String face_str_ko=result_face_ko[face];
+
+
+        File file_upload=new File(img_file_path);
+
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Users");
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        String collection="user_record";
+        String document="diag_record_"+user.getEmail()+"_"+format.format(date);
+        String time=format.format(date);
+        Map<String,String> data=new HashMap<>();
+        data.put("diagnosis","color_and_face");
+        data.put("diagnosis_date",time);
+        data.put("diagnosis_result",color_str_ko);
+        //추후 기록 형태 수정
+        //data.put("diagnosis_result_face",face_str_ko);
+        data.put("user_email",user.getEmail());
+
+        firebaseFirestore.collection(collection).document(document).set(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                name=value;
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference().child("user_img/");
+                Uri uri_upload=Uri.fromFile(file_upload);
+                String file_name=name+"_"+user.getUid()+"_"+format.format(date);
+                StorageReference imgRef = storageRef.child(file_name);
+
+                imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         item_Recycler recycler_1=new item_Recycler();
@@ -125,8 +198,6 @@ public class PersonalActivity  extends AppCompatActivity {
         Title_User_color.setText(color_str_ko);
         // 여기서 실제 이름을 가져와서 넣는다.
         firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference("Users");
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
