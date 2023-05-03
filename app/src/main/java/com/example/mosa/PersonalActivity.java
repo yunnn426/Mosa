@@ -122,29 +122,6 @@ public class PersonalActivity  extends AppCompatActivity {
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        String collection="user_record";
-        String document="diag_record_"+user.getEmail()+"_"+format.format(date);
-        String time=format.format(date);
-        Map<String,String> data=new HashMap<>();
-        data.put("diagnosis","color_and_face");
-        data.put("diagnosis_date",time);
-        data.put("diagnosis_result",color_str_ko);
-        //추후 기록 형태 수정
-        //data.put("diagnosis_result_face",face_str_ko);
-        data.put("user_email",user.getEmail());
-
-        firebaseFirestore.collection(collection).document(document).set(data)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
 
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
             @Override
@@ -160,7 +137,29 @@ public class PersonalActivity  extends AppCompatActivity {
                 imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        String collection="user_record";
+                        String document="diag_record_"+user.getEmail()+"_"+format.format(date);
+                        String time=format.format(date);
+                        Map<String,String> data=new HashMap<>();
+                        data.put("diagnosis","color_and_face");
+                        data.put("diagnosis_date",time);
+                        data.put("diagnosis_result_color",color_str_ko);
+                        data.put("diagnosis_result_face",face_str_ko);
+                        data.put("img_file_name",file_name);
+                        data.put("user_email",user.getEmail());
 
+                        firebaseFirestore.collection(collection).document(document).set(data)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

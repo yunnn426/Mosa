@@ -35,11 +35,16 @@
             android:layout_marginRight="20dp"
         />
         <TextView
-            android:id="@+id/history_diag_result"
+            android:id="@+id/history_diag_result_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="고객님의 진단결과"
+            android:text="고객님의 컬러 진단결과"
             />
+        <TextView
+            android:id="@+id/history_diag_result_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="고객님의 얼굴형 진단 결과"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"

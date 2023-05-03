@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mosa.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +27,9 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
     //ArrayList<Bitmap> user_img=new ArrayList<Bitmap>();
     ArrayList<String> Mail=new ArrayList<String>();
     ArrayList<String> Diagnosis=new ArrayList<String>();
-    ArrayList<String> Diagnosis_result=new ArrayList<String>();
+    ArrayList<String> Diagnosis_result_color=new ArrayList<String>();
+
+    ArrayList<String> Diagnosis_result_face=new ArrayList<String>();
     ArrayList<String> Dia_date=new ArrayList<String>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -33,23 +37,28 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         TextView his_mail;
         TextView his_date;
         TextView his_diag;
-        TextView his_diag_result;
+        TextView his_diag_result_1;
+
+        TextView his_diag_result_2;
         public ViewHolder(View itemView) {
             super(itemView);
             //his_record=itemView.findViewById(R.id.user_history_img);
             his_mail=itemView.findViewById(R.id.history_mail);
             his_date=itemView.findViewById(R.id.history_date);
             his_diag=itemView.findViewById(R.id.history_diag);
-            his_diag_result=itemView.findViewById(R.id.history_diag_result);
+            his_diag_result_1=itemView.findViewById(R.id.history_diag_result_1);
+            his_diag_result_2=itemView.findViewById(R.id.history_diag_result_2);
         }
     }
-    //ArrayList<Bitmap> userimg 변수 추가
-    public Recycler_history(ArrayList<String> mail, ArrayList<String> diagnosis, ArrayList<String> diagnosis_result, ArrayList<String> dia_date){
-        //this.user_img=userimg;
+
+    public Recycler_history(ArrayList<String> mail, ArrayList<String> diagnosis, ArrayList<String> diagnosis_result_color, ArrayList<String> diagnosis_result_face,
+                            ArrayList<String> dia_date, ArrayList<Bitmap> user_img ){
         this.Mail=mail;
         this.Diagnosis=diagnosis;
-        this.Diagnosis_result=diagnosis_result;
+        this.Diagnosis_result_color=diagnosis_result_color;
+        this.Diagnosis_result_face=diagnosis_result_face;
         this.Dia_date=dia_date;
+        //this.user_img=user_img;
     }
 
     @Override
@@ -64,13 +73,15 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         //Bitmap img=user_img.get(position);
         String mail= Mail.get(position);
         String Diag=Diagnosis.get(position);
-        String Diag_rst=Diagnosis_result.get(position);
+        String Diag_rst_1=Diagnosis_result_color.get(position);
+        String Diag_rst_2=Diagnosis_result_face.get(position);
         String Dia_da=Dia_date.get(position);
 
         //holder.his_record.setImageBitmap(img);
         holder.his_mail.setText(mail);
         holder.his_diag.setText(Diag);
-        holder.his_diag_result.setText(Diag_rst);
+        holder.his_diag_result_1.setText(Diag_rst_1);
+        holder.his_diag_result_2.setText(Diag_rst_2);
         holder.his_date.setText(Dia_da);
 
     }
