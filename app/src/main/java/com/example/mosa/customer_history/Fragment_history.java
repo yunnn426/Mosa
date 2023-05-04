@@ -3,6 +3,7 @@ package com.example.mosa.customer_history;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -13,10 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.mosa.CustomerInfo;
 import com.example.mosa.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -99,6 +104,7 @@ public class Fragment_history extends Fragment {
                 // 결과 처리
                 for (DocumentSnapshot documentSnapshot : queryresult) {
                     // 각각의 문서에서 필요한 데이터 가져오기
+                    // 파이어베이스에 저장된 이미지 이름을 가지고 이제 스토리지에 있는 이미지를 불러와야한다.
                     String diagnosisType = documentSnapshot.getString("diagnosis");
                     String diagnosisResult_color = documentSnapshot.getString("diagnosis_result_color");
                     String diagnosisResult_face=documentSnapshot.getString("diagnosis_result_face");
@@ -133,54 +139,38 @@ public class Fragment_history extends Fragment {
                 });
 
                 storage=FirebaseStorage.getInstance();
-                StorageReference user_img=storage.getReference().child("user_img/"+name+"_"+user.getUid());
-                File result_path= getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-                user_img.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                    @Override
-                    public void onSuccess(ListResult listResult) {
-                        path=new File(result_path.getAbsolutePath());
-                        for(StorageReference item: listResult.getItems()){
-                            File download=new File(path,item.getName());
-                            if(!path.exists()){
-                                path.getParentFile().mkdirs();
-                            }
-                            try {
-                                download.createNewFile();
-                                FileDownloadTask fileDownloadTask=item.getFile(download);
+                StorageReference user_img=storage.getReference();
+                File result_path= getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_record_img");
 
-                                fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        Bitmap bitmap= BitmapFactory.decodeFile(download.getAbsolutePath());
-                                        img_list.add(bitmap);
+                for(String filename:Diagnosis_file_name){
+                    StorageReference imgref=user_img.child("user_img/"+filename);
+                    imgref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(getContext()).asBitmap().load(uri).into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    img_list.add(resource);
+                                    if(img_list.size()==Diagnosis_file_name.size()){
+                                        Context context = getContext();
+                                        msg.setVisibility(View.INVISIBLE);
+
+                                        adapter = new Recycler_history(Mail, Diagnosis, Diagnosis_result_1, Diagnosis_result_2, Dia_date, img_list);
+                                        history.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+                                        history.setAdapter(adapter);
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-
-                                    }
-                                });
-
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                    });
+                }
 
-                    }
-                });
-                Context context = getContext();
-                msg.setVisibility(View.INVISIBLE);
-                /*
-                여기 사이에는 파일 이름과 이미지 파일의 이름을 매칭시키는 코드가 들어가야한다.
-                */
-                adapter = new Recycler_history(Mail, Diagnosis, Diagnosis_result_1, Diagnosis_result_2, Dia_date, img_list);
-                history.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-                history.setAdapter(adapter);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
