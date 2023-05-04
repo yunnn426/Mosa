@@ -46,11 +46,14 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class Fragment_history extends Fragment {
 
     TextView msg;
+    ArrayList<File> tmpfile;
     Recycler_history adapter;
     ArrayList<String> Mail;
     ArrayList<String> Diagnosis;
@@ -80,6 +83,7 @@ public class Fragment_history extends Fragment {
         super.onActivityCreated(savedInstanceState);
         View view = getView();
 
+        tmpfile=new ArrayList<File>();
         Mail=new ArrayList<String>();
         Diagnosis=new ArrayList<String>();
         Diagnosis_result_1=new ArrayList<String>();
@@ -142,32 +146,49 @@ public class Fragment_history extends Fragment {
                 StorageReference user_img=storage.getReference();
                 File result_path= getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_record_img");
 
-                for(String filename:Diagnosis_file_name){
-                    StorageReference imgref=user_img.child("user_img/"+filename);
-                    imgref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Glide.with(getContext()).asBitmap().load(uri).into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                    img_list.add(resource);
-                                    if(img_list.size()==Diagnosis_file_name.size()){
-                                        Context context = getContext();
-                                        msg.setVisibility(View.INVISIBLE);
+                for (String filename : Diagnosis_file_name) {
+                    final File localFile;
+                    try {
+                        localFile = File.createTempFile(filename,"jpg",result_path);
+                        StorageReference imgref = user_img.child("user_img/" + filename);
+                        imgref.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                tmpfile.add(localFile);
+                                if (tmpfile.size() == Diagnosis_file_name.size()) {
+                                    Collections.sort(tmpfile, new Comparator<File>() {
+                                        @Override
+                                        public int compare(File file1, File file2) {
+                                            return file1.getName().compareTo(file2.getName());
+                                        }
 
-                                        adapter = new Recycler_history(Mail, Diagnosis, Diagnosis_result_1, Diagnosis_result_2, Dia_date, img_list);
-                                        history.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-                                        history.setAdapter(adapter);
+                                    });
+                                    for(File file : tmpfile){
+                                        Bitmap bitmap_user = BitmapFactory.decodeFile(file.getAbsolutePath());
+                                        img_list.add(bitmap_user);
+                                        if(tmpfile.size()==Diagnosis_file_name.size()){
+                                            Context context = getContext();
+                                            msg.setVisibility(View.INVISIBLE);
+
+                                            adapter = new Recycler_history(Mail, Diagnosis, Diagnosis_result_1, Diagnosis_result_2, Dia_date, img_list);
+                                            history.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+                                            history.setAdapter(adapter);
+                                        }
                                     }
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
 
-                        }
-                    });
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle error
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
 
 
