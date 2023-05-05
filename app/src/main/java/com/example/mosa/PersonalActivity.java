@@ -159,7 +159,8 @@ public class PersonalActivity  extends AppCompatActivity {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 //이제 여기서 받아온 결과값을 결과화면상에 표시해야..
                 for(DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                    String result=documentSnapshot.getString("color_result");
+                    int result=(Integer) documentSnapshot.get("color_result");
+                    String match=result_color_ko.get(result);
                 }
 
             }
