@@ -5,8 +5,9 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/user_history_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/style"
         android:layout_marginRight="20dp"/>
 
@@ -34,14 +35,19 @@
             android:layout_marginRight="20dp"
         />
         <TextView
-            android:id="@+id/history_diag_result"
+            android:id="@+id/history_diag_result_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="고객님의 진단결과"
+            android:text="고객님의 컬러 진단결과"
             />
+        <TextView
+            android:id="@+id/history_diag_result_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="고객님의 얼굴형 진단 결과"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="해당 진단 정보를 이용해서 여러 활동을 합니다."/>
+        android:text="자세한 정보 보기"/>
 </LinearLayout>
