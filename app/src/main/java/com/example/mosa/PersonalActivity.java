@@ -38,9 +38,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.local.QueryResult;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -100,7 +102,7 @@ public class PersonalActivity  extends AppCompatActivity {
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-        Date date = new Date();
+        Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 
@@ -156,6 +158,10 @@ public class PersonalActivity  extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 //이제 여기서 받아온 결과값을 결과화면상에 표시해야..
+                for(DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                    String result=documentSnapshot.getString("color_result");
+                }
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -192,7 +198,8 @@ public class PersonalActivity  extends AppCompatActivity {
                 Uri uri_upload=Uri.fromFile(file_upload);
                 //이미지 파일이름 수정해야 (유저이메일+날짜+시간)
                 //다시 진단 기록내에 '진단명','진단날짜','진단결과(컬러)','진단결과(얼굴)','이미지파일이름','사용자의 이메일'로 저장
-                String file_name=name+"_"+user.getUid()+"_"+format.format(date);
+                //String file_name=name+"_"+user.getUid()+"_"+format.format(date);
+                String file_name=user_img_name;
                 StorageReference imgRef = storageRef.child(file_name);
 
                 imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
