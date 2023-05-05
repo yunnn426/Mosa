@@ -1,16 +1,23 @@
 package com.example.mosa;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -35,20 +42,19 @@ public class CustomerInfo extends AppCompatActivity {
 
     TextView customer_name;
     TextView customer_email;
-
-    MenuItem bottom_1;
-    MenuItem bottom_2;
-    MenuItem bottom_3;
-
+    ImageButton user_proimg;
     FirebaseDatabase firebaseDatabase;
     Fragment_Adapter adapter;
     ViewPager viewPager;
+    Button logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_info);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        logout=findViewById(R.id.logout);
+        user_proimg=findViewById(R.id.customer_picture);
         customer_name=findViewById(R.id.customer_name);
         customer_email=findViewById(R.id.customer_email);
 
@@ -59,6 +65,25 @@ public class CustomerInfo extends AppCompatActivity {
         viewPager=findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        user_proimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_proimg=new Intent(Intent.ACTION_PICK);
+                intent_proimg.setType("image/*");
+                startActivityForResult(intent_proimg, 1);
+                BitmapDrawable bitmapDrawable=(BitmapDrawable)user_proimg.getDrawable();
+                Bitmap user_img=bitmapDrawable.getBitmap();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent logout_intent=new Intent(CustomerInfo.this,Signup.class);
+                startActivity(logout_intent);
+            }
+        });
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -77,6 +102,7 @@ public class CustomerInfo extends AppCompatActivity {
 
             }
         });
+
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
@@ -161,5 +187,19 @@ public class CustomerInfo extends AppCompatActivity {
             e.printStackTrace();
         }
         return file;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    user_proimg.setImageURI(uri);
+                }
+                break;
+        }
     }
 }
