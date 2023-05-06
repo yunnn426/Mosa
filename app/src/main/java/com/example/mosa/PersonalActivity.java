@@ -38,7 +38,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.local.QueryResult;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -57,14 +61,11 @@ import java.util.Map;
 public class PersonalActivity  extends AppCompatActivity {
 
     //앱에서 나올수 있는 진단의 결과 값
-    final static String[] result_color={"spring worm_Bright","spring worm_Light",
-            "summer cool_Bright","summer cool_Light","summer cool_Mute","autumn worm_Deep","autumn worm_Mute",
-            "autumn worm_Strong","winter_Bright","winter_Bright","winter_Deep","알 수 없는 오류 발생!!!"};
-    final static String[] result_color_ko={"봄윔 라이트","봄윔 브라이트","여름쿨 라이트","여름쿨 브라이트","여름쿨 뮤트",
-            "가을웜 딥","가을웜 스트롱","가을웜 뮤트","겨울 브라이트","겨울 딥","알 수 없는 오류 발생!!!"};
-    //일단 face의 결과값도 추가로 정하기는 했는데 향후 바뀔 가능성이 존재
-    final static String[] result_face={"square","round","oval","oblong","heart","알 수 없는 오류 발생!!!"};
-    final static String[] result_face_ko={"사각형 얼굴형","둥근 얼굴형","계란 얼굴형","직사각형 얼굴형","하트 얼굴형","알 수 없는 오류 발생!!!"};
+    Map<String,String> result_face=new HashMap<>();
+    Map<String,String> result_face_ko=new HashMap<>();
+
+    Map<Integer, String> result_color = new HashMap<>();
+    Map<Integer, String> result_color_ko=new HashMap<>();
     TextView User_face;
     TextView User_color_recom;
     TextView User_name;
@@ -100,27 +101,76 @@ public class PersonalActivity  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        Date date = new Date();//사진을 찍은 날짜를 저장해야,
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+
+
+        result_color.put(0,"spring worm_Bright");
+        result_color.put(1,"spring worm_Light");
+        result_color.put(2,"summer cool_Bright");
+        result_color.put(3,"summer cool_Light");
+        result_color.put(4,"summer cool_Mute");
+        result_color.put(5,"autumn worm_Deep");
+        result_color.put(6,"autumn worm_Mute");
+        result_color.put(7,"autumn worm_Strong");
+        result_color.put(8,"winter_Bright");
+        result_color.put(9,"winter_Deep");
+
+        result_color_ko.put(0,"봄웜 라이트");
+        result_color_ko.put(1,"봄웜 브라이트");
+        result_color_ko.put(2,"여름쿨 브라이트");
+        result_color_ko.put(3,"여름쿨 라이트");
+        result_color_ko.put(4,"여름쿨 뮤트");
+        result_color_ko.put(5,"가을웜 딥");
+        result_color_ko.put(6,"가을웜 뮤트");
+        result_color_ko.put(7,"가을웜 스트롱");
+        result_color_ko.put(8,"겨울 브라이트");
+        result_color_ko.put(9,"겨울 딥");
+
+        result_face.put("a", "long shape");
+        result_face.put("b", "heart shape");
+        result_face.put("c", "round shape");
+        result_face.put("d", "angular(rhombus) shape");
+        result_face.put("e", "egg shape");
+
+        result_face_ko.put("a","긴 얼굴형");
+        result_face_ko.put("b","하트 얼굴형");
+        result_face_ko.put("c","둥근 얼굴형");
+        result_face_ko.put("d","각진 얼굴형(마름모)");
+        result_face_ko.put("e","계란 얼굴형");
+
+        /*
+
+        여기에 파이어베이스에서 결과값을 가져오는 코드를 추가해야
+        파이어 베이스의 파이어스토어 컬랙션 color_result로 검색을 해서
+        (유저이메일+날짜+시간)이미지파일, 결과값을 받아서 결과화면으로 보여주고
+
+        */
+        String img_name=intent.getStringExtra("img_name");
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference result_call= db.collection("color_result");
+        String user_img_name=img_name;
+        Query query=result_call.whereEqualTo("file_name",user_img_name);
 
 
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
         int color=intent.getIntExtra("result_color",10);
-        int face=intent.getIntExtra("result_face", 6);
+        String face_re=intent.getStringExtra("result_face");
         String img_file_path=intent.getStringExtra("img");
 
-        String color_str=result_color[color];
-        String color_str_ko=result_color_ko[color];
-        String face_str=result_face[face];
-        String face_str_ko=result_face_ko[face];
+        String color_str=result_color.get(color);
+        String color_str_ko=result_color_ko.get(color);
+        String face_str=result_face.get(face_re);
+        String face_str_ko=result_face_ko.get(face_re);
 
 
         File file_upload=new File(img_file_path);
 
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
@@ -131,14 +181,17 @@ public class PersonalActivity  extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference().child("user_img/");
                 Uri uri_upload=Uri.fromFile(file_upload);
-                String file_name=name+"_"+user.getUid()+"_"+format.format(date);
+                //이미지 파일이름 수정해야 (유저이메일+날짜+시간)
+                //다시 진단 기록내에 '진단명','진단날짜','진단결과(컬러)','진단결과(얼굴)','이미지파일이름','사용자의 이메일'로 저장
+                //String file_name=name+"_"+user.getUid()+"_"+format.format(date);
+                String file_name=user_img_name;
                 StorageReference imgRef = storageRef.child(file_name);
 
                 imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         String collection="user_record";
-                        String document="diag_record_"+user.getEmail()+"_"+format.format(date);
+                        String document="diag_record_"+ file_name;
                         String time=format.format(date);
                         Map<String,String> data=new HashMap<>();
                         data.put("diagnosis","color_and_face");
@@ -224,9 +277,9 @@ public class PersonalActivity  extends AppCompatActivity {
         //StorageReference storageReference_color_cloth=storage.getReference().child(color_str+"clothes/");
         //StorageReference storageReference_face_acc=storage.getReference().child(face_str+"/accessory/");
 
-        StorageReference storageReference_1=storage.getReference().child(result_color[0]+"/cosmetics/"+"rip/");
-        StorageReference storageReference_2=storage.getReference().child(result_color[0]+"/cosmetics/"+"blusher/");
-        StorageReference storageReference_3=storage.getReference().child(result_color[0]+"/cosmetics/"+"shadow/");
+        StorageReference storageReference_1=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"rip/");
+        StorageReference storageReference_2=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"blusher/");
+        StorageReference storageReference_3=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"shadow/");
         StorageReference storageReference_4=storageReference_3;
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
@@ -427,7 +480,7 @@ public class PersonalActivity  extends AppCompatActivity {
         //int skin_int=intent.getIntExtra("result",10);
         //String skin_title=result_color[skin_int];
         //잠시 임의로 지정
-        String skin_title=result_color[0];
+        String skin_title=result_color.get(0);
         String skin_detail=intent.getStringExtra("detail");
         Bitmap color_chrt_bmp;//퍼스널 컬러(skin_title)에 알맞는 chrt 이미지 정보를 bitmap의 배열 형식으로 받아온다.
         //해당 추천된 퍼스널 컬러(skin_title,skin_detail)에 알맞는 컬러 차트 이미지와, 컬러 이미지를 스토리지에서 불러옴
