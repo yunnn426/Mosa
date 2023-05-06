@@ -118,7 +118,7 @@ public class loadingActivity extends AppCompatActivity {
                 그 이미지로 진단을 하고나서 진단의 결과값을 해당 문서에 넣고, 그 값을 안드로이드 스튜디오가 읽어서 사용자의 화면상에 보여준다.
                  */
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        CollectionReference coloref = db.collection("color_result");
+                        CollectionReference coloref = db.collection(user.getEmail()+"_color_result");
                         coloref.addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(QuerySnapshot value,FirebaseFirestoreException error) {
