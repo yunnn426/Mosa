@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +33,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.collection.LLRBNode;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,7 +56,11 @@ import java.util.Map;
 public class loadingActivity extends AppCompatActivity {
     int result_color;
     int result_face;
+
     String name;
+    int result_1=0;
+    String result_2;
+    String result_3;
     TextView loading_text;
     ImageView loading_img;
     ImageView res_img;
@@ -64,6 +75,17 @@ public class loadingActivity extends AppCompatActivity {
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);
 
+        Date date = new Date();//사진을 찍은 날짜를 저장해야,
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        String user_img_name=user.getEmail()+"_"+format.format(date);
+        File user_img_file=new File(image_path);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("user_image/");
+        Uri uri_upload=Uri.fromFile(user_img_file);
+        StorageReference storageRef_2=storageRef.child(user_img_name);
+
+
         Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
         try{
             user_img= BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
@@ -76,35 +98,72 @@ public class loadingActivity extends AppCompatActivity {
         res_img=findViewById(R.id.res_clr);
         final Animation rotation = AnimationUtils.loadAnimation(loadingActivity.this,R.anim.model_loading_animation);
 
-
+        rotation.setRepeatCount(Animation.INFINITE);
         loading_img.startAnimation(rotation);
-
-        //둘중 한곳에 모델 실행 코드를 넣자.
-        /*
-        여기에 퍼스널 컬러 모델,얼굴형 측정 모델을 실행하는 코드를 넣어서 실행을 하고 결과 값을 받으면 될것 같다. user_img를 이용
-        이 값들을 이용해서 적절한 res_img를 매칭시킨다.
-        result_color=color_model(user_img);
-        result_face=face_model(user_img);
-
-        res_img.setImageBitmap(R.drawable.color_result_1);
-        */
 
         rotation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-            /*
-                여기에 퍼스널 컬러 모델,얼굴형 측정 모델을 실행하는 코드를 넣어서 실행을 하고 결과 값을 받으면 될것 같다. user_img를 이용
-                이 값들을 이용해서 적절한 res_img를 매칭시킨다.
-                result_color=color_model(user_img);
-                result_face=face_model(user_img);
 
-                res_img.setImageBitmap(R.drawable.color_result_1);
-             */
+                /*
+                여기에 사용자의 이미지를 전송하는 코드를 집어넣어야
+                */
+
+                storageRef_2.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                /*
+                여기에 color_result 컬렉션에 파일 이미지 이름 값을 넣고 모델은 그 이름을 이용해서 이미지를 찾고
+                그 이미지로 진단을 하고나서 진단의 결과값을 해당 문서에 넣고, 그 값을 안드로이드 스튜디오가 읽어서 사용자의 화면상에 보여준다.
+                 */
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        CollectionReference coloref = db.collection("color_result");
+                        coloref.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(QuerySnapshot value,FirebaseFirestoreException error) {
+                                // color_result 컬렉션에 데이터가 추가/변경/제거되었을 때 실행되는 코드
+                                // 즉 파이썬의 머신러닝 모델에 의해서 데이터가 추가될시 즉시 사용한 이미지의 이름으로 그 결과값을 검색해서
+                                // 결과값을 읽어온다.
+                                Query query=coloref.whereEqualTo("file_name",user_img_name);
+                                query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                                            result_1=documentSnapshot.getLong("color_result").intValue();
+                                            result_2=documentSnapshot.getString("face_result");
+                                            result_3=documentSnapshot.getString("file_name");
+
+                                            rotation.cancel();
+                                            //저위의 3개의 값을 인텐트로 전달해야
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(loadingActivity.this,"실행상에 오류가 있습니다.",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 // 애니메이션이 종료되면 실행될 작업
+
+                loading_img.clearAnimation();
                 loading_text.setText("컬러를 찾았습니다!!");
 
                 loading_img.setVisibility(View.INVISIBLE);
@@ -125,19 +184,20 @@ public class loadingActivity extends AppCompatActivity {
                         //이곳을 나중에 퍼스널 컬러별 색으로 바꾸면 될듯
                         cons.setBackgroundColor(Color.parseColor("#FF4D4D"));
                     }
-                }, 3000);
+                }, 2000);
                 cons.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         if(event.getAction()==event.ACTION_DOWN){
                             Intent intent_result=new Intent(loadingActivity.this,PersonalActivity.class);
                             intent_result.putExtra("img",image_path);
-                            /*
-                            intent_result.putExtra("result_color",result_color);
-                            intent_result.putExtra("result_face",result_face);
-                            */
-                            intent_result.putExtra("result_color",6);
-                            intent_result.putExtra("result_face",3);
+
+                            intent_result.putExtra("result_color",result_1);
+                            intent_result.putExtra("result_face",result_2);
+
+                            //intent_result.putExtra("result_color",6);
+                            //intent_result.putExtra("result_face",3);
+                            intent_result.putExtra("img_name",user_img_name);
                             startActivity(intent_result);
                             return true;
                         }

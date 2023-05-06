@@ -147,33 +147,17 @@ public class PersonalActivity  extends AppCompatActivity {
         (유저이메일+날짜+시간)이미지파일, 결과값을 받아서 결과화면으로 보여주고
 
         */
+        String img_name=intent.getStringExtra("img_name");
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user_result_view = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference result_call= db.collection("color_result");
-        String user_img_name=user.getEmail()+"_"+format.format(date);
+        String user_img_name=img_name;
         Query query=result_call.whereEqualTo("file_name",user_img_name);
 
-        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                //이제 여기서 받아온 결과값을 결과화면상에 표시해야..
-                for(DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                    int result=(Integer) documentSnapshot.get("color_result");
-                    String match=result_color_ko.get(result);
-                }
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
         int color=intent.getIntExtra("result_color",10);
-        int face=intent.getIntExtra("result_face", 6);
-        String face_re="a";
+        String face_re=intent.getStringExtra("result_face");
         String img_file_path=intent.getStringExtra("img");
 
         String color_str=result_color.get(color);
@@ -207,7 +191,7 @@ public class PersonalActivity  extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         String collection="user_record";
-                        String document="diag_record_"+user.getEmail()+"_"+format.format(date);
+                        String document="diag_record_"+ file_name;
                         String time=format.format(date);
                         Map<String,String> data=new HashMap<>();
                         data.put("diagnosis","color_and_face");
