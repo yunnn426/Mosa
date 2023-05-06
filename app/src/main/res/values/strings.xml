@@ -3,6 +3,7 @@
     <string name="next">다음</string>
     <string name="skip">건너뛰기</string>
     <string name="start">시작</string>
+    <string name="register"><u>계정 생성하기</u></string>
     
     
 </resources>
