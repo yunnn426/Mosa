@@ -101,6 +101,7 @@ public class PersonalActivity  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
+        String Isdiag=intent.getStringExtra("diag_or_record");
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -173,33 +174,35 @@ public class PersonalActivity  extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+//진단 수행중인지, 진단기록을 통해서 다시 추천아이템과 자세한 정보를 보려는지 체크
+    if(Isdiag.equals("yes")) {
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String value = snapshot.getValue(String.class);
-                name=value;
+                name = value;
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference().child("user_img/");
-                Uri uri_upload=Uri.fromFile(file_upload);
+                Uri uri_upload = Uri.fromFile(file_upload);
                 //이미지 파일이름 수정해야 (유저이메일+날짜+시간)
                 //다시 진단 기록내에 '진단명','진단날짜','진단결과(컬러)','진단결과(얼굴)','이미지파일이름','사용자의 이메일'로 저장
                 //String file_name=name+"_"+user.getUid()+"_"+format.format(date);
-                String file_name=user_img_name;
+                String file_name = user_img_name;
                 StorageReference imgRef = storageRef.child(file_name);
 
                 imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String collection="user_record";
-                        String document="diag_record_"+ file_name;
-                        String time=format.format(date);
-                        Map<String,String> data=new HashMap<>();
-                        data.put("diagnosis","color_and_face");
-                        data.put("diagnosis_date",time);
-                        data.put("diagnosis_result_color",color_str_ko);
-                        data.put("diagnosis_result_face",face_str_ko);
-                        data.put("img_file_name",file_name);
-                        data.put("user_email",user.getEmail());
+                        String collection = "user_record";
+                        String document = "diag_record_" + file_name;
+                        String time = format.format(date);
+                        Map<String, String> data = new HashMap<>();
+                        data.put("diagnosis", "color_and_face");
+                        data.put("diagnosis_date", time);
+                        data.put("diagnosis_result_color", color_str_ko);
+                        data.put("diagnosis_result_face", face_str_ko);
+                        data.put("img_file_name", file_name);
+                        data.put("user_email", user.getEmail());
 
                         firebaseFirestore.collection(collection).document(document).set(data)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -227,7 +230,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
             }
         });
-
+    }
 
 
         item_Recycler recycler_1=new item_Recycler();
