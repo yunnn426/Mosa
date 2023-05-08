@@ -5,13 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginVertical="15dp"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".IntitialActivity">
+
+    <ImageView
+        android:id="@+id/mosa_logo"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+
+        android:background="@drawable/mosa_color"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_above="@+id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@+id/mosa_logo"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,14 +40,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/capture_default" />
+                android:src="@drawable/capture_image" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/img_button"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="UPLOAD" />
+                android:background="@drawable/bin_red"
+                android:layout_marginHorizontal="50dp"
+                android:text="이미지 올리기" />
 
             <TextView
                 android:id="@+id/face_info"
