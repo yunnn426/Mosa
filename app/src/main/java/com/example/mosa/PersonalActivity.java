@@ -107,10 +107,10 @@ public class PersonalActivity  extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 
-        result_color.put(0,"spring worm_Bright");
-        result_color.put(1,"spring worm_Light");
-        result_color.put(2,"summer cool_Bright");
-        result_color.put(3,"summer cool_Light");
+        result_color.put(0,"spring worm_Light");
+        result_color.put(1,"spring worm_Bright");
+        result_color.put(2,"summer cool_Light");
+        result_color.put(3,"summer cool_Bright");
         result_color.put(4,"summer cool_Mute");
         result_color.put(5,"autumn worm_Deep");
         result_color.put(6,"autumn worm_Mute");
@@ -120,8 +120,8 @@ public class PersonalActivity  extends AppCompatActivity {
 
         result_color_ko.put(0,"봄웜 라이트");
         result_color_ko.put(1,"봄웜 브라이트");
-        result_color_ko.put(2,"여름쿨 브라이트");
-        result_color_ko.put(3,"여름쿨 라이트");
+        result_color_ko.put(2,"여름쿨 라이트");
+        result_color_ko.put(3,"여름쿨 브라이트");
         result_color_ko.put(4,"여름쿨 뮤트");
         result_color_ko.put(5,"가을웜 딥");
         result_color_ko.put(6,"가을웜 뮤트");
