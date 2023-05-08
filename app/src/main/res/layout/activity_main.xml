@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingTop="50dp"
     tools:context=".Start"
-
+    android:background="#ffffff"
     >
     <ScrollView
         android:layout_width="match_parent"
