@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -298,25 +299,49 @@ public class CustomerInfo extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK && data!=null) {
                     Uri uri = data.getData();
-                    user_proimg.setImageURI(uri);
-                    BitmapDrawable bitmapDrawable = (BitmapDrawable) user_proimg.getDrawable();
-                    Bitmap user_img = bitmapDrawable.getBitmap();
+                    try {
+                        Bitmap pro_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 
-                    File user_profile_img = BmpToFile(user_img, user_img_name);
-                    Uri uri_pro = Uri.fromFile(user_profile_img);
-                    StorageReference pro_storef_2 = pro_storef.child(user_img_name);
+                        int width=pro_bitmap.getWidth();
+                        int height=pro_bitmap.getHeight();
 
-                    pro_storef_2.putFile(uri_pro).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        float ratio = (float) width / height;
 
+                        int resizedWidth, resizedHeight;
+                        if (ratio > 1) {
+                            // 이미지의 가로가 더 긴 경우
+                            resizedWidth = 250;
+                            resizedHeight = (int) (resizedWidth / ratio);
+                        } else {
+                            // 이미지의 세로가 더 긴 경우
+                            resizedHeight = 250;
+                            resizedWidth = (int) (resizedHeight * ratio);
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CustomerInfo.this, "연결 상태가 원할하지 않습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
+                        Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
+                        user_proimg.setImageBitmap(resize);
+
+                        BitmapDrawable bitmapDrawable = (BitmapDrawable) user_proimg.getDrawable();
+                        Bitmap user_img = bitmapDrawable.getBitmap();
+
+                        File user_profile_img = BmpToFile(user_img, user_img_name);
+                        Uri uri_pro = Uri.fromFile(user_profile_img);
+                        StorageReference pro_storef_2 = pro_storef.child(user_img_name);
+
+                        pro_storef_2.putFile(uri_pro).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(CustomerInfo.this, "연결 상태가 원할하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 break;
         }
