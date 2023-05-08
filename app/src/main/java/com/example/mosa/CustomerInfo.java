@@ -71,7 +71,10 @@ public class CustomerInfo extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference pro_storef=storage.getReference().child("user_profile/");
     FirebaseUser user_pro = FirebaseAuth.getInstance().getCurrentUser();
-
+    String email_pro=user_pro.getEmail();
+    Date date = new Date();
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+    String user_img_name = email_pro+ "_" +"profile"+"_"+ format.format(date);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,10 +95,7 @@ public class CustomerInfo extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        String email_pro=user_pro.getEmail();
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String user_img_name = email_pro+ "_" +"profile"+"_"+ format.format(date);
+
 
 
 
@@ -169,24 +169,7 @@ public class CustomerInfo extends AppCompatActivity {
                 Intent intent_proimg = new Intent(Intent.ACTION_PICK);
                 intent_proimg.setType("image/*");
                 startActivityForResult(intent_proimg, 1);
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) user_proimg.getDrawable();
-                Bitmap user_img = bitmapDrawable.getBitmap();
 
-                File user_profile_img = BmpToFile(user_img, user_img_name);
-                Uri uri_pro = Uri.fromFile(user_profile_img);
-                StorageReference pro_storef_2 = pro_storef.child(user_img_name);
-
-                pro_storef_2.putFile(uri_pro).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CustomerInfo.this, "연결 상태가 원할하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
                 /*
                 여기에 유저의 프로필 이미지를 파이어베이스 스토어에 저장하는 코드를 추가
@@ -313,10 +296,27 @@ public class CustomerInfo extends AppCompatActivity {
 
         switch (requestCode) {
             case 1:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK && data!=null) {
                     Uri uri = data.getData();
                     user_proimg.setImageURI(uri);
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable) user_proimg.getDrawable();
+                    Bitmap user_img = bitmapDrawable.getBitmap();
 
+                    File user_profile_img = BmpToFile(user_img, user_img_name);
+                    Uri uri_pro = Uri.fromFile(user_profile_img);
+                    StorageReference pro_storef_2 = pro_storef.child(user_img_name);
+
+                    pro_storef_2.putFile(uri_pro).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CustomerInfo.this, "연결 상태가 원할하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 break;
         }
