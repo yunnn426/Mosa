@@ -115,8 +115,8 @@ public class PersonalActivity  extends AppCompatActivity {
         result_color.put(5,"autumn worm_Deep");
         result_color.put(6,"autumn worm_Mute");
         result_color.put(7,"autumn worm_Strong");
-        result_color.put(8,"winter_Bright");
-        result_color.put(9,"winter_Deep");
+        result_color.put(8,"winter cool_Deep");
+        result_color.put(9,"winter cool_Bright");
 
         result_color_ko.put(0,"봄웜 라이트");
         result_color_ko.put(1,"봄웜 브라이트");
@@ -126,8 +126,8 @@ public class PersonalActivity  extends AppCompatActivity {
         result_color_ko.put(5,"가을웜 딥");
         result_color_ko.put(6,"가을웜 뮤트");
         result_color_ko.put(7,"가을웜 스트롱");
-        result_color_ko.put(8,"겨울 브라이트");
-        result_color_ko.put(9,"겨울 딥");
+        result_color_ko.put(8,"겨울쿨 딥");
+        result_color_ko.put(9,"겨울쿨 브라이트");
 
         result_face.put("a", "long shape");
         result_face.put("b", "heart shape");
