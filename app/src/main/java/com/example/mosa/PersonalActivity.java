@@ -84,7 +84,6 @@ public class PersonalActivity  extends AppCompatActivity {
     ImageView color_chrt;
     ImageView Face_title;
     ImageView selected_color_1;
-    ImageView selected_color_2;
     FirebaseFirestore db;
     CollectionReference diagnosesref;
     FirebaseStorage storage;
@@ -101,7 +100,6 @@ public class PersonalActivity  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
-        String Isdiag=intent.getStringExtra("diag_or_record");
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -175,7 +173,7 @@ public class PersonalActivity  extends AppCompatActivity {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
 //진단 수행중인지, 진단기록을 통해서 다시 추천아이템과 자세한 정보를 보려는지 체크
-    if(Isdiag.equals("yes")) {
+
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -230,7 +228,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
             }
         });
-    }
+
 
 
         item_Recycler recycler_1=new item_Recycler();
@@ -490,10 +488,45 @@ public class PersonalActivity  extends AppCompatActivity {
         //추천정보(해당 정보와 매치시켜야)를 불러와야한다. 결과값을 인텐트에 담고, 그것을 추천 클래스로 보내면 된다.
         //차후 구현 필요
 
-        color_chrt=findViewById(R.id.color_chrt);
+        //color_chrt=findViewById(R.id.color_chrt);
         selected_color_1=findViewById(R.id.selected_color_chrt_1);
-        selected_color_2=findViewById(R.id.selected_color_chrt_2);
 
+
+        switch (color) {
+            case 0:
+                selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
+                break;
+            case 1:
+                selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
+                break;
+            case 2:
+                selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
+                break;
+            case 3:
+                selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
+                break;
+            case 4:
+                selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
+                break;
+            case 5:
+                selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
+                break;
+            case 6:
+                selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
+                break;
+            case 7:
+                selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
+                break;
+            case 8:
+                selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
+                break;
+            case 9:
+                selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
+                break;
+            default:
+                //여기에는 오류화면 띄우면 될듯
+                break;
+        }
         /*
         color_chrt_bmp=match_color_chrt(skin_title);
         color_chrt.setImageBitmap(color_chrt_bmp);
