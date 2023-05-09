@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:background="@color/pont_color"
-            android:src="@drawable/personal_color_ex"
+            android:src="@drawable/ic_launcher_background"
             android:layout_gravity="center_horizontal"/>
        <LinearLayout
            android:layout_width="match_parent"

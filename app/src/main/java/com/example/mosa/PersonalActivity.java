@@ -492,36 +492,46 @@ public class PersonalActivity  extends AppCompatActivity {
         selected_color_1=findViewById(R.id.selected_color_chrt_1);
 
 
-        switch (color) {
-            case 0:
+        switch (color_str) {
+            case "spring worm_Light":
                 selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
+                color_title.setImageResource(R.drawable.spring_worm_light_img);
                 break;
-            case 1:
+            case "spring worm_Bright":
                 selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
+                color_title.setImageResource(R.drawable.spring_worm_bright_img);
                 break;
-            case 2:
+            case "summer cool_Light":
                 selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
+                color_title.setImageResource(R.drawable.summer_cool_light_img);
                 break;
-            case 3:
+            case "summer cool_Bright":
                 selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
+                color_title.setImageResource(R.drawable.summer_cool_bright_img);
                 break;
-            case 4:
+            case "summer cool_Mute":
                 selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
+                color_title.setImageResource(R.drawable.summer_cool_mute_img);
                 break;
-            case 5:
+            case "autumn worm_Deep":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
+                color_title.setImageResource(R.drawable.autumn_worm_deep_img);
                 break;
-            case 6:
+            case "autumn worm_Mute":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
+                color_title.setImageResource(R.drawable.autumn_worm_mute_img);
                 break;
-            case 7:
+            case "autumn worm_Strong":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
+                color_title.setImageResource(R.drawable.autumn_worm_strong_img);
                 break;
-            case 8:
+            case "winter cool_Deep":
                 selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
+                color_title.setImageResource(R.drawable.winter_cool_deep_img);
                 break;
-            case 9:
+            case "winter cool_Bright":
                 selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
+                color_title.setImageResource(R.drawable.winter_cool_bright_img);
                 break;
             default:
                 //여기에는 오류화면 띄우면 될듯
