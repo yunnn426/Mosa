@@ -122,7 +122,7 @@ public class loadingActivity extends AppCompatActivity {
                         coloref.addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(QuerySnapshot value,FirebaseFirestoreException error) {
-                                // color_result 컬렉션에 데이터가 추가/변경/제거되었을 때 실행되는 코드
+                                // "사용자의 이메일"+_color_result 컬렉션에 데이터가 추가/변경/제거되었을 때 실행되는 코드
                                 // 즉 파이썬의 머신러닝 모델에 의해서 데이터가 추가될시 즉시 사용한 이미지의 이름으로 그 결과값을 검색해서
                                 // 결과값을 읽어온다.
                                 Query query=coloref.whereEqualTo("file_name",user_img_name);
@@ -198,6 +198,7 @@ public class loadingActivity extends AppCompatActivity {
                             //intent_result.putExtra("result_color",6);
                             //intent_result.putExtra("result_face",3);
                             intent_result.putExtra("img_name",user_img_name);
+                            intent_result.putExtra("Isdiag","yes");
                             startActivity(intent_result);
                             return true;
                         }

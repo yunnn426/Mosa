@@ -47,39 +47,39 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:gravity="center"-->
-<!--                android:background="@drawable/bin_google"-->
-<!--                android:paddingLeft="12dp"-->
-<!--                android:paddingRight="12dp"-->
-<!--                >-->
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="60dp"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:gravity="center"-->
+            <!--                android:background="@drawable/bin_google"-->
+            <!--                android:paddingLeft="12dp"-->
+            <!--                android:paddingRight="12dp"-->
+            <!--                >-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="37dp"-->
-<!--                    android:layout_height="55dp"-->
-<!--                    android:layout_marginRight="1dp"-->
-<!--                    android:layout_toLeftOf="@id/GoGoogleButton"-->
-<!--                    android:background="@null"-->
-<!--                    android:gravity="center"-->
-<!--                    android:src="@drawable/google_48"></ImageView>-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="37dp"-->
+            <!--                    android:layout_height="55dp"-->
+            <!--                    android:layout_marginRight="1dp"-->
+            <!--                    android:layout_toLeftOf="@id/GoGoogleButton"-->
+            <!--                    android:background="@null"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:src="@drawable/google_48"></ImageView>-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/GoGoogleButton"-->
-<!--                    android:layout_width="300dp"-->
-<!--                    android:layout_height="50dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:stateListAnimator="@null"-->
-<!--                    android:text="Continue with Google"-->
-<!--                    android:textColor="#000000"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:textStyle="bold"></TextView>-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/GoGoogleButton"-->
+            <!--                    android:layout_width="300dp"-->
+            <!--                    android:layout_height="50dp"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:stateListAnimator="@null"-->
+            <!--                    android:text="Continue with Google"-->
+            <!--                    android:textColor="#000000"-->
+            <!--                    android:textSize="20sp"-->
+            <!--                    android:textStyle="bold"></TextView>-->
 
-<!--            </RelativeLayout>-->
+            <!--            </RelativeLayout>-->
 
             <TextView
                 android:layout_width="match_parent"

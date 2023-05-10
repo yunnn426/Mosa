@@ -84,7 +84,6 @@ public class PersonalActivity  extends AppCompatActivity {
     ImageView color_chrt;
     ImageView Face_title;
     ImageView selected_color_1;
-    ImageView selected_color_2;
     FirebaseFirestore db;
     CollectionReference diagnosesref;
     FirebaseStorage storage;
@@ -106,27 +105,27 @@ public class PersonalActivity  extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 
-        result_color.put(0,"spring worm_Bright");
-        result_color.put(1,"spring worm_Light");
-        result_color.put(2,"summer cool_Bright");
-        result_color.put(3,"summer cool_Light");
+        result_color.put(0,"spring worm_Light");
+        result_color.put(1,"spring worm_Bright");
+        result_color.put(2,"summer cool_Light");
+        result_color.put(3,"summer cool_Bright");
         result_color.put(4,"summer cool_Mute");
         result_color.put(5,"autumn worm_Deep");
         result_color.put(6,"autumn worm_Mute");
         result_color.put(7,"autumn worm_Strong");
-        result_color.put(8,"winter_Bright");
-        result_color.put(9,"winter_Deep");
+        result_color.put(8,"winter cool_Deep");
+        result_color.put(9,"winter cool_Bright");
 
         result_color_ko.put(0,"봄웜 라이트");
         result_color_ko.put(1,"봄웜 브라이트");
-        result_color_ko.put(2,"여름쿨 브라이트");
-        result_color_ko.put(3,"여름쿨 라이트");
+        result_color_ko.put(2,"여름쿨 라이트");
+        result_color_ko.put(3,"여름쿨 브라이트");
         result_color_ko.put(4,"여름쿨 뮤트");
         result_color_ko.put(5,"가을웜 딥");
         result_color_ko.put(6,"가을웜 뮤트");
         result_color_ko.put(7,"가을웜 스트롱");
-        result_color_ko.put(8,"겨울 브라이트");
-        result_color_ko.put(9,"겨울 딥");
+        result_color_ko.put(8,"겨울쿨 딥");
+        result_color_ko.put(9,"겨울쿨 브라이트");
 
         result_face.put("a", "long shape");
         result_face.put("b", "heart shape");
@@ -173,33 +172,35 @@ public class PersonalActivity  extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+//진단 수행중인지, 진단기록을 통해서 다시 추천아이템과 자세한 정보를 보려는지 체크
+
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String value = snapshot.getValue(String.class);
-                name=value;
+                name = value;
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference().child("user_img/");
-                Uri uri_upload=Uri.fromFile(file_upload);
+                Uri uri_upload = Uri.fromFile(file_upload);
                 //이미지 파일이름 수정해야 (유저이메일+날짜+시간)
                 //다시 진단 기록내에 '진단명','진단날짜','진단결과(컬러)','진단결과(얼굴)','이미지파일이름','사용자의 이메일'로 저장
                 //String file_name=name+"_"+user.getUid()+"_"+format.format(date);
-                String file_name=user_img_name;
+                String file_name = user_img_name;
                 StorageReference imgRef = storageRef.child(file_name);
 
                 imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String collection="user_record";
-                        String document="diag_record_"+ file_name;
-                        String time=format.format(date);
-                        Map<String,String> data=new HashMap<>();
-                        data.put("diagnosis","color_and_face");
-                        data.put("diagnosis_date",time);
-                        data.put("diagnosis_result_color",color_str_ko);
-                        data.put("diagnosis_result_face",face_str_ko);
-                        data.put("img_file_name",file_name);
-                        data.put("user_email",user.getEmail());
+                        String collection = "user_record";
+                        String document = "diag_record_" + file_name;
+                        String time = format.format(date);
+                        Map<String, String> data = new HashMap<>();
+                        data.put("diagnosis", "color_and_face");
+                        data.put("diagnosis_date", time);
+                        data.put("diagnosis_result_color", color_str_ko);
+                        data.put("diagnosis_result_face", face_str_ko);
+                        data.put("img_file_name", file_name);
+                        data.put("user_email", user.getEmail());
 
                         firebaseFirestore.collection(collection).document(document).set(data)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -246,8 +247,6 @@ public class PersonalActivity  extends AppCompatActivity {
         Title_User_color=findViewById(R.id.title_usercolor);
 
         //User_color_recom.setText(result_color_ko[0]);
-        User_color_recom.setText(color_str_ko);
-        Title_User_color.setText(color_str_ko);
         // 여기서 실제 이름을 가져와서 넣는다.
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
@@ -276,10 +275,10 @@ public class PersonalActivity  extends AppCompatActivity {
         //StorageReference storageReference_face_hair=storage.getReference().child(face_str+"/hair/");
         //StorageReference storageReference_color_cloth=storage.getReference().child(color_str+"clothes/");
         //StorageReference storageReference_face_acc=storage.getReference().child(face_str+"/accessory/");
-
-        StorageReference storageReference_1=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"rip/");
-        StorageReference storageReference_2=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"blusher/");
-        StorageReference storageReference_3=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"shadow/");
+        //폴더에 파일이 없으면 안나온다;;
+        StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
+        StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
+        StorageReference storageReference_3=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"shadow/");
         StorageReference storageReference_4=storageReference_3;
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
@@ -487,10 +486,105 @@ public class PersonalActivity  extends AppCompatActivity {
         //추천정보(해당 정보와 매치시켜야)를 불러와야한다. 결과값을 인텐트에 담고, 그것을 추천 클래스로 보내면 된다.
         //차후 구현 필요
 
-        color_chrt=findViewById(R.id.color_chrt);
+        //color_chrt=findViewById(R.id.color_chrt);
         selected_color_1=findViewById(R.id.selected_color_chrt_1);
-        selected_color_2=findViewById(R.id.selected_color_chrt_2);
 
+
+        switch (color_str) {
+            case "spring worm_Light":
+                selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
+                color_title.setImageResource(R.drawable.spring_worm_light_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
+                Title_User_color.setTextColor(getColor(R.color.spring_worm_light));
+                color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
+                break;
+            case "spring worm_Bright":
+                selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
+                color_title.setImageResource(R.drawable.spring_worm_bright_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.spring_worm_bright));
+                Title_User_color.setTextColor(getColor(R.color.spring_worm_bright));
+                color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
+                break;
+            case "summer cool_Light":
+                selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
+                color_title.setImageResource(R.drawable.summer_cool_light_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.summer_cool_light));
+                Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
+                color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
+                break;
+            case "summer cool_Bright":
+                selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
+                color_title.setImageResource(R.drawable.summer_cool_bright_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.summer_cool_bright));
+                Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
+                color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
+                break;
+            case "summer cool_Mute":
+                selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
+                color_title.setImageResource(R.drawable.summer_cool_mute_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.summer_cool_mute));
+                Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
+                color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
+                break;
+            case "autumn worm_Deep":
+                selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
+                color_title.setImageResource(R.drawable.autumn_worm_deep_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.autumn_worm_deep));
+                Title_User_color.setTextColor(getColor(R.color.autumn_worm_deep));
+                color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
+                break;
+            case "autumn worm_Mute":
+                selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
+                color_title.setImageResource(R.drawable.autumn_worm_mute_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.autumn_worm_mute));
+                Title_User_color.setTextColor(getColor(R.color.autumn_worm_mute));
+                color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
+                break;
+            case "autumn worm_Strong":
+                selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
+                color_title.setImageResource(R.drawable.autumn_worm_strong_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.autumn_worm_strong));
+                Title_User_color.setTextColor(getColor(R.color.autumn_worm_strong));
+                color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
+                break;
+            case "winter cool_Deep":
+                selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
+                color_title.setImageResource(R.drawable.winter_cool_deep_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.winter_cool_deep));
+                Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
+                color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
+                break;
+            case "winter cool_Bright":
+                selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
+                color_title.setImageResource(R.drawable.winter_cool_bright_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.winter_cool_bright));
+                Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
+                color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
+                break;
+            default:
+                //여기에는 오류화면 띄우면 될듯
+                break;
+        }
         /*
         color_chrt_bmp=match_color_chrt(skin_title);
         color_chrt.setImageBitmap(color_chrt_bmp);
