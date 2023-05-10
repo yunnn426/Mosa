@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -15,7 +16,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
+            ndk {
+                abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            }
+        python {
+            version "3.11"
+        }
+        }
 
     buildTypes {
         release {
@@ -69,5 +76,8 @@ dependencies {
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.chaquo.python:python:14.0.2"
+    implementation "com.chaquo.python.android:android:14.0.2"
 }
 
