@@ -247,8 +247,6 @@ public class PersonalActivity  extends AppCompatActivity {
         Title_User_color=findViewById(R.id.title_usercolor);
 
         //User_color_recom.setText(result_color_ko[0]);
-        User_color_recom.setText(color_str_ko);
-        Title_User_color.setText(color_str_ko);
         // 여기서 실제 이름을 가져와서 넣는다.
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
@@ -277,10 +275,10 @@ public class PersonalActivity  extends AppCompatActivity {
         //StorageReference storageReference_face_hair=storage.getReference().child(face_str+"/hair/");
         //StorageReference storageReference_color_cloth=storage.getReference().child(color_str+"clothes/");
         //StorageReference storageReference_face_acc=storage.getReference().child(face_str+"/accessory/");
-
-        StorageReference storageReference_1=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"rip/");
-        StorageReference storageReference_2=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"blusher/");
-        StorageReference storageReference_3=storage.getReference().child(result_color.get(0)+"/cosmetics/"+"shadow/");
+        //폴더에 파일이 없으면 안나온다;;
+        StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
+        StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
+        StorageReference storageReference_3=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"shadow/");
         StorageReference storageReference_4=storageReference_3;
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
@@ -496,42 +494,92 @@ public class PersonalActivity  extends AppCompatActivity {
             case "spring worm_Light":
                 selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
                 color_title.setImageResource(R.drawable.spring_worm_light_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
+                Title_User_color.setTextColor(getColor(R.color.spring_worm_light));
+                color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
                 break;
             case "spring worm_Bright":
                 selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
                 color_title.setImageResource(R.drawable.spring_worm_bright_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.spring_worm_bright));
+                Title_User_color.setTextColor(getColor(R.color.spring_worm_bright));
+                color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
                 break;
             case "summer cool_Light":
                 selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
                 color_title.setImageResource(R.drawable.summer_cool_light_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.summer_cool_light));
+                Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
+                color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
                 break;
             case "summer cool_Bright":
                 selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
                 color_title.setImageResource(R.drawable.summer_cool_bright_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.summer_cool_bright));
+                Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
+                color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
                 break;
             case "summer cool_Mute":
                 selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
                 color_title.setImageResource(R.drawable.summer_cool_mute_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.summer_cool_mute));
+                Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
+                color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
                 break;
             case "autumn worm_Deep":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
                 color_title.setImageResource(R.drawable.autumn_worm_deep_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.autumn_worm_deep));
+                Title_User_color.setTextColor(getColor(R.color.autumn_worm_deep));
+                color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
                 break;
             case "autumn worm_Mute":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
                 color_title.setImageResource(R.drawable.autumn_worm_mute_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.autumn_worm_mute));
+                Title_User_color.setTextColor(getColor(R.color.autumn_worm_mute));
+                color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
                 break;
             case "autumn worm_Strong":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
                 color_title.setImageResource(R.drawable.autumn_worm_strong_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.autumn_worm_strong));
+                Title_User_color.setTextColor(getColor(R.color.autumn_worm_strong));
+                color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
                 break;
             case "winter cool_Deep":
                 selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
                 color_title.setImageResource(R.drawable.winter_cool_deep_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.winter_cool_deep));
+                Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
+                color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
                 break;
             case "winter cool_Bright":
                 selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
                 color_title.setImageResource(R.drawable.winter_cool_bright_img);
+                User_color_recom.setText(color_str_ko);
+                Title_User_color.setText(color_str_ko);
+                User_color_recom.setTextColor(getColor(R.color.winter_cool_bright));
+                Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
+                color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
                 break;
             default:
                 //여기에는 오류화면 띄우면 될듯
