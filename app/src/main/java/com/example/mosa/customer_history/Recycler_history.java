@@ -1,15 +1,18 @@
 package com.example.mosa.customer_history;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mosa.PersonalActivity;
 import com.example.mosa.R;
 
 import org.w3c.dom.Text;
@@ -33,6 +36,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
     ArrayList<String> Dia_date=new ArrayList<String>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
+        Button review_btn;
         ImageView his_record;
         TextView his_mail;
         TextView his_date;
@@ -42,6 +46,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         TextView his_diag_result_2;
         public ViewHolder(View itemView) {
             super(itemView);
+            review_btn=itemView.findViewById(R.id.record_view);
             his_record=itemView.findViewById(R.id.user_history_img);
             his_mail=itemView.findViewById(R.id.history_mail);
             his_date=itemView.findViewById(R.id.history_date);
@@ -83,6 +88,19 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         holder.his_diag_result_1.setText(Diag_rst_1);
         holder.his_diag_result_2.setText(Diag_rst_2);
         holder.his_date.setText(Dia_da);
+
+        holder.review_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(holder.itemView.getContext(), PersonalActivity.class);
+                intent.putExtra("result_color",Diag_rst_1);
+                intent.putExtra("result_face",Diag_rst_2);
+                intent.putExtra("img","is_record");
+                intent.putExtra("img_name","is_record");
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 

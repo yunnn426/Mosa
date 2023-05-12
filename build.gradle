@@ -4,15 +4,11 @@ buildscript {
         google()  // Google's Maven repository
 
         mavenCentral()  // Maven Central repository
-        maven {
-            url "https://chaquo.com/maven"
-        }
 
     }
     dependencies {
         // Add the dependency for the Google services Gradle plugin
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.chaquo.python:gradle:14.0.2'
     }
 }
 
@@ -20,6 +16,5 @@ buildscript {
 plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
-    id 'com.chaquo.python' version '14.0.2' apply false
 }
 
