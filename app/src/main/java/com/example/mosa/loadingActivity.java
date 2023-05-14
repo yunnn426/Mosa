@@ -198,7 +198,6 @@ public class loadingActivity extends AppCompatActivity {
                             //intent_result.putExtra("result_color",6);
                             //intent_result.putExtra("result_face",3);
                             intent_result.putExtra("img_name",user_img_name);
-                            intent_result.putExtra("Isdiag","yes");
                             startActivity(intent_result);
                             return true;
                         }

@@ -47,6 +47,7 @@
             android:text="고객님의 얼굴형 진단 결과"/>
     </LinearLayout>
     <Button
+        android:id="@+id/record_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="자세한 정보 보기"/>
