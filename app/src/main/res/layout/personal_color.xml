@@ -35,14 +35,14 @@
                  android:id="@+id/title_username"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:textSize="25dp"
+                 android:textSize="30dp"
                  android:text="데일리"/>
 
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="님의 진단결과"
-                   android:textSize="25dp" />
+                   android:textSize="30dp" />
 
            </LinearLayout>
         <TextView
@@ -51,8 +51,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/pont_color"
-            android:textSize="25dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="30dp"
             android:text="데일리의 색상"/>
+
+
+           <TextView
+               android:textColor="@color/detail_color"
+               android:id="@+id/color_detail"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_horizontal"
+               android:gravity="center_horizontal"
+               android:layout_marginBottom="35dp"
+               android:textSize="15dp"
+               android:text="@string/summer_cool_Bright"/>
     </LinearLayout>
 
 

@@ -71,6 +71,7 @@ public class PersonalActivity  extends AppCompatActivity {
     TextView User_name;
     TextView Title_User_name;
     TextView Title_User_color;
+    TextView color_detail;
     FirebaseDatabase firebaseDatabase;
 
     /*
@@ -103,6 +104,7 @@ public class PersonalActivity  extends AppCompatActivity {
         setContentView(R.layout.personal_color);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
+        color_detail=findViewById(R.id.color_detail);
         Intent intent=getIntent();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
@@ -311,6 +313,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_1.add(bitmap);
+                                //여기에 데이터가 더이상 남지 않으면 리사이클러 뷰로 보여주는 조건을 추가한다.
                                 if(itemfile_1.size()==8){
                                     recycler_1.setrecycler(itemfile_1);
                                     itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
@@ -464,6 +467,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
                 Title_User_color.setTextColor(getColor(R.color.spring_worm_light));
                 color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
+                color_detail.setText(R.string.spring_warm_Light);
                 break;
             case "spring warm_Bright":
                 selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
@@ -473,6 +477,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_bright));
                 Title_User_color.setTextColor(getColor(R.color.spring_worm_bright));
                 color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
+                color_detail.setText(R.string.spring_warm_Bright);
                 break;
             case "summer cool_Light":
                 selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
@@ -482,6 +487,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_light));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
                 color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
+                color_detail.setText(R.string.summer_cool_Light);
                 break;
             case "summer cool_Bright":
                 selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
@@ -491,6 +497,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
                 color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
+                color_detail.setText(R.string.summer_cool_Bright);
                 break;
             case "summer cool_Mute":
                 selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
@@ -500,6 +507,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_mute));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
                 color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
+                color_detail.setText(R.string.summer_cool_Mute);
                 break;
             case "autumn warm_Deep":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
@@ -509,6 +517,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_deep));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_deep));
                 color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
+                color_detail.setText(R.string.autumn_warm_Deep);
                 break;
             case "autumn warm_Mute":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
@@ -518,6 +527,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_mute));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_mute));
                 color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
+                color_detail.setText(R.string.autumn_warm_Mute);
                 break;
             case "autumn warm_Strong":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
@@ -527,6 +537,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_strong));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_strong));
                 color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
+                color_detail.setText(R.string.autumn_warm_Strong);
                 break;
             case "winter cool_Deep":
                 selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
@@ -536,6 +547,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_deep));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
                 color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
+                color_detail.setText(R.string.winter_cool_Deep);
                 break;
             case "winter cool_Bright":
                 selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
@@ -545,6 +557,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
                 color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
+                color_detail.setText(R.string.winter_cool_Bright);
                 break;
             default:
                 //여기에는 오류화면 띄우면 될듯
