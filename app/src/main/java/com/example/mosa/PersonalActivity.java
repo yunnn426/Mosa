@@ -157,17 +157,13 @@ public class PersonalActivity  extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference result_call= db.collection("color_result");
         String user_img_name;
-
+        File file_upload;
+        String img_file_path;
         //
-        if(!img_name.equals("is_record")) {
-            user_img_name = img_name;
-            Query query = result_call.whereEqualTo("file_name", user_img_name);
-        }else{
-            user_img_name=null;
-        }
+
+
 
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
-        String img_file_path;
 
 
 
@@ -177,12 +173,9 @@ public class PersonalActivity  extends AppCompatActivity {
         String face_str_ko=result_face_ko.get(face_re);
 
         img_file_path = intent.getStringExtra("img");
-        File file_upload;
-            if(!img_file_path.equals("is_record")) {
-                file_upload = new File(img_file_path);
-            }else{
-              file_upload=null;
-            }
+
+
+
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("Users");
@@ -190,6 +183,9 @@ public class PersonalActivity  extends AppCompatActivity {
 
 //진단 수행중인지, 진단기록을 통해서 다시 추천아이템과 자세한 정보를 보려는지 체크
         if(!img_file_path.equals("is_record")&&!img_name.equals("is_record")) {
+            user_img_name = img_name;
+            Query query = result_call.whereEqualTo("file_name", user_img_name);
+            file_upload = new File(img_file_path);
             myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -284,9 +280,9 @@ public class PersonalActivity  extends AppCompatActivity {
 
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
-        StorageReference storageReference_1=storage.getReference().child(color_str+"cosmetics/");
+        StorageReference storageReference_1=storage.getReference().child(color_str+"/cosmetics/");
         StorageReference storageReference_2=storage.getReference().child(face_str+"/hair/");
-        StorageReference storageReference_3=storage.getReference().child(color_str+"clothes/");
+        StorageReference storageReference_3=storage.getReference().child(color_str+"/clothes/");
         //폴더에 파일이 없으면 안나온다;;
         //StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
         //StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
