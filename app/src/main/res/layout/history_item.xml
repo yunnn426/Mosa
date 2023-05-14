@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/user_history_img"
@@ -50,5 +52,5 @@
         android:id="@+id/record_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="자세한 정보 보기"/>
+        android:text="자세한\n정보 보기"/>
 </LinearLayout>
