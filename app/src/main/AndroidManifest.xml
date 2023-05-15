@@ -63,6 +63,9 @@
             android:name=".CustomerInfo"
             android:exported="false" />
         <activity
+            android:name=".find_password"
+            android:exported="false" />
+        <activity
             android:name=".Start"
             android:exported="true">
             <intent-filter>

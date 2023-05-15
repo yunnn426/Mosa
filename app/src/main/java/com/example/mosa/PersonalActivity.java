@@ -97,7 +97,7 @@ public class PersonalActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_color);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
         Intent intent=getIntent();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
