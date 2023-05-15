@@ -22,40 +22,46 @@
         android:id="@+id/customer_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pont_color"
-        android:textSize="25dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/nanumgothic"
         android:text="데일리"
-        app:layout_constraintTop_toTopOf="@id/customer_picture"
-        app:layout_constraintStart_toEndOf="@id/customer_picture"
+        android:textColor="#333333"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="16dp" />
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toEndOf="@id/customer_picture"
+        app:layout_constraintTop_toTopOf="@id/customer_picture" />
 
     <TextView
         android:id="@+id/customer_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pont_color"
-        android:text="고객님의 email"
-        app:layout_constraintTop_toBottomOf="@id/customer_name"
-        app:layout_constraintStart_toEndOf="@id/customer_picture"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="30dp" />
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/nanumgothic"
+        android:text="고객님의 email"
+        android:textColor="#333333"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintStart_toEndOf="@id/customer_picture"
+        app:layout_constraintTop_toBottomOf="@id/customer_name" />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
         android:layout_marginBottom="5dp"
+        android:backgroundTint="#bfbfbf"
+        android:fontFamily="@font/nanumgothic"
         android:text="로그아웃"
         app:layout_constraintBottom_toTopOf="@+id/tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.866"
         app:layout_constraintStart_toEndOf="@+id/customer_email"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.506" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"

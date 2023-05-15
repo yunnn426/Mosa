@@ -93,6 +93,10 @@ public class PersonalActivity  extends AppCompatActivity {
     RecyclerView itemlist_4;
     File path;
     String name;
+
+    //닫기용 버튼
+    ImageButton closeBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*
@@ -110,6 +114,15 @@ public class PersonalActivity  extends AppCompatActivity {
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
+        //닫기
+        closeBtn = findViewById(R.id.close);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //메인 머지 후 수정 예정
+                //Intent intent = new Intent(PersonalActivity.this, )
+            }
+        });
 
         result_color.put(0,"spring warm_Light");
         result_color.put(1,"spring warm_Bright");
@@ -466,7 +479,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
                 Title_User_color.setTextColor(getColor(R.color.spring_worm_light));
-                color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
+                //color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
                 color_detail.setText(R.string.spring_warm_Light);
                 break;
             case "spring warm_Bright":
@@ -476,7 +489,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_bright));
                 Title_User_color.setTextColor(getColor(R.color.spring_worm_bright));
-                color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
+                //color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
                 color_detail.setText(R.string.spring_warm_Bright);
                 break;
             case "summer cool_Light":
@@ -486,7 +499,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_light));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
-                color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
+                //color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
                 color_detail.setText(R.string.summer_cool_Light);
                 break;
             case "summer cool_Bright":
@@ -496,7 +509,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
-                color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
+                //color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
                 color_detail.setText(R.string.summer_cool_Bright);
                 break;
             case "summer cool_Mute":
@@ -506,7 +519,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_mute));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
-                color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
+                //color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
                 color_detail.setText(R.string.summer_cool_Mute);
                 break;
             case "autumn warm_Deep":
@@ -516,7 +529,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_deep));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_deep));
-                color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
+                //color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
                 color_detail.setText(R.string.autumn_warm_Deep);
                 break;
             case "autumn warm_Mute":
@@ -526,7 +539,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_mute));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_mute));
-                color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
+                //color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
                 color_detail.setText(R.string.autumn_warm_Mute);
                 break;
             case "autumn warm_Strong":
@@ -536,7 +549,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_strong));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_strong));
-                color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
+                //color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
                 color_detail.setText(R.string.autumn_warm_Strong);
                 break;
             case "winter cool_Deep":
@@ -546,7 +559,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_deep));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
-                color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
+                //color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
                 color_detail.setText(R.string.winter_cool_Deep);
                 break;
             case "winter cool_Bright":
@@ -556,7 +569,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
-                color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
+                //color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
                 color_detail.setText(R.string.winter_cool_Bright);
                 break;
             default:
@@ -569,9 +582,9 @@ public class PersonalActivity  extends AppCompatActivity {
 
         */
 
-        Face_title=findViewById(R.id.facedes_img);
-        User_face=findViewById(R.id.user_face);
-        User_face.setText(face_str_ko);
+        //Face_title=findViewById(R.id.facedes_img);
+        //User_face=findViewById(R.id.user_face);
+        //User_face.setText(face_str_ko);
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");
