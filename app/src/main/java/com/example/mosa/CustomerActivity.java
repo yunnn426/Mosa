@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ml.common.modeldownload.*;
@@ -67,6 +71,8 @@ import java.util.List;
 public class CustomerActivity extends AppCompatActivity {
 
     String faceinfo=null;
+    TextView customer_name;
+    FirebaseDatabase firebaseDatabase;
 
     private final static int scaling_Facter=10;
     FaceDetectorOptions highAccuracyOpts =
@@ -84,16 +90,36 @@ public class CustomerActivity extends AppCompatActivity {
     MenuItem bottom_1;
     MenuItem bottom_2;
     MenuItem bottom_3;
+
+
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommended_initial_screen);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         img1=findViewById(R.id.example_skin_img);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
+
+        customer_name = findViewById(R.id.title_text);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Users");
+
+        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                String value2 = value + "님,";
+                customer_name.setText(value2);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //String imagePath = intent.getStringExtra("img");
         //File file=new File(imagePath);

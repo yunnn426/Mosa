@@ -50,10 +50,10 @@ public class subSignup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         //액션 바 등록하기
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Create Account");
-        actionBar.setDisplayHomeAsUpEnabled(true); //뒤로가기버튼
-        actionBar.setDisplayShowHomeEnabled(true); //홈 아이콘
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle("Create Account");
+//        actionBar.setDisplayHomeAsUpEnabled(true); //뒤로가기버튼
+//        actionBar.setDisplayShowHomeEnabled(true); //홈 아이콘
 
 //        email_join = findViewById(R.id.TextInputEditText_email);
 //        pwd_join = findViewById(R.id.TextInputEditText_password);
@@ -142,6 +142,13 @@ public class subSignup extends AppCompatActivity {
                 }
             }
         });
+
+//        Button find_pw = findViewById(R.id.find_button);
+//        find_pw.setOnClickListener(view -> {
+//            Intent intent = new Intent(getApplicationContext(),
+//                    find_password.class);
+//        });
+
         Button imageButton = findViewById(R.id.back_login);
         imageButton.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(),
