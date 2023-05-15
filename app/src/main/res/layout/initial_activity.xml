@@ -49,7 +49,10 @@
                 android:layout_gravity="center"
                 android:background="@drawable/bin_red"
                 android:layout_marginHorizontal="50dp"
-                android:text="이미지 올리기" />
+                android:textColor="@color/black"
+                android:text="이미지 올리기"
+
+                />
 
             <TextView
                 android:id="@+id/face_info"
