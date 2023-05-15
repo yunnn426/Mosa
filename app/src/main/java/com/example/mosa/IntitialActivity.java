@@ -57,6 +57,7 @@ public class IntitialActivity extends AppCompatActivity {
     //현재 이미지가 올라와 있는지 여부를 확인
     boolean inImg=false;
 
+    ImageButton backBtn;
     Button btn1;
     ImageButton btn3;
     Button btn4;
@@ -80,8 +81,19 @@ public class IntitialActivity extends AppCompatActivity {
         Intent intent_info=getIntent();
         String choice=intent_info.getStringExtra("choice");
 
+        //뒤로가기 버튼
+        backBtn = findViewById(R.id.back);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IntitialActivity.this, CustomerActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btn1=findViewById(R.id.img_button);
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

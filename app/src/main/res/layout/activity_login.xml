@@ -11,10 +11,10 @@
 
     <ImageView
         android:id="@+id/mosa_logo"
-        android:layout_width="75dp"
-        android:layout_height="30dp"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
         android:layout_marginHorizontal="15dp"
-        android:background="@drawable/mosa_logo"
+        android:background="@drawable/mosa_color"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,6 +59,7 @@
                 android:text="Login with email"
 
                 app:layout_constraintTop_toBottomOf="@+id/welcome"
+                android:fontFamily="@font/nanumgothic"
                 />
             <View
                 android:id="@+id/login_line"
@@ -95,6 +96,7 @@
                     android:background="#ffffff"
                     android:textColor="@color/white_gray"
                     android:textColorHint="@color/white_gray"
+                    android:fontFamily="@font/nanumgothic"
                     android:hint="email"></EditText>
             </LinearLayout>
             <LinearLayout
@@ -123,6 +125,7 @@
                     android:hint="password"
                     android:textColor="@color/white_gray"
                     android:textColorHint="@color/white_gray"
+                    android:fontFamily="@font/nanumgothic"
 
                     android:inputType="textPassword"
                     >
@@ -138,6 +141,7 @@
                 android:background="@drawable/bin_login2"
                 android:gravity="center"
                 android:stateListAnimator="@null"
+                android:fontFamily="@font/nanumgothic"
                 android:text="로그인"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
@@ -145,6 +149,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/password1" >
 
             </android.widget.Button>
+
+
+            <android.widget.Button
+                android:id="@+id/find_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:text="비밀번호 찾기"
+                android:textSize="17sp"
+                android:background="@color/white"
+                android:textColor="#925A5757"
+                android:fontFamily="@font/nanumgothic"
+                app:layout_constraintTop_toBottomOf="@+id/login_button"
+                >
+            </android.widget.Button>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,6 +184,7 @@
                     android:text="계정이 없으신가요?"
                     android:background="@color/white"
                     android:textColor="#925A5757"
+                    android:fontFamily="@font/nanumgothic"
                     android:textSize="17sp" />
 
                 <android.widget.Button
@@ -174,6 +196,7 @@
                     android:textSize="17sp"
                     android:background="@color/white"
                     android:textColor="#925A5757"
+                    android:fontFamily="@font/nanumgothic"
                     >
                 </android.widget.Button>
 
