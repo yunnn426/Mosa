@@ -71,6 +71,7 @@ public class PersonalActivity  extends AppCompatActivity {
     TextView User_name;
     TextView Title_User_name;
     TextView Title_User_color;
+    TextView color_detail;
     FirebaseDatabase firebaseDatabase;
 
     /*
@@ -89,30 +90,35 @@ public class PersonalActivity  extends AppCompatActivity {
     FirebaseStorage storage;
     RecyclerView itemlist_1;
     RecyclerView itemlist_2;
-    RecyclerView itemlist_3;
     RecyclerView itemlist_4;
     File path;
     String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
+        진단기록에서 자세히 보기를 클릭하면, 해당 하는 결과값을 토대로 결과화면을 제공한다
+        img,img_name 값이 사실상 없다.
+        진단기록에 등록하면 안되고, 해당 변수를 없다고 인식해야 한다.
+        */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_color);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
+        color_detail=findViewById(R.id.color_detail);
         Intent intent=getIntent();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 
-        result_color.put(0,"spring worm_Light");
-        result_color.put(1,"spring worm_Bright");
+        result_color.put(0,"spring warm_Light");
+        result_color.put(1,"spring warm_Bright");
         result_color.put(2,"summer cool_Light");
         result_color.put(3,"summer cool_Bright");
         result_color.put(4,"summer cool_Mute");
-        result_color.put(5,"autumn worm_Deep");
-        result_color.put(6,"autumn worm_Mute");
-        result_color.put(7,"autumn worm_Strong");
+        result_color.put(5,"autumn warm_Deep");
+        result_color.put(6,"autumn warm_Mute");
+        result_color.put(7,"autumn warm_Strong");
         result_color.put(8,"winter cool_Deep");
         result_color.put(9,"winter cool_Bright");
 
@@ -147,25 +153,30 @@ public class PersonalActivity  extends AppCompatActivity {
 
         */
         String img_name=intent.getStringExtra("img_name");
+        int color=intent.getIntExtra("result_color",10);
+        String face_re=intent.getStringExtra("result_face");
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference result_call= db.collection("color_result");
-        String user_img_name=img_name;
-        Query query=result_call.whereEqualTo("file_name",user_img_name);
+        String user_img_name;
+        File file_upload;
+        String img_file_path;
+        //
+
 
 
         //이 값을 위의 배열과 매칭해서 결과를 화면에 보여줌
-        int color=intent.getIntExtra("result_color",10);
-        String face_re=intent.getStringExtra("result_face");
-        String img_file_path=intent.getStringExtra("img");
+
+
 
         String color_str=result_color.get(color);
         String color_str_ko=result_color_ko.get(color);
         String face_str=result_face.get(face_re);
         String face_str_ko=result_face_ko.get(face_re);
 
+        img_file_path = intent.getStringExtra("img");
 
-        File file_upload=new File(img_file_path);
+
 
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -173,72 +184,73 @@ public class PersonalActivity  extends AppCompatActivity {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
 //진단 수행중인지, 진단기록을 통해서 다시 추천아이템과 자세한 정보를 보려는지 체크
+        if(!img_file_path.equals("is_record")&&!img_name.equals("is_record")) {
+            user_img_name = img_name;
+            Query query = result_call.whereEqualTo("file_name", user_img_name);
+            file_upload = new File(img_file_path);
+            myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String value = snapshot.getValue(String.class);
+                    name = value;
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReference().child("user_img/");
+                    Uri uri_upload = Uri.fromFile(file_upload);
+                    //이미지 파일이름 수정해야 (유저이메일+날짜+시간)
+                    //다시 진단 기록내에 '진단명','진단날짜','진단결과(컬러)','진단결과(얼굴)','이미지파일이름','사용자의 이메일'로 저장
+                    //String file_name=name+"_"+user.getUid()+"_"+format.format(date);
+                    String file_name = user_img_name;
+                    StorageReference imgRef = storageRef.child(file_name);
 
-        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue(String.class);
-                name = value;
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference().child("user_img/");
-                Uri uri_upload = Uri.fromFile(file_upload);
-                //이미지 파일이름 수정해야 (유저이메일+날짜+시간)
-                //다시 진단 기록내에 '진단명','진단날짜','진단결과(컬러)','진단결과(얼굴)','이미지파일이름','사용자의 이메일'로 저장
-                //String file_name=name+"_"+user.getUid()+"_"+format.format(date);
-                String file_name = user_img_name;
-                StorageReference imgRef = storageRef.child(file_name);
+                    imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            String collection = "user_record";
+                            String document = "diag_record_" + file_name;
+                            String time = format.format(date);
+                            Map<String, String> data = new HashMap<>();
+                            data.put("diagnosis", "color_and_face");
+                            data.put("diagnosis_date", time);
+                            data.put("diagnosis_result_color", color_str_ko);
+                            data.put("diagnosis_result_face", face_str_ko);
+                            data.put("img_file_name", file_name);
+                            data.put("user_email", user.getEmail());
 
-                imgRef.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String collection = "user_record";
-                        String document = "diag_record_" + file_name;
-                        String time = format.format(date);
-                        Map<String, String> data = new HashMap<>();
-                        data.put("diagnosis", "color_and_face");
-                        data.put("diagnosis_date", time);
-                        data.put("diagnosis_result_color", color_str_ko);
-                        data.put("diagnosis_result_face", face_str_ko);
-                        data.put("img_file_name", file_name);
-                        data.put("user_email", user.getEmail());
+                            firebaseFirestore.collection(collection).document(document).set(data)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
 
-                        firebaseFirestore.collection(collection).document(document).set(data)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
 
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                        }
+                                    });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                                    }
-                                });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                        }
+                    });
+                }
 
-                    }
-                });
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+                }
+            });
+        }
 
 
         item_Recycler recycler_1=new item_Recycler();
         item_Recycler recycler_2=new item_Recycler();
-        item_Recycler recycler_3=new item_Recycler();
         item_Recycler recycler_4=new item_Recycler();
 
         ArrayList<Bitmap> itemfile_1=new ArrayList<Bitmap>();
         ArrayList<Bitmap> itemfile_2=new ArrayList<Bitmap>();
-        ArrayList<Bitmap> itemfile_3=new ArrayList<Bitmap>();
         ArrayList<Bitmap> itemfile_4=new ArrayList<Bitmap>();
 
         User_color_recom=findViewById(R.id.recom_user_color);
@@ -266,20 +278,18 @@ public class PersonalActivity  extends AppCompatActivity {
 
         itemlist_1=findViewById(R.id.cos_list);
         itemlist_2=findViewById(R.id.hair_list);
-        itemlist_3=findViewById(R.id.acc_list);
         itemlist_4=findViewById(R.id.cloth_list);
 
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
-        //StorageReference storageReference_color_cos=storage.getReference().child(color_str+"cosmetics/");
-        //StorageReference storageReference_face_hair=storage.getReference().child(face_str+"/hair/");
-        //StorageReference storageReference_color_cloth=storage.getReference().child(color_str+"clothes/");
-        //StorageReference storageReference_face_acc=storage.getReference().child(face_str+"/accessory/");
+        StorageReference storageReference_1=storage.getReference().child(color_str+"/cosmetics/");
+        StorageReference storageReference_2=storage.getReference().child(face_str+"/hair/");
+        StorageReference storageReference_3=storage.getReference().child(color_str+"/clothes/");
         //폴더에 파일이 없으면 안나온다;;
-        StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
-        StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
-        StorageReference storageReference_3=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"shadow/");
-        StorageReference storageReference_4=storageReference_3;
+        //StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
+        //StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
+        //StorageReference storageReference_3=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"shadow/");
+        //StorageReference storageReference_4=storageReference_3;
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         storageReference_1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -303,6 +313,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_1.add(bitmap);
+                                //여기에 데이터가 더이상 남지 않으면 리사이클러 뷰로 보여주는 조건을 추가한다.
                                 if(itemfile_1.size()==8){
                                     recycler_1.setrecycler(itemfile_1);
                                     itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
@@ -394,51 +405,6 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
-                                itemfile_3.add(bitmap);
-                                if(itemfile_3.size()==8){
-                                    recycler_3.setrecycler(itemfile_3);
-                                    itemlist_3.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_3.setAdapter(recycler_3);
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(PersonalActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        storageReference_4.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                path=new File(result_path.getAbsolutePath());
-                for (StorageReference item : listResult.getItems()) {
-                    //다운로드 받을 파일의 이름을 지정
-                    File download=new File(path,item.getName());
-                    if(!path.exists()){
-                        path.getParentFile().mkdirs();
-                    }
-                    try {
-                        //파일을 생성
-                        download.createNewFile();
-                        //파일을 다운로드할 작업을 정의
-                        FileDownloadTask fileDownloadTask=item.getFile(download);
-                        fileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
-                                Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
                                 itemfile_4.add(bitmap);
                                 if(itemfile_4.size()==8){
                                     recycler_4.setrecycler(itemfile_4);
@@ -464,6 +430,8 @@ public class PersonalActivity  extends AppCompatActivity {
             }
         });
 
+
+        /*
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);
         Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
@@ -473,7 +441,7 @@ public class PersonalActivity  extends AppCompatActivity {
             color_title.setImageBitmap(bitmap);
         }catch (FileNotFoundException e){
             e.printStackTrace();
-        }
+        }*/
 
         //진단 실행화면에서 결과값을 받아오고 그 결과값(숫자)에 맞는 문자열을 매칭 시킨다
         //int skin_int=intent.getIntExtra("result",10);
@@ -491,7 +459,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
 
         switch (color_str) {
-            case "spring worm_Light":
+            case "spring warm_Light":
                 selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
                 color_title.setImageResource(R.drawable.spring_worm_light_img);
                 User_color_recom.setText(color_str_ko);
@@ -499,8 +467,9 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
                 Title_User_color.setTextColor(getColor(R.color.spring_worm_light));
                 color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
+                color_detail.setText(R.string.spring_warm_Light);
                 break;
-            case "spring worm_Bright":
+            case "spring warm_Bright":
                 selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
                 color_title.setImageResource(R.drawable.spring_worm_bright_img);
                 User_color_recom.setText(color_str_ko);
@@ -508,6 +477,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_bright));
                 Title_User_color.setTextColor(getColor(R.color.spring_worm_bright));
                 color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
+                color_detail.setText(R.string.spring_warm_Bright);
                 break;
             case "summer cool_Light":
                 selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
@@ -517,6 +487,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_light));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
                 color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
+                color_detail.setText(R.string.summer_cool_Light);
                 break;
             case "summer cool_Bright":
                 selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
@@ -526,6 +497,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
                 color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
+                color_detail.setText(R.string.summer_cool_Bright);
                 break;
             case "summer cool_Mute":
                 selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
@@ -535,8 +507,9 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_mute));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
                 color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
+                color_detail.setText(R.string.summer_cool_Mute);
                 break;
-            case "autumn worm_Deep":
+            case "autumn warm_Deep":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
                 color_title.setImageResource(R.drawable.autumn_worm_deep_img);
                 User_color_recom.setText(color_str_ko);
@@ -544,8 +517,9 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_deep));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_deep));
                 color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
+                color_detail.setText(R.string.autumn_warm_Deep);
                 break;
-            case "autumn worm_Mute":
+            case "autumn warm_Mute":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
                 color_title.setImageResource(R.drawable.autumn_worm_mute_img);
                 User_color_recom.setText(color_str_ko);
@@ -553,8 +527,9 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_mute));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_mute));
                 color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
+                color_detail.setText(R.string.autumn_warm_Mute);
                 break;
-            case "autumn worm_Strong":
+            case "autumn warm_Strong":
                 selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
                 color_title.setImageResource(R.drawable.autumn_worm_strong_img);
                 User_color_recom.setText(color_str_ko);
@@ -562,6 +537,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.autumn_worm_strong));
                 Title_User_color.setTextColor(getColor(R.color.autumn_worm_strong));
                 color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
+                color_detail.setText(R.string.autumn_warm_Strong);
                 break;
             case "winter cool_Deep":
                 selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
@@ -571,6 +547,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_deep));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
                 color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
+                color_detail.setText(R.string.winter_cool_Deep);
                 break;
             case "winter cool_Bright":
                 selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
@@ -580,6 +557,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
                 color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
+                color_detail.setText(R.string.winter_cool_Bright);
                 break;
             default:
                 //여기에는 오류화면 띄우면 될듯

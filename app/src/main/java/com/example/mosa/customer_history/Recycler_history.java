@@ -1,15 +1,18 @@
 package com.example.mosa.customer_history;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mosa.PersonalActivity;
 import com.example.mosa.R;
 
 import org.w3c.dom.Text;
@@ -33,6 +36,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
     ArrayList<String> Dia_date=new ArrayList<String>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
+        Button review_btn;
         ImageView his_record;
         TextView his_mail;
         TextView his_date;
@@ -42,6 +46,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         TextView his_diag_result_2;
         public ViewHolder(View itemView) {
             super(itemView);
+            review_btn=itemView.findViewById(R.id.record_view);
             his_record=itemView.findViewById(R.id.user_history_img);
             his_mail=itemView.findViewById(R.id.history_mail);
             his_date=itemView.findViewById(R.id.history_date);
@@ -83,6 +88,77 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         holder.his_diag_result_1.setText(Diag_rst_1);
         holder.his_diag_result_2.setText(Diag_rst_2);
         holder.his_date.setText(Dia_da);
+
+        holder.review_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int result_color = 10;
+                String result_face = "e";
+                switch (Diag_rst_1){
+                    case "봄웜 라이트":
+                        result_color = 0;
+                        break;
+                    case "봄웜 브라이트":
+                        result_color = 1;
+                        break;
+                    case "여름쿨 라이트":
+                        result_color = 2;
+                        break;
+                    case "여름쿨 브라이트":
+                        result_color = 3;
+                        break;
+                    case "여름쿨 뮤트":
+                        result_color = 4;
+                        break;
+                    case "가을웜 딥":
+                        result_color = 5;
+                        break;
+                    case "가을웜 뮤트":
+                        result_color = 6;
+                        break;
+                    case "가을웜 스트롱":
+                        result_color = 7;
+                        break;
+                    case "겨울쿨 딥":
+                        result_color = 8;
+                        break;
+                    case "겨울쿨 브라이트":
+                        result_color = 9;
+                        break;
+                    default:
+                        //여기에는 오류화면 띄우면 될듯
+                        break;
+                }
+
+                switch (Diag_rst_2){
+                    case "긴 얼굴형":
+                        result_face = "a";
+                        break;
+                    case "하트 얼굴형":
+                        result_face = "b";
+                        break;
+                    case "둥근 얼굴형":
+                        result_face = "c";
+                        break;
+                    case "각진 얼굴형(마름모)":
+                        result_face = "d";
+                        break;
+                    case "계란 얼굴형":
+                        result_face = "e";
+                        break;
+                    default:
+                        //여기에는 오류화면 띄우면 될듯
+                        break;
+
+                }
+                Intent intent=new Intent(holder.itemView.getContext(), PersonalActivity.class);
+                intent.putExtra("result_color",result_color);
+                intent.putExtra("result_face",result_face);
+                intent.putExtra("img","is_record");
+                intent.putExtra("img_name","is_record");
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 
