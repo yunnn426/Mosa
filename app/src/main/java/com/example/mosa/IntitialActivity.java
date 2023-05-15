@@ -62,10 +62,6 @@ public class IntitialActivity extends AppCompatActivity {
     Button btn4;
     File file;
     String filePath;
-    MenuItem bottom_1;
-    MenuItem bottom_2;
-    MenuItem bottom_3;
-    String faceinfo=null;
     BottomNavigationView bottomNavigationView;
     int clickcount=0;
     @Override

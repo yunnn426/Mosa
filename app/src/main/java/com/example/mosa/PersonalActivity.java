@@ -74,12 +74,6 @@ public class PersonalActivity  extends AppCompatActivity {
     TextView color_detail;
     FirebaseDatabase firebaseDatabase;
 
-    /*
-    ImageButton rec_btn_1;
-    ImageButton rec_btn_2;
-    ImageButton rec_btn_3;
-    ImageButton rec_btn_4;
-    */
 
     ImageView color_title;
     ImageView color_chrt;
@@ -563,11 +557,6 @@ public class PersonalActivity  extends AppCompatActivity {
                 //여기에는 오류화면 띄우면 될듯
                 break;
         }
-        /*
-        color_chrt_bmp=match_color_chrt(skin_title);
-        color_chrt.setImageBitmap(color_chrt_bmp);
-
-        */
 
         Face_title=findViewById(R.id.facedes_img);
         User_face=findViewById(R.id.user_face);
@@ -577,54 +566,7 @@ public class PersonalActivity  extends AppCompatActivity {
         diagnosesref=db.collection("user_record");
         //아래에 db에 기록하는 코드를 추가
 
-        /*
-        //각각 추천 UI를 불러오는 버튼
-        rec_btn_1=findViewById(R.id.recommand_btn_1);
-        rec_btn_2=findViewById(R.id.recommand_btn_2);
-        rec_btn_3=findViewById(R.id.recommand_btn_3);
-        rec_btn_4=findViewById(R.id.recommand_btn_4);
-
-        //각각 의 추천 엑티비티를 불러오는 리스너
-        rec_btn_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, reccosActivity.class);
-                intent.putExtra("result",skin_title);
-                startActivity(intent);
-            }
-        });
-        rec_btn_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, rechairActivity.class);
-                //얼굴형+퍼스널 컬러의 정보를 써야할 것 같다.
-            }
-        });
-        rec_btn_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, recaccActivity.class);
-                //얼굴형+퍼스널 컬러의 정보를 써야할 것 같다.
-            }
-        });
-        rec_btn_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, recclothActivity.class);
-            }
-        });*/
     }
-
-    //고객의 퍼스널 컬러 정보를 받아서 해당 컬러에 맞는 chrt 정보를 불러온다.
-    /*
-    public Bitmap match_color_chrt(String your_color){
-        Log.d("User","당신의 퍼스널 컬러에 맞는 chrt 정보를 불러옵니다.");
-        Bitmap your_color_chart;
-        //스토리지에 컬러 차트 이미지 저장하고 불러온다.
-
-        return your_color_chart;
-    }
-    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.top_menu,menu);
