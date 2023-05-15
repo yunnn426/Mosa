@@ -54,10 +54,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class loadingActivity extends AppCompatActivity {
-    int result_color;
-    int result_face;
 
-    String name;
     int result_1=0;
     String result_2;
     String result_3;
