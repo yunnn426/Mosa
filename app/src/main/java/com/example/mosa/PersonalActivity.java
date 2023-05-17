@@ -266,6 +266,10 @@ public class PersonalActivity  extends AppCompatActivity {
         ArrayList<Bitmap> itemfile_2=new ArrayList<Bitmap>();
         ArrayList<Bitmap> itemfile_4=new ArrayList<Bitmap>();
 
+        ArrayList<String> itemdetail_1=new ArrayList<String>();
+        ArrayList<String> itemdetail_2=new ArrayList<String>();
+        ArrayList<String> itemdetail_4=new ArrayList<String>();
+
         User_color_recom=findViewById(R.id.recom_user_color);
         User_name=findViewById(R.id.recom_user_name);
         Title_User_name=findViewById(R.id.title_username);
@@ -325,10 +329,12 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                Log.d("filename",download.getName());
+                                itemdetail_1.add(download.getName());
                                 itemfile_1.add(bitmap);
                                 //여기에 데이터가 더이상 남지 않으면 리사이클러 뷰로 보여주는 조건을 추가한다.
-                                if(itemfile_1.size()==8){
-                                    recycler_1.setrecycler(itemfile_1);
+                                if(itemfile_1.size()==6){
+                                    recycler_1.setrecycler(itemfile_1,itemdetail_1);
                                     itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_1.setAdapter(recycler_1);
                                 }
@@ -373,9 +379,10 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                itemdetail_2.add(download.getName());
                                 itemfile_2.add(bitmap);
-                                if(itemfile_2.size()==8){
-                                    recycler_2.setrecycler(itemfile_2);
+                                if(itemfile_2.size()==6){
+                                    recycler_2.setrecycler(itemfile_2,itemdetail_2);
                                     itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_2.setAdapter(recycler_2);
                                 }
@@ -418,9 +425,10 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                itemdetail_4.add(download.getName());
                                 itemfile_4.add(bitmap);
-                                if(itemfile_4.size()==8){
-                                    recycler_4.setrecycler(itemfile_4);
+                                if(itemfile_4.size()==6){
+                                    recycler_4.setrecycler(itemfile_4,itemdetail_4);
                                     itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_4.setAdapter(recycler_4);
                                 }

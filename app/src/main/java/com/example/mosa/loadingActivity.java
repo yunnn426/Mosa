@@ -40,6 +40,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.ml.common.FirebaseMLException;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
+import com.google.firebase.ml.custom.FirebaseCustomRemoteModel;
+import com.google.firebase.ml.custom.FirebaseModelDataType;
+import com.google.firebase.ml.custom.FirebaseModelInputOutputOptions;
+import com.google.firebase.ml.custom.FirebaseModelInputs;
+import com.google.firebase.ml.custom.FirebaseModelInterpreter;
+import com.google.firebase.ml.custom.FirebaseModelInterpreterOptions;
+import com.google.firebase.ml.custom.FirebaseModelOutputs;
+import com.google.firebase.ml.modeldownloader.CustomModel;
+import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions;
+import com.google.firebase.ml.modeldownloader.DownloadType;
+import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,12 +63,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class loadingActivity extends AppCompatActivity {
-
+    private static final int IMAGE_DIMENSION = 224;
     int result_1=0;
     String result_2;
     String result_3;
@@ -128,7 +143,75 @@ public class loadingActivity extends AppCompatActivity {
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                                             result_1=documentSnapshot.getLong("color_result").intValue();
-                                            result_2=documentSnapshot.getString("face_result");
+                                            //result_2=documentSnapshot.getString("face_result");
+                                            /*
+                                            여기에서 직접 얼굴형 진단 모델을 호출해서 실행시키는 코드를 추가해야
+                                            */
+                                            FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("faceshape").build();
+                                            FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder().requireWifi().build();
+
+                                            FirebaseModelManager.getInstance().download(remoteModel, conditions)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            // Model downloaded successfully.
+
+                                                            // Create a FirebaseModelInterpreterOptions object.
+                                                            FirebaseModelInterpreterOptions options = new FirebaseModelInterpreterOptions.Builder(remoteModel).build();
+
+                                                            try {
+                                                                // Create a FirebaseModelInterpreter object.
+                                                                FirebaseModelInterpreter interpreter = FirebaseModelInterpreter.getInstance(options);
+
+                                                                // Preprocess the image and prepare the input data.
+                                                                float[][][][] inputData = preprocessImage(image_path);
+
+                                                                // Create a FirebaseModelInputs object.
+                                                                FirebaseModelInputOutputOptions inputOptions = new FirebaseModelInputOutputOptions.Builder()
+                                                                        .setInputFormat(0, FirebaseModelDataType.FLOAT32, new int[]{1, IMAGE_DIMENSION, IMAGE_DIMENSION, 3})
+                                                                        .setOutputFormat(0, FirebaseModelDataType.FLOAT32, new int[]{1, 1000})
+                                                                        .build();
+                                                                FirebaseModelInputs inputs = new FirebaseModelInputs.Builder()
+                                                                        .add(inputData)
+                                                                        .build();
+
+                                                                // Run the model and get the outputs.
+                                                                interpreter.run(inputs, inputOptions)
+                                                                        .addOnSuccessListener(new OnSuccessListener<FirebaseModelOutputs>() {
+                                                                            @Override
+                                                                            public void onSuccess(FirebaseModelOutputs result) {
+                                                                                // Model execution succeeded.
+
+                                                                                // Process the output data.
+                                                                                float[][] outputData = result.getOutput(0);
+                                                                                float[] probabilities = outputData[0];
+
+                                                                                // Use the probabilities as needed.
+                                                                                // Here, we are simply displaying them in the console.
+                                                                                System.out.println("Probabilities: " + Arrays.toString(probabilities));
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                // Model execution failed.
+                                                                            }
+                                                                        });
+                                                            } catch (IOException |
+                                                                     FirebaseMLException e) {
+                                                                // Error occurred while preparing the input image.
+
+                                                            }
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+// Model download failed.
+
+                                                        }
+                                                    });
+
                                             result_3=documentSnapshot.getString("file_name");
 
                                             rotation.cancel();
@@ -224,4 +307,26 @@ public class loadingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private float[][][][] preprocessImage(String imagePath) throws IOException {
+        // Load the image from the specified path.
+        File imageFile = new File(imagePath);
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+
+        // Resize the image to the desired input dimension.
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_DIMENSION, IMAGE_DIMENSION, true);
+
+        // Convert the image to a float array.
+        float[][][][] inputData = new float[1][IMAGE_DIMENSION][IMAGE_DIMENSION][3];
+        for (int i = 0; i < IMAGE_DIMENSION; i++) {
+            for (int j = 0; j < IMAGE_DIMENSION; j++) {
+                int pixel = resizedBitmap.getPixel(i, j);
+                inputData[0][i][j][0] = (float) ((pixel >> 16) & 0xFF) / 255.0f;  // Red channel
+                inputData[0][i][j][1] = (float) ((pixel >> 8) & 0xFF) / 255.0f;   // Green channel
+                inputData[0][i][j][2] = (float) (pixel & 0xFF) / 255.0f;          // Blue channel
+            }
+        }
+
+        return inputData;
+    }
+
 }
