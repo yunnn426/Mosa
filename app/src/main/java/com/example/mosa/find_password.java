@@ -32,6 +32,7 @@ public class find_password extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_password);
+        getSupportActionBar().hide();
 
         email = findViewById(R.id.input_email);
         password = findViewById(R.id.input_password);

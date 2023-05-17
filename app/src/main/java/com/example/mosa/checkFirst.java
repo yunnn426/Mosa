@@ -24,6 +24,7 @@ public class checkFirst extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_page1);
+        getSupportActionBar().hide();
 
         isFirstTime();
     }

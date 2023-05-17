@@ -80,7 +80,7 @@ public class CustomerInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_info);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
 
         logout = findViewById(R.id.logout);
         user_proimg = findViewById(R.id.customer_picture);

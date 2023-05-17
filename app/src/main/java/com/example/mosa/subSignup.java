@@ -48,6 +48,7 @@ public class subSignup extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        getSupportActionBar().hide();
 
         //액션 바 등록하기
 //        ActionBar actionBar = getSupportActionBar();

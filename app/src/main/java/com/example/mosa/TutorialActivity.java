@@ -36,6 +36,7 @@ public class TutorialActivity extends AppCompatActivity {
 //        }
 
         setContentView(R.layout.activity_tutorial);
+        getSupportActionBar().hide();
 
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
