@@ -1,6 +1,8 @@
 package com.example.mosa;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -58,10 +60,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.Tensor;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -118,9 +126,36 @@ public class loadingActivity extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animation animation) {
 
-                /*
-                여기에 사용자의 이미지를 전송하는 코드를 집어넣어야
-                */
+
+                String modelFileName="model.tflite";
+                // 모델 로드
+                AssetManager assetManager = getAssets();
+                Interpreter.Options options = new Interpreter.Options();
+                options.setNumThreads(4); // 원하는 스레드 수 설정
+                try {
+                    Interpreter interpreter = new Interpreter(loadModelFile(assetManager, modelFileName), options);
+                    float[][][][] inputData = preprocessImage(image_path);
+                    float[][] outputArray = new float[1][5];
+                    interpreter.run(inputData, outputArray);
+
+                    int maxIndex = 0;
+                    float maxValue = outputArray[0][0];
+                    for (int i = 0; i < outputArray[0].length; i++) {
+                        if (outputArray[0][i] > maxValue) {
+                            maxValue = outputArray[0][i];
+                            maxIndex = i;
+                        }
+                    }
+
+                    String[] labels = {"a", "b", "c", "d", "e"};
+                    String predictedLabel = labels[maxIndex];
+                    Toast.makeText(loadingActivity.this,predictedLabel,Toast.LENGTH_SHORT).show();
+
+                    result_2 = predictedLabel;
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 storageRef_2.putFile(uri_upload).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -144,7 +179,7 @@ public class loadingActivity extends AppCompatActivity {
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                                             result_1 = documentSnapshot.getLong("color_result").intValue();
-                                            result_2=documentSnapshot.getString("face_result");
+                                            //result_2=documentSnapshot.getString("face_result");
 
                                             /*
                                             여기에서 직접 얼굴형 진단 모델을 호출해서 실행시키는 코드를 추가해야
@@ -342,5 +377,14 @@ public class loadingActivity extends AppCompatActivity {
             }
         }
         return maxIndex;
+    }
+
+    private MappedByteBuffer loadModelFile(AssetManager assetManager, String modelFileName) throws IOException {
+        AssetFileDescriptor fileDescriptor = assetManager.openFd(modelFileName);
+        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+        FileChannel fileChannel = inputStream.getChannel();
+        long startOffset = fileDescriptor.getStartOffset();
+        long declaredLength = fileDescriptor.getDeclaredLength();
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 }
