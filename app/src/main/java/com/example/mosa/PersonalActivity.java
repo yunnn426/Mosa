@@ -115,14 +115,14 @@ public class PersonalActivity  extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
         //닫기
-        closeBtn = findViewById(R.id.close);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //메인 머지 후 수정 예정
-                //Intent intent = new Intent(PersonalActivity.this, )
-            }
-        });
+        //closeBtn = findViewById(R.id.close);
+//        closeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //메인 머지 후 수정 예정
+//                //Intent intent = new Intent(PersonalActivity.this, )
+//            }
+//        });
 
         result_color.put(0,"spring warm_Light");
         result_color.put(1,"spring warm_Bright");
