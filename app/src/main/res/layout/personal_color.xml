@@ -27,7 +27,7 @@
                 android:layout_height="224dp"
                 android:layout_marginTop="110dp"
                 android:layout_marginBottom="30dp"
-                android:src="@drawable/spring_worm_light_img"
+                android:src="@drawable/spring_warm_light_img"
                 android:layout_gravity="center_horizontal"
                 app:layout_collapseMode="parallax"
                 />
