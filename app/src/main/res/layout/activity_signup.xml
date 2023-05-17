@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/mosa_logo"
-        android:layout_width="75dp"
-        android:layout_height="30dp"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
         android:layout_marginHorizontal="15dp"
-        android:background="@drawable/mosa_logo"
+        android:background="@drawable/mosa_color"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -74,6 +74,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:background="#ffffff"
+                    android:fontFamily="@font/nanumgothic"
                     android:hint="name"
                     android:id="@+id/TextInputEditText_name"
                     android:textColor="@color/white_gray"
@@ -105,6 +106,7 @@
                     android:background="#ffffff"
                     android:textColor="@color/white_gray"
                     android:textColorHint="@color/white_gray"
+                    android:fontFamily="@font/nanumgothic"
                     android:hint="email" />
             </LinearLayout>
 
@@ -133,6 +135,7 @@
                     android:id="@+id/TextInputEditText_password"
                     android:textColor="@color/white_gray"
                     android:textColorHint="@color/white_gray"
+                    android:fontFamily="@font/nanumgothic"
                     >
                 </EditText>
             </LinearLayout>
@@ -160,6 +163,7 @@
                     android:textColor="@color/white_gray"
                     android:textColorHint="@color/white_gray"
                     android:id="@+id/TextInputEditText_passwordcheck"
+                    android:fontFamily="@font/nanumgothic"
                     >
                 </EditText>
             </LinearLayout>
@@ -176,6 +180,7 @@
                 android:text="계정 생성하기"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
+                android:fontFamily="@font/nanumgothic"
                 >
             </android.widget.Button>
 
@@ -194,7 +199,9 @@
                     android:gravity="center"
                     android:textColor="@color/gray"
                     android:text="이미 계정이 있으신가요?"
-                    android:textSize="17sp"></TextView>
+                    android:textSize="17sp"
+                    android:fontFamily="@font/nanumgothic"
+                    ></TextView>
 
                 <android.widget.Button
                     android:id="@+id/back_login"
@@ -205,7 +212,9 @@
                     android:text="@string/login"
                     android:textStyle="bold"
                     android:textColor="#925A5757"
-                    android:textSize="17sp">
+                    android:textSize="17sp"
+                    android:fontFamily="@font/nanumgothic"
+                    >
 
                 </android.widget.Button>
 

@@ -19,7 +19,9 @@
         app:layout_constraintBottom_toBottomOf="@id/loading_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/nanumgothic"
+        />
 
     <ImageView
         android:id="@+id/loading_img"

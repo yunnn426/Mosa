@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ml.common.modeldownload.*;
@@ -67,6 +71,8 @@ import java.util.List;
 public class CustomerActivity extends AppCompatActivity {
 
     String faceinfo=null;
+    TextView customer_name;
+    FirebaseDatabase firebaseDatabase;
 
     private final static int scaling_Facter=10;
     FaceDetectorOptions highAccuracyOpts =
@@ -81,18 +87,52 @@ public class CustomerActivity extends AppCompatActivity {
 
     Button btn1;
     Button btn2;
-//
+    MenuItem bottom_1;
+    MenuItem bottom_2;
+    MenuItem bottom_3;
+
+
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommended_initial_screen);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         img1=findViewById(R.id.example_skin_img);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
 
+        customer_name = findViewById(R.id.title_text);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Users");
 
+        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                String value2 = value + "님,";
+                customer_name.setText(value2);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //String imagePath = intent.getStringExtra("img");
+        //File file=new File(imagePath);
+        //Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
+        /*
+        try{
+            Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            //faceinfo=analyzePicture(bitmap);
+            //여기서 ml kit을 수행해서 얼굴 이미지를 탐지해서 이용하려는데 null이 할당? 왜지?
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        */
 
         //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야
         //그냥 엑티비티를 이용해도 될듯?
@@ -134,7 +174,19 @@ public class CustomerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent_1=new Intent(CustomerActivity.this,IntitialActivity.class);
-
+                //if 파이어 베이스에서 String 형으로 보내줄 경우
+                //String face_color_info_1=sendimg_skin_firebase(bitmap,faceinfo)
+                //if 파이어 베이스에서 Json 형으로 보내줄 경우
+                //JSONObject face_color_info_1=(JSONObject)sendimg_skin_firebase(bitmap,faceinfo)
+                //String info_rem=sendimg_recom_firebase(bitmap,faceinfo)
+                //위의 퍼스널 컬러 정보와 추천정보를 담아서 해당 엑티비티에 전달(내 생각인데 큰 파일형식(?)이 좋을듯)
+                //일단 모르기 때문에 String 형으로 아무거나 전달
+                String info_rem="테스트용 추천정보";
+                String face_color_info_1="테스트용 제목";
+                String face_color_info_2="테스트용 내용";//여기에는 제목(퍼스널 컬러)에 알맞는 정보(내용)를 보내줘야
+                intent_1.putExtra("title",face_color_info_1);
+                intent_1.putExtra("detail",face_color_info_2);
+                intent_1.putExtra("recommend",info_rem);
                 intent_1.putExtra("choice","종합진단");
                 startActivity(intent_1);
             }
