@@ -144,11 +144,12 @@ public class loadingActivity extends AppCompatActivity {
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                                             result_1 = documentSnapshot.getLong("color_result").intValue();
-                                            //result_2=documentSnapshot.getString("face_result");
+                                            result_2=documentSnapshot.getString("face_result");
 
                                             /*
                                             여기에서 직접 얼굴형 진단 모델을 호출해서 실행시키는 코드를 추가해야
                                             */
+                                            /*
                                             FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("faceshape").build();
                                             FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder().requireWifi().build();
 
@@ -213,7 +214,7 @@ public class loadingActivity extends AppCompatActivity {
                                                             // 모델 다운로드 실패
 
                                                         }
-                                                    });
+                                                    });*/
                                             result_3 = documentSnapshot.getString("file_name");
 
                                             //무한 애니매이션 중지
@@ -334,7 +335,7 @@ public class loadingActivity extends AppCompatActivity {
     private static int getMaxIndex(float[] array) {
         int maxIndex = 0;
         float maxValue = array[0];
-        for (int i = 1; i < array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] > maxValue) {
                 maxIndex = i;
                 maxValue = array[i];
