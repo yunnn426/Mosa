@@ -115,14 +115,14 @@ public class PersonalActivity  extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
         //닫기
-        closeBtn = findViewById(R.id.close);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //메인 머지 후 수정 예정
-                //Intent intent = new Intent(PersonalActivity.this, )
-            }
-        });
+        //closeBtn = findViewById(R.id.close);
+//        closeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //메인 머지 후 수정 예정
+//                //Intent intent = new Intent(PersonalActivity.this, )
+//            }
+//        });
 
         result_color.put(0,"spring warm_Light");
         result_color.put(1,"spring warm_Bright");
@@ -474,7 +474,7 @@ public class PersonalActivity  extends AppCompatActivity {
         switch (color_str) {
             case "spring warm_Light":
                 selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
-                color_title.setImageResource(R.drawable.spring_worm_light_img);
+                color_title.setImageResource(R.drawable.spring_warm_light_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
