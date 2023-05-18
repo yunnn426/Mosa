@@ -487,7 +487,7 @@ public class PersonalActivity  extends AppCompatActivity {
         switch (color_str) {
             case "spring warm_Light":
                 selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
-                color_title.setImageResource(R.drawable.spring_worm_light_img);
+                color_title.setImageResource(R.drawable.spring_warm_light_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
@@ -595,8 +595,10 @@ public class PersonalActivity  extends AppCompatActivity {
 
         */
 
+
         User_face=findViewById(R.id.face_title);
         User_face.setText(face_str_ko);
+
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");

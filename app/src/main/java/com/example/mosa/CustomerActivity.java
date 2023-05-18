@@ -92,7 +92,6 @@ public class CustomerActivity extends AppCompatActivity {
     MenuItem bottom_3;
 
 
-    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
