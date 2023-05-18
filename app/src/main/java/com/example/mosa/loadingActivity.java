@@ -280,27 +280,64 @@ public class loadingActivity extends AppCompatActivity {
                 // 애니메이션이 종료되면 실행될 작업
 
                 loading_img.clearAnimation();
-                loading_text.setText("컬러를 찾았습니다!!");
+                loading_text.setText("컬러를 찾았습니다!");
 
                 loading_img.setVisibility(View.INVISIBLE);
                 res_img.setVisibility(View.VISIBLE);
 
                 //결과 값을 받아서 그거에 맞는 ui 요소를 표시
-                /*
-                String rst_color="result_"+result_color;
+                String rst_color="result_"+result_1;
                 int drawable_id=getResources().getIdentifier(rst_color,"drawable",getPackageName());
                 res_img.setImageResource(drawable_id);
-                */
+
                 //임시로 표시
-                res_img.setImageResource(R.drawable.result_1);
+                //res_img.setImageResource(R.drawable.result_1);
+
+                String color;
+                switch (result_1) {
+                    case 1:
+                        color = "#FFA6AF";
+                        break;
+                    case 2:
+                        color = "#FF6E55";
+                        break;
+                    case 3:
+                        color = "#D6EDE5";
+                        break;
+                    case 4:
+                        color = "#F4FFB4";
+                        break;
+                    case 5:
+                        color = "#E0C8EF";
+                        break;
+                    case 6:
+                        color = "#273E19";
+                        break;
+                    case 7:
+                        color = "#97AB60";
+                        break;
+                    case 8:
+                        color = "#987A5F";
+                        break;
+                    case 9:
+                        color = "#023854";
+                        break;
+                    case 10:
+                        color = "#FF53AC";
+                        break;
+                    default:
+                        color = "#ffffff";
+                        break;
+                }
 
                 cons.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //이곳을 나중에 퍼스널 컬러별 색으로 바꾸면 될듯
-                        cons.setBackgroundColor(Color.parseColor("#FF4D4D"));
+                        cons.setBackgroundColor(Color.parseColor(color));
                     }
                 }, 2000);
+
                 cons.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
