@@ -96,7 +96,7 @@ public class CustomerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommended_initial_screen);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
 
         img1=findViewById(R.id.example_skin_img);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();

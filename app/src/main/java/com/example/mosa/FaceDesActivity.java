@@ -34,7 +34,7 @@ public class FaceDesActivity extends AppCompatActivity {
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
         Intent intent=getIntent();
         String image_path=intent.getStringExtra("img");
         File file=new File(image_path);

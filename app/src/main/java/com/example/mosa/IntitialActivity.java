@@ -73,7 +73,7 @@ public class IntitialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.initial_activity);
-
+        getSupportActionBar().hide();
 
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
 
