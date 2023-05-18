@@ -156,7 +156,7 @@ public class PersonalActivity  extends AppCompatActivity {
         result_face_ko.put("a","긴 얼굴형");
         result_face_ko.put("b","하트 얼굴형");
         result_face_ko.put("c","둥근 얼굴형");
-        result_face_ko.put("d","각진 얼굴형(마름모)");
+        result_face_ko.put("d","각진 얼굴형");
         result_face_ko.put("e","계란 얼굴형");
 
         /*
