@@ -81,17 +81,6 @@
 
             <!--            </RelativeLayout>-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-
-                >
-            </TextView>
-
             <RelativeLayout
                 android:id="@+id/ToEmail"
                 android:layout_width="match_parent"

@@ -106,7 +106,7 @@ public class PersonalActivity  extends AppCompatActivity {
         */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_color);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         color_title=findViewById(R.id.skin_img);
         color_detail=findViewById(R.id.color_detail);
         Intent intent=getIntent();
