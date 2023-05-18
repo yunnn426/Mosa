@@ -7,7 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -21,21 +24,35 @@ import java.io.FileNotFoundException;
 
 public class FullitemImage extends AppCompatActivity {
     ImageView imageView;
+    ImageButton backbtn;
+    TextView item_detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullitemimage);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = findViewById(R.id.full_image_view);
+        item_detail=findViewById(R.id.item_detail);
+        backbtn=findViewById(R.id.item_back);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra("bitmap_url");
+        String item_des=intent.getStringExtra("item_detail");
         File file=new File(imageUrl);
         Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
         try{
             Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
             imageView.setImageBitmap(bitmap);
+            item_detail.setText(item_des);
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }

@@ -171,12 +171,6 @@ public class CustomerInfo extends AppCompatActivity {
                 intent_proimg.setType("image/*");
                 startActivityForResult(intent_proimg, 1);
 
-
-                /*
-                여기에 유저의 프로필 이미지를 파이어베이스 스토어에 저장하는 코드를 추가
-                */
-
-
                 }
 
         });

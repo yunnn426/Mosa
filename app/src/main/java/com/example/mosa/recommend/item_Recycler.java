@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder_item>{
 
     ArrayList<Bitmap> itemfile=new ArrayList<Bitmap>();
-
+    ArrayList<String> itemname=new ArrayList<String>();
 
     @Override
     public ViewHolder_item onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,7 +33,7 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder_item holder, int position) {
         Bitmap item=itemfile.get(position);
-
+        String item_detail=itemname.get(position);
         holder.item_img.setImageBitmap(item);
     }
     public class ViewHolder_item extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -48,8 +48,9 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
             int position=getAdapterPosition();
             Intent intent=new Intent(itemView.getContext(),FullitemImage.class);
             Bitmap bitmap=itemfile.get(position);
-
+            String item_detail=itemname.get(position);
             File file=BmpToFile(bitmap,"item_img");
+            intent.putExtra("item_detail",item_detail);
             intent.putExtra("bitmap_url",file.getAbsolutePath());
             itemView.getContext().startActivity(intent);
         }
@@ -77,8 +78,9 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
 
     }
 
-    public void setrecycler(ArrayList<Bitmap> itemfile_list){
+    public void setrecycler(ArrayList<Bitmap> itemfile_list,ArrayList<String> itemname){
         this.itemfile=itemfile_list;
+        this.itemname=itemname;
     }
     @Override
     public int getItemCount() {
