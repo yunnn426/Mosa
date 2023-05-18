@@ -144,6 +144,8 @@ public class Fragment_history extends Fragment {
 
                 storage=FirebaseStorage.getInstance();
                 StorageReference user_img=storage.getReference();
+
+
                 File result_path= getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_record_img");
 
                 for (String filename : Diagnosis_file_name) {
@@ -151,6 +153,7 @@ public class Fragment_history extends Fragment {
                     try {
                         localFile = File.createTempFile(filename,"jpg",result_path);
                         StorageReference imgref = user_img.child("user_img/" + filename);
+
                         imgref.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {

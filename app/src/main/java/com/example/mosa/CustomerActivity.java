@@ -92,7 +92,6 @@ public class CustomerActivity extends AppCompatActivity {
     MenuItem bottom_3;
 
 
-//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +110,7 @@ public class CustomerActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String value = snapshot.getValue(String.class);
-                String value2 = value + "님,";
+                String value2 = value;
                 customer_name.setText(value2);
             }
 
@@ -134,41 +133,48 @@ public class CustomerActivity extends AppCompatActivity {
         }
         */
 
-        //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야
+        //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야 (구현함)
         //그냥 엑티비티를 이용해도 될듯?
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item->{
-            switch (item.getItemId()){
-                case R.id.bottom_menu_1:
-                {
-                    Toast.makeText(this,"이미 스타일 진단 화면입니다.(단, 사진등록을 먼저 해야합니다.)",Toast.LENGTH_SHORT).show();
-                    //이미 스타일 진단 화면이어서 별다른 응답 없어도 된다.
-                    break;
+        bottomNavigationView.setSelectedItemId(R.id.bottom_menu_1);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.bottom_menu_1:
+                    {
+                        //Toast.makeText(this,"이미 스타일 진단 화면입니다.(단, 사진등록을 먼저 해야합니다.)",Toast.LENGTH_SHORT).show();
+                        //이미 스타일 진단 화면이어서 별다른 응답 없어도 된다.
+                        return true;
+                    }
+                    case R.id.bottom_menu_2:
+                    {
+                        //Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
+                        Intent intent_bottom_2=new Intent(CustomerActivity.this,styleSearchActivity.class);
+                        //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
+                        startActivity(intent_bottom_2);
+                        overridePendingTransition(0,0);
+                        return true;
+                        //스타일 검색 화면을 보여준다.
+                    }
+                    case R.id.bottom_menu_3:
+                    {
+                        String user_name=user.getDisplayName();
+                        String user_email=user.getEmail();
+                        //Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent_bottom_3=new Intent(CustomerActivity.this,CustomerInfo.class);
+                        intent_bottom_3.putExtra("username",user_name);
+                        intent_bottom_3.putExtra("useremail",user_email);
+                        startActivity(intent_bottom_3);
+                        overridePendingTransition(0,0);
+                        return true;
+                        //회원님의 정보를 보여준다
+                    }
                 }
-                case R.id.bottom_menu_2:
-                {
-                    Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
-                    Intent intent_bottom_2=new Intent(CustomerActivity.this,styleSearchActivity.class);
-                    //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
-                    startActivity(intent_bottom_2);
-                    break;
-                    //스타일 검색 화면을 보여준다.
-                }
-                case R.id.bottom_menu_3:
-                {
-                    String user_name=user.getDisplayName();
-                    String user_email=user.getEmail();
-                    Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent_bottom_3=new Intent(CustomerActivity.this,CustomerInfo.class);
-                    intent_bottom_3.putExtra("username",user_name);
-                    intent_bottom_3.putExtra("useremail",user_email);
-                    startActivity(intent_bottom_3);
-                    break;
-                    //회원님의 정보를 보여준다
-                }
+                return false;
             }
-            return false;
         });
+
         btn1=findViewById(R.id.color_btn);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override

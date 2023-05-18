@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,9 +37,9 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
     ArrayList<String> Dia_date=new ArrayList<String>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        Button review_btn;
+        ImageButton review_btn;
         ImageView his_record;
-        TextView his_mail;
+        //TextView his_mail;
         TextView his_date;
         TextView his_diag;
         TextView his_diag_result_1;
@@ -48,9 +49,11 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
             super(itemView);
             review_btn=itemView.findViewById(R.id.record_view);
             his_record=itemView.findViewById(R.id.user_history_img);
-            his_mail=itemView.findViewById(R.id.history_mail);
+            //his_mail=itemView.findViewById(R.id.history_mail);
+
+
             his_date=itemView.findViewById(R.id.history_date);
-            his_diag=itemView.findViewById(R.id.history_diag);
+            //his_diag=itemView.findViewById(R.id.history_diag);
             his_diag_result_1=itemView.findViewById(R.id.history_diag_result_1);
             his_diag_result_2=itemView.findViewById(R.id.history_diag_result_2);
         }
@@ -83,10 +86,18 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
         String Dia_da=Dia_date.get(position);
 
         holder.his_record.setImageBitmap(img);
-        holder.his_mail.setText(mail);
-        holder.his_diag.setText(Diag);
+        //holder.his_mail.setText(mail);
+        //holder.his_diag.setText(Diag);
         holder.his_diag_result_1.setText(Diag_rst_1);
         holder.his_diag_result_2.setText(Diag_rst_2);
+
+        String temp, year, month, day, time;
+        temp = Dia_da;
+        year = temp.substring(0, 4);
+        month = temp.substring(5, 7);
+        day = temp.substring(8, 10);
+        time = temp.substring(11);
+        Dia_da = year + "." + month + "." + day + " " + time;
         holder.his_date.setText(Dia_da);
 
         holder.review_btn.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +151,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
                     case "둥근 얼굴형":
                         result_face = "c";
                         break;
-                    case "각진 얼굴형(마름모)":
+                    case "각진 얼굴형":
                         result_face = "d";
                         break;
                     case "계란 얼굴형":

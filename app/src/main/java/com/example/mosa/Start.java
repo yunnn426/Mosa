@@ -32,9 +32,11 @@ public class Start extends AppCompatActivity {
         }else{
 //            Button imageButton = findViewById(R.id.GoEmailButton);
 //            imageButton.setOnClickListener(view -> {
-                Intent intent = new Intent(getApplicationContext(),
-                        Signup.class);
-                startActivity(intent);
+
+            Intent intent = new Intent(getApplicationContext(),
+                    Signup.class);
+            startActivity(intent);
+
 //            });
 
         }

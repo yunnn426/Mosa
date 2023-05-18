@@ -93,6 +93,10 @@ public class PersonalActivity  extends AppCompatActivity {
     RecyclerView itemlist_4;
     File path;
     String name;
+
+    //닫기용 버튼
+    ImageButton closeBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*
@@ -110,6 +114,16 @@ public class PersonalActivity  extends AppCompatActivity {
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
+        //닫기
+        closeBtn = findViewById(R.id.close);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //메인 머지 후 수정 예정
+                Intent intent = new Intent(PersonalActivity.this, CustomerActivity.class);
+                startActivity(intent);
+            }
+        });
 
         result_color.put(0,"spring warm_Light");
         result_color.put(1,"spring warm_Bright");
@@ -253,6 +267,10 @@ public class PersonalActivity  extends AppCompatActivity {
         ArrayList<Bitmap> itemfile_2=new ArrayList<Bitmap>();
         ArrayList<Bitmap> itemfile_4=new ArrayList<Bitmap>();
 
+        ArrayList<String> itemdetail_1=new ArrayList<String>();
+        ArrayList<String> itemdetail_2=new ArrayList<String>();
+        ArrayList<String> itemdetail_4=new ArrayList<String>();
+
         User_color_recom=findViewById(R.id.recom_user_color);
         User_name=findViewById(R.id.recom_user_name);
         Title_User_name=findViewById(R.id.title_username);
@@ -312,10 +330,13 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                String itemfilename=download.getName();
+                                String itemname=itemfilename.substring(0, itemfilename.length() - 4);
+                                itemdetail_1.add(itemname);
                                 itemfile_1.add(bitmap);
                                 //여기에 데이터가 더이상 남지 않으면 리사이클러 뷰로 보여주는 조건을 추가한다.
-                                if(itemfile_1.size()==8){
-                                    recycler_1.setrecycler(itemfile_1);
+                                if(itemfile_1.size()==6){
+                                    recycler_1.setrecycler(itemfile_1,itemdetail_1);
                                     itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_1.setAdapter(recycler_1);
                                 }
@@ -360,9 +381,12 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                String itemfilename=download.getName();
+                                String itemname=itemfilename.substring(0, itemfilename.length() - 4);
+                                itemdetail_2.add(itemname);
                                 itemfile_2.add(bitmap);
-                                if(itemfile_2.size()==8){
-                                    recycler_2.setrecycler(itemfile_2);
+                                if(itemfile_2.size()==6){
+                                    recycler_2.setrecycler(itemfile_2,itemdetail_2);
                                     itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_2.setAdapter(recycler_2);
                                 }
@@ -405,9 +429,12 @@ public class PersonalActivity  extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 //제대로 비트맵 이미지를 받아온 것을 확인, 실제 경로 상에 파일이 존재, 배열도 확인
                                 Bitmap bitmap=BitmapFactory.decodeFile(download.getAbsolutePath());
+                                String itemfilename=download.getName();
+                                String itemname=itemfilename.substring(0, itemfilename.length() - 4);
+                                itemdetail_4.add(itemname);
                                 itemfile_4.add(bitmap);
-                                if(itemfile_4.size()==8){
-                                    recycler_4.setrecycler(itemfile_4);
+                                if(itemfile_4.size()==6){
+                                    recycler_4.setrecycler(itemfile_4,itemdetail_4);
                                     itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                     itemlist_4.setAdapter(recycler_4);
                                 }
@@ -460,23 +487,23 @@ public class PersonalActivity  extends AppCompatActivity {
 
         switch (color_str) {
             case "spring warm_Light":
-                selected_color_1.setImageResource(R.drawable.spring_worm_light_color_chart);
-                color_title.setImageResource(R.drawable.spring_worm_light_img);
+                selected_color_1.setImageResource(R.drawable.spring_warm_light_color_chart);
+                color_title.setImageResource(R.drawable.spring_warm_light_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
-                User_color_recom.setTextColor(getColor(R.color.spring_worm_light));
-                Title_User_color.setTextColor(getColor(R.color.spring_worm_light));
-                color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
+                User_color_recom.setTextColor(getColor(R.color.spring_warm_light));
+                Title_User_color.setTextColor(getColor(R.color.spring_warm_light));
+                //color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
                 color_detail.setText(R.string.spring_warm_Light);
                 break;
             case "spring warm_Bright":
-                selected_color_1.setImageResource(R.drawable.spring_worm_bright_color_chart);
-                color_title.setImageResource(R.drawable.spring_worm_bright_img);
+                selected_color_1.setImageResource(R.drawable.spring_warm_bright_color_chart);
+                color_title.setImageResource(R.drawable.spring_warm_bright_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
-                User_color_recom.setTextColor(getColor(R.color.spring_worm_bright));
-                Title_User_color.setTextColor(getColor(R.color.spring_worm_bright));
-                color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
+                User_color_recom.setTextColor(getColor(R.color.spring_warm_bright));
+                Title_User_color.setTextColor(getColor(R.color.spring_warm_bright));
+                //color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
                 color_detail.setText(R.string.spring_warm_Bright);
                 break;
             case "summer cool_Light":
@@ -486,7 +513,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_light));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
-                color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
+                //color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
                 color_detail.setText(R.string.summer_cool_Light);
                 break;
             case "summer cool_Bright":
@@ -496,7 +523,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
-                color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
+                //color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
                 color_detail.setText(R.string.summer_cool_Bright);
                 break;
             case "summer cool_Mute":
@@ -506,37 +533,37 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.summer_cool_mute));
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
-                color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
+                //color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
                 color_detail.setText(R.string.summer_cool_Mute);
                 break;
             case "autumn warm_Deep":
-                selected_color_1.setImageResource(R.drawable.autumn_worm_deep_color_chart);
-                color_title.setImageResource(R.drawable.autumn_worm_deep_img);
+                selected_color_1.setImageResource(R.drawable.autumn_warm_deep_color_chart);
+                color_title.setImageResource(R.drawable.autumn_warm_deep_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
-                User_color_recom.setTextColor(getColor(R.color.autumn_worm_deep));
-                Title_User_color.setTextColor(getColor(R.color.autumn_worm_deep));
-                color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
+                User_color_recom.setTextColor(getColor(R.color.autumn_warm_deep));
+                Title_User_color.setTextColor(getColor(R.color.autumn_warm_deep));
+                //color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
                 color_detail.setText(R.string.autumn_warm_Deep);
                 break;
             case "autumn warm_Mute":
-                selected_color_1.setImageResource(R.drawable.autumn_worm_mute_color_chart);
-                color_title.setImageResource(R.drawable.autumn_worm_mute_img);
+                selected_color_1.setImageResource(R.drawable.autumn_warm_mute_color_chart);
+                color_title.setImageResource(R.drawable.autumn_warm_mute_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
-                User_color_recom.setTextColor(getColor(R.color.autumn_worm_mute));
-                Title_User_color.setTextColor(getColor(R.color.autumn_worm_mute));
-                color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
+                User_color_recom.setTextColor(getColor(R.color.autumn_warm_mute));
+                Title_User_color.setTextColor(getColor(R.color.autumn_warm_mute));
+                //color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
                 color_detail.setText(R.string.autumn_warm_Mute);
                 break;
             case "autumn warm_Strong":
-                selected_color_1.setImageResource(R.drawable.autumn_worm_strong_color_chart);
-                color_title.setImageResource(R.drawable.autumn_worm_strong_img);
+                selected_color_1.setImageResource(R.drawable.autumn_warm_strong_color_chart);
+                color_title.setImageResource(R.drawable.autumn_warm_strong_img);
                 User_color_recom.setText(color_str_ko);
                 Title_User_color.setText(color_str_ko);
-                User_color_recom.setTextColor(getColor(R.color.autumn_worm_strong));
-                Title_User_color.setTextColor(getColor(R.color.autumn_worm_strong));
-                color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
+                User_color_recom.setTextColor(getColor(R.color.autumn_warm_strong));
+                Title_User_color.setTextColor(getColor(R.color.autumn_warm_strong));
+                //color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
                 color_detail.setText(R.string.autumn_warm_Strong);
                 break;
             case "winter cool_Deep":
@@ -546,7 +573,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_deep));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
-                color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
+                //color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
                 color_detail.setText(R.string.winter_cool_Deep);
                 break;
             case "winter cool_Bright":
@@ -556,7 +583,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setText(color_str_ko);
                 User_color_recom.setTextColor(getColor(R.color.winter_cool_bright));
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
-                color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
+                //color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
                 color_detail.setText(R.string.winter_cool_Bright);
                 break;
             default:
@@ -569,9 +596,10 @@ public class PersonalActivity  extends AppCompatActivity {
 
         */
 
-        Face_title=findViewById(R.id.facedes_img);
-        User_face=findViewById(R.id.user_face);
+
+        User_face=findViewById(R.id.face_title);
         User_face.setText(face_str_ko);
+
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");

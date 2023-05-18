@@ -12,14 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="컬러를 찾는 중입니다."
-        android:textColor="@color/black"
+        android:textColor="#3d3d3d"
         android:textSize="20dp"
         android:textStyle="bold"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="@id/loading_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/nanumgothic"
+        />
 
     <ImageView
         android:id="@+id/loading_img"
