@@ -590,9 +590,8 @@ public class PersonalActivity  extends AppCompatActivity {
 
         */
 
-        //Face_title=findViewById(R.id.facedes_img);
-        //User_face=findViewById(R.id.user_face);
-        //User_face.setText(face_str_ko);
+        User_face=findViewById(R.id.face_title);
+        User_face.setText(face_str_ko);
 
         db=FirebaseFirestore.getInstance();
         diagnosesref=db.collection("user_record");

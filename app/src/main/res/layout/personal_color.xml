@@ -234,13 +234,32 @@
                         android:fontFamily="@font/nanumgothic"
                         />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
-                    android:text="얼굴형에 어울리는"
+                    android:text="얼굴형("
                     android:fontFamily="@font/nanumgothic"
                     />
+                   <TextView
+                    android:id="@+id/face_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="얼굴형"
+                    android:fontFamily="@font/nanumgothic"
+                    />
+                <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textSize="15dp"
+                     android:text=")에 어울리는"
+                     android:fontFamily="@font/nanumgothic"
+                     />
+            </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
