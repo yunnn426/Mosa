@@ -81,6 +81,7 @@ public class reccosActivity extends AppCompatActivity {
         StorageReference storageReference2=storage.getReference().child(result+"/cosmetics/"+"shadow/");
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        /*
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
@@ -216,7 +217,7 @@ public class reccosActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(reccosActivity.this,"스토리지를 불러오는 것을 실패 했습니다.",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }
