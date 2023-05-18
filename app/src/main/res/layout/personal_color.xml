@@ -24,7 +24,7 @@
                 <ImageView
                     android:id="@+id/skin_img"
                     android:layout_width="wrap_content"
-                    android:layout_height="224dp"
+                    android:layout_height="245dp"
                     android:layout_marginTop="110dp"
                     android:layout_marginBottom="30dp"
                     android:src="@drawable/spring_warm_light_img"
@@ -34,9 +34,11 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:layout_collapseMode="pin"
                     android:background="#ffffff"
+                    android:contentInsetStart="0dp"
+                    app:contentInsetStart="0dp"
                     >
                     <ImageView
                         android:id="@+id/mosa_logo"
@@ -45,15 +47,17 @@
                         android:background="@drawable/mosa_color"
                         android:layout_marginLeft="0dp"
                         android:layout_marginTop="0dp"
+                        android:adjustViewBounds="true"
                         />
 
                     <ImageButton
                         android:id="@+id/close"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:src="@drawable/close"
                         android:background="@android:color/transparent"
                         android:layout_gravity="right"
+                        android:scaleType="fitCenter"
                         android:layout_marginTop="80dp"
                         android:layout_marginRight="30dp"
                         />
@@ -90,6 +94,8 @@
                         android:textSize="15dp"
                         android:layout_marginTop="15dp"
                         android:text="데일리"
+                        android:textStyle="bold"
+                        android:textColor="#3d3d3d"
                         android:fontFamily="@font/nanumgothic"
                         />
                     <TextView
@@ -98,7 +104,7 @@
                         android:layout_marginTop="15dp"
                         android:text="님의 진단결과"
                         android:textSize="15dp"
-
+                        android:textColor="#3d3d3d"
                         android:fontFamily="@font/nanumgothic"
                         />
                 </LinearLayout>
@@ -124,9 +130,9 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/line"
+                    android:layout_width="336dp"
+                    android:layout_height="3dp"
+                    android:src="@drawable/ic_line"
                     android:layout_gravity="center_horizontal"
                     />
 
@@ -141,6 +147,7 @@
                     android:layout_marginBottom="35dp"
                     android:textSize="13dp"
                     android:fontFamily="@font/nanumgothic"
+
                     android:text="@string/summer_cool_Bright"/>
 
                 <LinearLayout
@@ -156,9 +163,9 @@
                         <ImageView
                             android:id="@+id/selected_color_chrt_1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="194dp"
                             android:layout_marginBottom="20dp"
-                            android:src="@drawable/spring_worm_light_color_chart"
+                            android:src="@drawable/spring_warm_light_color_chart"
                             android:layout_gravity="center_horizontal"/>
                     </LinearLayout>
 
@@ -188,6 +195,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
                             android:text="을 위한"
+                            android:textColor="#3d3d3d"
                             android:fontFamily="@font/nanumgothic"
                             />
                     </LinearLayout>
@@ -196,6 +204,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
                         android:text="추천 메이크업 제품"
+                        android:textColor="#3d3d3d"
                         android:fontFamily="@font/nanumgothic"
                         />
                 </LinearLayout>
@@ -223,6 +232,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
                             android:textStyle="bold"
+                            android:textColor="#3d3d3d"
                             android:text="데일리"
                             android:fontFamily="@font/nanumgothic"
                             />
@@ -230,6 +240,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
+                            android:textColor="#3d3d3d"
                             android:text="님의"
                             android:fontFamily="@font/nanumgothic"
                             />
@@ -238,6 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
+                        android:textColor="#3d3d3d"
                         android:text="얼굴형에 어울리는"
                         android:fontFamily="@font/nanumgothic"
                         />
@@ -245,6 +257,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
+                        android:textColor="#3d3d3d"
                         android:text="헤어스타일 추천"
                         android:fontFamily="@font/nanumgothic"
                         />
@@ -263,6 +276,7 @@
 
                     android:layout_marginLeft="20dp"
                     android:textSize="15dp"
+                    android:textColor="#3d3d3d"
                     android:text="옷 추천"
                     android:fontFamily="@font/nanumgothic"
                     />

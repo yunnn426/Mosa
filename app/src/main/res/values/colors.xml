@@ -14,14 +14,14 @@
     <color name="gray">#92494747</color>
     <color name="white_gray">#90999595</color>
 
-    <color name="spring_worm_light">#FF4866</color>
-    <color name="spring_worm_bright">#FD1C2A</color>
+    <color name="spring_warm_light">#FF4866</color>
+    <color name="spring_warm_bright">#FD1C2A</color>
     <color name="summer_cool_light">#53AC8D</color>
     <color name="summer_cool_bright">#92A32F</color>
     <color name="summer_cool_mute">#8A32C8</color>
-    <color name="autumn_worm_deep">#2E5118</color>
-    <color name="autumn_worm_mute">#6D8135</color>
-    <color name="autumn_worm_strong">#704D2E</color>
+    <color name="autumn_warm_deep">#2E5118</color>
+    <color name="autumn_warm_mute">#6D8135</color>
+    <color name="autumn_warm_strong">#704D2E</color>
     <color name="winter_cool_deep">#003049</color>
     <color name="winter_cool_bright">#FF0084</color>
 </resources>

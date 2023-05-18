@@ -24,7 +24,7 @@
             android:exported="false" />
         <activity
             android:name=".CustomerActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".FaceDesActivity"
             android:exported="false" />

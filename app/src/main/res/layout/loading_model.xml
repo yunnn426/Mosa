@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="컬러를 찾는 중입니다."
-        android:textColor="@color/black"
+        android:textColor="#3d3d3d"
         android:textSize="20dp"
         android:textStyle="bold"
         android:layout_marginBottom="80dp"

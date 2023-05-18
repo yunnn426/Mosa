@@ -7,8 +7,10 @@
     android:id="@+id/history_fail_msg"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:visibility="visible"
-    android:text="기록이 없거나, 기록을 불러오는 것에 실패했습니다."/>
+    android:layout_marginTop="20dp"
+    android:text="진단 기록을 불러오는 중입니다."/>
 
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/history_view"

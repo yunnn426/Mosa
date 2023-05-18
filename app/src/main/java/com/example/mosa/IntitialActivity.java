@@ -197,7 +197,7 @@ public class IntitialActivity extends AppCompatActivity {
 
                 case R.id.bottom_menu_1:
                 {
-                    Toast.makeText(this,"고객님의 이미지로 스타일 진단 화면으로 이동합니다.(다시 진단 종류를 선택하세요.)",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,"고객님의 이미지로 스타일 진단 화면으로 이동합니다.(다시 진단 종류를 선택하세요.)",Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_1=new Intent(IntitialActivity.this, CustomerActivity.class);
                     //이제 따로 뭘 전달할 필요는 없다, 그냥 진단 종류 선택하는 화면으로 만 이동
                     startActivity(intent_bottom_1);
@@ -205,7 +205,7 @@ public class IntitialActivity extends AppCompatActivity {
                 }
                 case R.id.bottom_menu_2:
                 {
-                    Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_2=new Intent(IntitialActivity.this,styleSearchActivity.class);
                     //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
                     startActivity(intent_bottom_2);
@@ -215,7 +215,7 @@ public class IntitialActivity extends AppCompatActivity {
                 case R.id.bottom_menu_3:
                 {
                     String user_email=user.getEmail();
-                    Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
                     Intent intent_bottom_3=new Intent(IntitialActivity.this,CustomerInfo.class);
                     BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
                     Bitmap bitmap=bitmapDrawable.getBitmap();
