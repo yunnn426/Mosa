@@ -135,8 +135,7 @@
                 android:background="@color/white_gray"
                 android:layout_gravity="center"
                 />
-
-
+          
                 <TextView
                     android:textColor="@color/detail_color"
                     android:id="@+id/color_detail"
