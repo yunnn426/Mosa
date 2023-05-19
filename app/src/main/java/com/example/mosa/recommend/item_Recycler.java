@@ -35,11 +35,14 @@ public class item_Recycler extends RecyclerView.Adapter<item_Recycler.ViewHolder
         Bitmap item=itemfile.get(position);
         String item_detail=itemname.get(position);
         holder.item_img.setImageBitmap(item);
+        holder.item_de.setText(item_detail);
     }
     public class ViewHolder_item extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView item_de;
         ImageView item_img;
         public ViewHolder_item(View itemView) {
             super(itemView);
+            item_de=itemView.findViewById(R.id.prodout_detail);
             item_img=itemView.findViewById(R.id.prodouct_id);
             item_img.setOnClickListener(this);
         }

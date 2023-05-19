@@ -104,6 +104,8 @@ public class styleSearchActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     @Override

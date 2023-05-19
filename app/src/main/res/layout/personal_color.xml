@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     >
 
     <!--컬러별 일러스트-->
@@ -127,13 +128,14 @@
                         android:fontFamily="@font/nanumgothic"
                         />
                 </LinearLayout>
-          
-                <ImageView
-                    android:layout_width="336dp"
-                    android:layout_height="3dp"
-                    android:src="@drawable/ic_line"
-                    android:layout_gravity="center_horizontal"
-                    />
+
+            <View
+                android:layout_width="336dp"
+                android:layout_height="3dp"
+                android:background="@color/white_gray"
+                android:layout_gravity="center"
+                />
+
 
                 <TextView
                     android:textColor="@color/detail_color"
@@ -308,7 +310,14 @@
                 android:padding="20dp"
                 />
 
+            <android.widget.Button
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:outlineSpotShadowColor="@color/white"
+                android:layout_height="wrap_content"
+                android:text="#봄웜 브라이트 검색하기"/>
         </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

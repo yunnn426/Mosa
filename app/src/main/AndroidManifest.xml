@@ -32,16 +32,7 @@
             android:name=".PersonalActivity"
             android:exported="false" />
         <activity
-            android:name=".recommend.reccosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".recommend.recaccActivity"
-            android:exported="false" />
-        <activity
             android:name=".recommend.recclothActivity"
-            android:exported="false" />
-        <activity
-            android:name=".recommend.rechairActivity"
             android:exported="false" />
         <activity
             android:name=".recommend.FullitemImage"

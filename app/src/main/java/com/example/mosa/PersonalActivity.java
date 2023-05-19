@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mosa.customer_history.Fragment_Adapter;
 import com.example.mosa.recommend.item_Recycler;
-import com.example.mosa.recommend.recaccActivity;
-import com.example.mosa.recommend.recclothActivity;
-import com.example.mosa.recommend.reccosActivity;
-import com.example.mosa.recommend.rechairActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,11 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.local.QueryResult;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -50,7 +39,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -106,7 +94,8 @@ public class PersonalActivity  extends AppCompatActivity {
         */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_color);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
         color_title=findViewById(R.id.skin_img);
         color_detail=findViewById(R.id.color_detail);
         Intent intent=getIntent();
@@ -301,7 +290,7 @@ public class PersonalActivity  extends AppCompatActivity {
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
         StorageReference storageReference_1=storage.getReference().child(color_str+"/cosmetics/");
-        StorageReference storageReference_2=storage.getReference().child(face_str+"/hair/");
+        StorageReference storageReference_2=storage.getReference().child(face_str+"/");
         StorageReference storageReference_3=storage.getReference().child(color_str+"/clothes/");
         //폴더에 파일이 없으면 안나온다;;
         //StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
