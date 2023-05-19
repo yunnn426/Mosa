@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mosa.customer_history.Fragment_Adapter;
 import com.example.mosa.recommend.item_Recycler;
-import com.example.mosa.recommend.recaccActivity;
-import com.example.mosa.recommend.recclothActivity;
-import com.example.mosa.recommend.reccosActivity;
-import com.example.mosa.recommend.rechairActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,11 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.local.QueryResult;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -50,7 +39,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,12 +62,6 @@ public class PersonalActivity  extends AppCompatActivity {
     TextView color_detail;
     FirebaseDatabase firebaseDatabase;
 
-    /*
-    ImageButton rec_btn_1;
-    ImageButton rec_btn_2;
-    ImageButton rec_btn_3;
-    ImageButton rec_btn_4;
-    */
 
     ImageView color_title;
     ImageView color_chrt;
@@ -157,7 +139,7 @@ public class PersonalActivity  extends AppCompatActivity {
         result_face_ko.put("a","긴 얼굴형");
         result_face_ko.put("b","하트 얼굴형");
         result_face_ko.put("c","둥근 얼굴형");
-        result_face_ko.put("d","각진 얼굴형(마름모)");
+        result_face_ko.put("d","각진 얼굴형");
         result_face_ko.put("e","계란 얼굴형");
 
         /*
@@ -302,7 +284,7 @@ public class PersonalActivity  extends AppCompatActivity {
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
         StorageReference storageReference_1=storage.getReference().child(color_str+"/cosmetics/");
-        StorageReference storageReference_2=storage.getReference().child(face_str+"/hair/");
+        StorageReference storageReference_2=storage.getReference().child(face_str+"/");
         StorageReference storageReference_3=storage.getReference().child(color_str+"/clothes/");
         //폴더에 파일이 없으면 안나온다;;
         //StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
@@ -459,18 +441,6 @@ public class PersonalActivity  extends AppCompatActivity {
         });
 
 
-        /*
-        String image_path=intent.getStringExtra("img");
-        File file=new File(image_path);
-        Uri uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".fileprovider",file);
-
-        try{
-            Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-            color_title.setImageBitmap(bitmap);
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }*/
-
         //진단 실행화면에서 결과값을 받아오고 그 결과값(숫자)에 맞는 문자열을 매칭 시킨다
         //int skin_int=intent.getIntExtra("result",10);
         //String skin_title=result_color[skin_int];
@@ -591,11 +561,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 //여기에는 오류화면 띄우면 될듯
                 break;
         }
-        /*
-        color_chrt_bmp=match_color_chrt(skin_title);
-        color_chrt.setImageBitmap(color_chrt_bmp);
 
-        */
 
 
         User_face=findViewById(R.id.face_title);
@@ -606,54 +572,9 @@ public class PersonalActivity  extends AppCompatActivity {
         diagnosesref=db.collection("user_record");
         //아래에 db에 기록하는 코드를 추가
 
-        /*
-        //각각 추천 UI를 불러오는 버튼
-        rec_btn_1=findViewById(R.id.recommand_btn_1);
-        rec_btn_2=findViewById(R.id.recommand_btn_2);
-        rec_btn_3=findViewById(R.id.recommand_btn_3);
-        rec_btn_4=findViewById(R.id.recommand_btn_4);
 
-        //각각 의 추천 엑티비티를 불러오는 리스너
-        rec_btn_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, reccosActivity.class);
-                intent.putExtra("result",skin_title);
-                startActivity(intent);
-            }
-        });
-        rec_btn_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, rechairActivity.class);
-                //얼굴형+퍼스널 컬러의 정보를 써야할 것 같다.
-            }
-        });
-        rec_btn_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, recaccActivity.class);
-                //얼굴형+퍼스널 컬러의 정보를 써야할 것 같다.
-            }
-        });
-        rec_btn_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(PersonalActivity.this, recclothActivity.class);
-            }
-        });*/
     }
 
-    //고객의 퍼스널 컬러 정보를 받아서 해당 컬러에 맞는 chrt 정보를 불러온다.
-    /*
-    public Bitmap match_color_chrt(String your_color){
-        Log.d("User","당신의 퍼스널 컬러에 맞는 chrt 정보를 불러옵니다.");
-        Bitmap your_color_chart;
-        //스토리지에 컬러 차트 이미지 저장하고 불러온다.
-
-        return your_color_chart;
-    }
-    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.top_menu,menu);

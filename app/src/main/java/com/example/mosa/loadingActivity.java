@@ -147,7 +147,7 @@ public class loadingActivity extends AppCompatActivity {
                         }
                     }
 
-                    String[] labels = {"a", "b", "c", "d", "e"};
+                    String[] labels = {"b", "a", "e", "c", "d"};
                     String predictedLabel = labels[maxIndex];
                     Toast.makeText(loadingActivity.this,predictedLabel,Toast.LENGTH_SHORT).show();
 
