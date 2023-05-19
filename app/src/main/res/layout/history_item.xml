@@ -28,6 +28,7 @@
             android:layout_marginBottom="5dp"
             android:textStyle="bold"
             android:text="고객님의 컬러 진단결과"
+            android:textColor="@color/black"
             android:fontFamily="@font/nanumgothic"
             />
         <TextView
@@ -37,6 +38,7 @@
             android:layout_marginBottom="5dp"
             android:textStyle="bold"
             android:text="고객님의 얼굴형 진단 결과"
+            android:textColor="@color/black"
             android:fontFamily="@font/nanumgothic"
             />
 
@@ -45,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="고객님의 진단일자"
+            android:textColor="@color/black"
             android:fontFamily="@font/nanumgothic"
             />
 

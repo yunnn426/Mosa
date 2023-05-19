@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -106,6 +107,9 @@ public class CustomerInfo extends AppCompatActivity {
 
                 for(StorageReference item : listResult.getItems()){
                     String profile_name=item.getName();
+
+                    SpannableString spannableString = new SpannableString(profile_name);
+
                     if(profile_name.contains(email_pro)){
                         pro_file_name.add(item.getName());
                     }
