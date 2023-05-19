@@ -58,7 +58,7 @@ public class styleSearchActivity extends AppCompatActivity {
 
         editText=findViewById(R.id.style_str);
         button=findViewById(R.id.style_str_input);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
 
         Paint paint=new Paint();
         paint.setColor(Color.BLACK);
@@ -103,6 +103,8 @@ public class styleSearchActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
     }
 

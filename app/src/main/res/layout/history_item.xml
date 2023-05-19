@@ -1,47 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="8dp"
+    >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/user_history_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
         android:src="@drawable/style"
         android:layout_marginRight="20dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="2">
+
         <TextView
-            android:id="@+id/history_mail"
-            android:layout_width="wrap_content"
+            android:id="@+id/history_diag_result_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="고객님의 이메일 정보"
-            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"
+            android:text="고객님의 컬러 진단결과"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nanumgothic"
             />
+        <TextView
+            android:id="@+id/history_diag_result_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"
+            android:text="고객님의 얼굴형 진단 결과"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nanumgothic"
+            />
+
         <TextView
             android:id="@+id/history_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="고객님의 진단일자"/>
-        <TextView
-            android:id="@+id/history_diag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="고객님의 진단종류"
-            android:layout_marginRight="20dp"
-        />
-        <TextView
-            android:id="@+id/history_diag_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="고객님의 진단결과"
+            android:text="고객님의 진단일자"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nanumgothic"
             />
+
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="해당 진단 정보를 이용해서 여러 활동을 합니다."/>
+
+    <ImageButton
+        android:id="@+id/record_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/arrow_forward"
+        android:scaleType="fitCenter"
+        />
+
+
 </LinearLayout>

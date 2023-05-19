@@ -1,77 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_gravity="center_horizontal"
-    android:fillViewport="true">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:id="@+id/recommend_initial_screen"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/pont_color"
-        android:textSize="25dp"
-        android:text="Personal Color"/>
-    <androidx.cardview.widget.CardView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center_horizontal"
-        app:cardCornerRadius="125dp"
-        app:cardElevation="5dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         >
+
+        <ImageView
+            android:id="@+id/mosa_logo"
+            android:layout_width="120dp"
+            android:layout_height="79dp"
+
+            android:background="@drawable/mosa_color"
+
+            app:layout_constraintBottom_toTopOf="@id/title_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            >
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="데일리"
+                android:textColor="#333333"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/title_text2"
+                app:layout_constraintTop_toBottomOf="@id/mosa_logo"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/title_text1"
+                android:text="님, "
+                android:textColor="#333333"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/title_text2"
+                app:layout_constraintTop_toBottomOf="@id/mosa_logo"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:text="안녕하세요!"
+            android:textColor="#333333"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@id/frame_layout1"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+
+            />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+
         <ImageView
             android:id="@+id/example_skin_img"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="308dp"
+            android:layout_height="511dp"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"/>
-    </androidx.cardview.widget.CardView>
-    <Button
-        android:id="@+id/color_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="컬러 진단 받기"/>
+            android:background="@drawable/mainpage"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/pont_color"
-        android:textSize="25dp"
-        android:text="얼굴형 분석"/>
+            app:layout_constraintTop_toBottomOf="@id/title_text2" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center_horizontal"
-        app:cardCornerRadius="125dp"
-        app:cardElevation="5dp"
-        >
-        <ImageView
-            android:id="@+id/example_face_img"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background" />
-    </androidx.cardview.widget.CardView>
-    <Button
-        android:id="@+id/face_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:textSize="20dp"
-        android:text="자신의 얼굴형 분석하기"/>
+        <android.widget.Button
+            android:id="@+id/color_btn"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bin_red"
+
+            android:text="지금 시작하기"
+            android:textColor="#282828"
+            android:textSize="14dp" />
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#C4C4C4"
-        app:menu="@menu/bottom_menu"/>
-</LinearLayout>
+        android:background="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu"
+        app:itemIconTint="@color/navigation_selector_color"
+        app:itemTextColor="@color/navigation_selector_color"
+        app:itemBackground="@color/white"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

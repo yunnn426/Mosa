@@ -1,216 +1,324 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    >
 
-    <LinearLayout
+    <!--컬러별 일러스트-->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-
-        <ImageView
-            android:id="@+id/skin_img"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:background="@color/pont_color"
-            android:src="@drawable/personal_color_ex"
-            android:layout_gravity="center_horizontal"/>
-        <TextView
-            android:id="@+id/user_color_en"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="고객님의 색상(영문)"/>
-        <TextView
-            android:id="@+id/user_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:textSize="25dp"
-            android:text="고객님의 색상"/>
-        <TextView
-            android:id="@+id/user_color_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:textSize="15dp"
-            android:text="고객님의 색상에 대한 설명"/>
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="컬러 차트"/>
+            <!-- 스크롤시 접히는 부분-->
+            <ImageView
+                android:id="@+id/skin_img"
+                android:layout_width="wrap_content"
+                android:layout_height="245dp"
+                android:layout_marginTop="110dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/spring_warm_light_img"
+                android:layout_gravity="center_horizontal"
+                app:layout_collapseMode="parallax"
+                />
 
-
-        <ImageView
-            android:id="@+id/color_chrt"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/color_chrt_1"/>
-
-        <ImageView
-            android:id="@+id/selected_color_chrt"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:src="@drawable/color_chrt_2"
-            android:layout_gravity="center_horizontal"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="Recommendations"/>
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="2"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:rowOrderPreserved="false">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="100dp"
-                    app:cardElevation="5dp">
-
-                    <ImageButton
-                        android:id="@+id/recommand_btn_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/cos_exm" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="화장품 추천"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="100dp"
-                    app:cardElevation="5dp">
-
-                    <ImageButton
-                        android:id="@+id/recommand_btn_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/hair_exm" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="헤어 추천"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="100dp"
-                    app:cardElevation="5dp">
-
-                    <ImageButton
-                        android:id="@+id/recommand_btn_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/acc_exm" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="악세서리 추천"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-            <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:layout_margin="16dp"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="5dp">
+                android:layout_height="match_parent"
+                app:layout_collapseMode="pin"
+                android:background="#ffffff"
+                android:contentInsetStart="0dp"
+                app:contentInsetStart="0dp"
+                >
+                <ImageView
+                    android:id="@+id/mosa_logo"
+                    android:layout_width="120dp"
+                    android:layout_height="79dp"
+                    android:background="@drawable/mosa_color"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:adjustViewBounds="true"
+                    />
 
                 <ImageButton
-                    android:id="@+id/recommand_btn_4"
+                    android:id="@+id/close"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/close"
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="right"
+                    android:scaleType="fitCenter"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginRight="30dp"
+                    />
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- 설명 -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <!--데일리님의 진단결과-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/clo_exm" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/title_username"
+                        android:textSize="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="데일리"
+                        android:textStyle="bold"
+                        android:textColor="#3d3d3d"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="님의 진단결과"
+                        android:textSize="15dp"
+                        android:textColor="#3d3d3d"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <!--컬러-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="20dp"
+                    >
+                    <TextView
+                        android:id="@+id/title_usercolor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/pont_color"
+                        android:textSize="18dp"
+                        android:text="데일리의 색상"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                </LinearLayout>
 
-            <TextView
+            <View
+                android:layout_width="336dp"
+                android:layout_height="3dp"
+                android:background="@color/white_gray"
+                android:layout_gravity="center"
+                />
+          
+                <TextView
+                    android:textColor="@color/detail_color"
+                    android:id="@+id/color_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="35dp"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/nanumgothic"
+                    android:text="@string/summer_cool_Bright"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/selected_color_chrt_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="194dp"
+                        android:layout_marginBottom="20dp"
+                        android:src="@drawable/spring_warm_light_color_chart"
+                        android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+              
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/recom_user_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/pont_color"
+                        android:text="고객님의 색상"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                  <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="을 위한"
+                        android:textColor="#3d3d3d"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="추천 메이크업 제품"
+                    android:textColor="#3d3d3d"
+                    android:fontFamily="@font/nanumgothic"
+                    />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cos_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/recom_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textColor="#3d3d3d"
+                        android:text="데일리"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="#3d3d3d"
+                        android:text="님의"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+               </LinearLayout>
+               
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="15dp"
+                       android:textColor="#3d3d3d"
+                       android:text="얼굴형("
+                       android:fontFamily="@font/nanumgothic"
+                       />
+                   <TextView
+                       android:id="@+id/face_title"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="15dp"
+                       android:textColor="#3d3d3d"
+                       android:text="얼굴형"
+                       android:fontFamily="@font/nanumgothic"
+                       />
+                    <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textSize="15dp"
+                         android:textColor="#3d3d3d"
+                         android:text=")에 어울리는"
+                         android:fontFamily="@font/nanumgothic"
+                         />
+               </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="#3d3d3d"
+                    android:text="헤어스타일 추천"
+                    android:fontFamily="@font/nanumgothic"
+                    />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hair_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp" />
+
+           <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="20dp"
+                android:textSize="15dp"
+                android:textColor="#3d3d3d"
                 android:text="옷 추천"
-                android:layout_gravity="center_horizontal"/>
+                android:fontFamily="@font/nanumgothic"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cloth_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                />
 
+            <android.widget.Button
+                android:id="@+id/fashion_search"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:outlineSpotShadowColor="@color/white"
+                android:layout_height="wrap_content"
+                android:text="#봄웜 브라이트 검색하기"/>
         </LinearLayout>
-        </GridLayout>
 
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

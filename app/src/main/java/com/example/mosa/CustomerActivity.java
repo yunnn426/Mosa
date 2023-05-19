@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ml.common.modeldownload.*;
@@ -66,6 +71,8 @@ import java.util.List;
 public class CustomerActivity extends AppCompatActivity {
 
     String faceinfo=null;
+    TextView customer_name;
+    FirebaseDatabase firebaseDatabase;
 
     private final static int scaling_Facter=10;
     FaceDetectorOptions highAccuracyOpts =
@@ -77,24 +84,41 @@ public class CustomerActivity extends AppCompatActivity {
 
     FaceDetector detector = FaceDetection.getClient(highAccuracyOpts);
     ImageView img1;
-    ImageView img2;
 
     Button btn1;
     Button btn2;
     MenuItem bottom_1;
     MenuItem bottom_2;
     MenuItem bottom_3;
-//
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommended_initial_screen);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
 
         img1=findViewById(R.id.example_skin_img);
-        img2=findViewById(R.id.example_face_img);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getIntent();
+
+        customer_name = findViewById(R.id.title_text);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Users");
+
+        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                String value2 = value;
+                customer_name.setText(value2);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //String imagePath = intent.getStringExtra("img");
         //File file=new File(imagePath);
@@ -109,41 +133,48 @@ public class CustomerActivity extends AppCompatActivity {
         }
         */
 
-        //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야
+        //여기서 선택에 따라서 하단 메뉴의 선택여부(색깔)을 다르게 해야 (구현함)
         //그냥 엑티비티를 이용해도 될듯?
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item->{
-            switch (item.getItemId()){
-                case R.id.bottom_menu_1:
-                {
-                    Toast.makeText(this,"이미 스타일 진단 화면입니다.(단, 사진등록을 먼저 해야합니다.)",Toast.LENGTH_SHORT).show();
-                    //이미 스타일 진단 화면이어서 별다른 응답 없어도 된다.
-                    break;
+        bottomNavigationView.setSelectedItemId(R.id.bottom_menu_1);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.bottom_menu_1:
+                    {
+                        //Toast.makeText(this,"이미 스타일 진단 화면입니다.(단, 사진등록을 먼저 해야합니다.)",Toast.LENGTH_SHORT).show();
+                        //이미 스타일 진단 화면이어서 별다른 응답 없어도 된다.
+                        return true;
+                    }
+                    case R.id.bottom_menu_2:
+                    {
+                        //Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
+                        Intent intent_bottom_2=new Intent(CustomerActivity.this,styleSearchActivity.class);
+                        //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
+                        startActivity(intent_bottom_2);
+                        overridePendingTransition(0,0);
+                        return true;
+                        //스타일 검색 화면을 보여준다.
+                    }
+                    case R.id.bottom_menu_3:
+                    {
+                        String user_name=user.getDisplayName();
+                        String user_email=user.getEmail();
+                        //Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent_bottom_3=new Intent(CustomerActivity.this,CustomerInfo.class);
+                        intent_bottom_3.putExtra("username",user_name);
+                        intent_bottom_3.putExtra("useremail",user_email);
+                        startActivity(intent_bottom_3);
+                        overridePendingTransition(0,0);
+                        return true;
+                        //회원님의 정보를 보여준다
+                    }
                 }
-                case R.id.bottom_menu_2:
-                {
-                    Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
-                    Intent intent_bottom_2=new Intent(CustomerActivity.this,styleSearchActivity.class);
-                    //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
-                    startActivity(intent_bottom_2);
-                    break;
-                    //스타일 검색 화면을 보여준다.
-                }
-                case R.id.bottom_menu_3:
-                {
-                    String user_name=user.getDisplayName();
-                    String user_email=user.getEmail();
-                    Toast.makeText(this,"당신의 회원정보를 보여줍니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent_bottom_3=new Intent(CustomerActivity.this,CustomerInfo.class);
-                    intent_bottom_3.putExtra("username",user_name);
-                    intent_bottom_3.putExtra("useremail",user_email);
-                    startActivity(intent_bottom_3);
-                    break;
-                    //회원님의 정보를 보여준다
-                }
+                return false;
             }
-            return false;
         });
+
         btn1=findViewById(R.id.color_btn);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,26 +193,8 @@ public class CustomerActivity extends AppCompatActivity {
                 intent_1.putExtra("title",face_color_info_1);
                 intent_1.putExtra("detail",face_color_info_2);
                 intent_1.putExtra("recommend",info_rem);
-                intent_1.putExtra("choice","컬러진단");
+                intent_1.putExtra("choice","종합진단");
                 startActivity(intent_1);
-            }
-        });
-        btn2=findViewById(R.id.face_btn);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_2=new Intent(CustomerActivity.this,IntitialActivity.class);
-                //if 파이어 베이스에서 String 형으로 보내줄 경우
-                //String info=sendimg_shap_firebase(bitmap,faceinfo)
-                //if 파이어 베이스에서 Json 형으로 보내줄 경우
-                //JSONObject jsonob=(JSONObject)sendimg_shap_firebase(bitmap,faceinfo)
-                //일단 모르기 때문에 String 형으로 아무거나 전달
-                String face_shape_info_1="테스트용 제목";
-                String face_shape_info_2="테스트용 내용입니다.";
-                intent_2.putExtra("title",face_shape_info_1);
-                intent_2.putExtra("detail",face_shape_info_2);
-                intent_2.putExtra("choice","얼굴형진단");
-                startActivity(intent_2);
             }
         });
 

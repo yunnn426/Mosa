@@ -22,6 +22,7 @@ public class Signup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
 
         FirebaseApp.initializeApp(this);
 
@@ -47,6 +48,12 @@ public class Signup extends AppCompatActivity {
                         }
                     });
 
+        });
+
+        Button find_pw = findViewById(R.id.find_password);
+        find_pw.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), find_password.class);
+            startActivity(intent);
         });
 
         Button imageButton = findViewById(R.id.Layout_signup);

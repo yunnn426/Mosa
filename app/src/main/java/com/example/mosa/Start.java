@@ -16,6 +16,7 @@ public class Start extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
         boolean checkFirst = pref.getBoolean("checkFirst", false);
@@ -29,12 +30,14 @@ public class Start extends AppCompatActivity {
             startActivity(intent);
             finish();
         }else{
-            Button imageButton = findViewById(R.id.GoEmailButton);
-            imageButton.setOnClickListener(view -> {
-                Intent intent = new Intent(getApplicationContext(),
-                        Signup.class);
-                startActivity(intent);
-            });
+//            Button imageButton = findViewById(R.id.GoEmailButton);
+//            imageButton.setOnClickListener(view -> {
+
+            Intent intent = new Intent(getApplicationContext(),
+                    Signup.class);
+            startActivity(intent);
+
+//            });
 
         }
 

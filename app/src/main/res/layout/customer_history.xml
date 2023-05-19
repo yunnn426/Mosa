@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 <TextView
     android:id="@+id/history_fail_msg"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:visibility="visible"
-    android:text="기록이 없거나, 기록을 불러오는 것에 실패했습니다."/>
+    android:layout_marginTop="20dp"
+    android:textColor="@color/black"
+    android:text="진단 기록을 불러오는 중입니다."/>
 
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/history_view"

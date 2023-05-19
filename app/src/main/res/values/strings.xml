@@ -1,8 +1,20 @@
 <resources>
-    <string name="app_name">aiproject</string>
+    <string name="app_name">MOSA</string>
     <string name="next">다음</string>
     <string name="skip">건너뛰기</string>
     <string name="start">시작</string>
-    
-    
+    <string name="register"><u>계정 생성하기</u></string>
+    <string name="login"><u>로그인</u></string>
+    <string name="logout"><u>로그아웃</u></string>
+
+    <string name="spring_warm_Light">고채도의 순색보다는 <font color="#636363"><b>흰색이나 베이지가 섞인 파스텔톤</b></font>\n고명도의 색이라면 <font color="#636363"><b>여름 쿨 라이트</b></font> 색도 소화가능\n짙고 어두운 저명도의 색상은 피하기</string>
+    <string name="spring_warm_Bright"><font color="#636363"><b>깨끗하고 쨍한 청색 또는 순색</b></font>이 가장 잘 어울림\n<font color="#636363"><b>대비감</b></font>을 사용해 포인트를 주기\n흐릿한 탁색은 피하기</string>
+    <string name="summer_cool_Light"><font color="#636363"><b>쨍하고 깨끗</b></font>한 색, <font color="#636363"><b>활발하고 발랄한</b></font> 색이 가장 잘 어울림\n고명도의 색이라면 <font color="#636363"><b>봄 웜 브라이트</b></font> 색도 소화 가능\n어두운 느낌이 드는 가을 타입 색은 피하기</string>
+    <string name="summer_cool_Bright">파란기가 강한 전형적인 <font color="#636363"><b>쿨톤</b></font> 색이 가장 잘 어울림\n<font color="#636363"><b>산뜻</b></font>하고 <font color="#636363"><b>시원</b></font>한 느낌을 잘 소화함\n노랗고 따뜻함이 느껴지는 웜톤의 색은 피하기</string>
+    <string name="summer_cool_Mute">탁한 느낌이 드는 <font color="#636363"><b>저채도의 색</b></font>이 가장 잘 어울림\n흐린 탁한 느낌의 색이라면 <font color="#636363"><b>가을 웜 뮤트</b></font> 색도 소화가능\n비비드한 형광색은 피하기</string>
+    <string name="autumn_warm_Deep">채도에 상관없이 <font color="#636363"><b>저명도의 색</b></font>이 잘 어울림\n노랑보다는 <font color="#636363"><b>초록</b></font>, 핑크보다는 <font color="#636363"><b>레드</b></font>가 잘 어울림\n고채도의 노란기가 강한 색, 고명도의 색은 피하기</string>
+    <string name="autumn_warm_Mute">부드럽고 뽀얀 느낌의 <font color="#636363"><b>탁색</b></font>이 잘 어울림\n탁한 색이라면 봄, 여름 타입의 색도 소화가능\n강한 고채도와 형광색은 피하기</string>
+    <string name="autumn_warm_Strong">레드, 키키, 그린, 베이지 등 <font color="#636363"><b>웜톤</b></font> 색이 가장 잘 어울림\n차가운 색보다는 <font color="#636363"><b>따뜻한 느낌</b></font>의 색 사용\n차가운 느낌이 느껴지는 쿨톤의 색은 피하기</string>
+    <string name="winter_cool_Deep">진분홍색, 체리색 같은 <font color="#636363"><b>고채도-저명도</b></font>의 색이 잘 어울림\n유광, 고채도, 고명도의 색을 포인트로 <font color="#636363"><b>대비감</b></font> 살리기\n형광 색상은 인위적인 느낌이 들기 때문에 사용이 어려움</string>
+    <string name="winter_cool_Bright">쨍한 느낌이 드는 <font color="#636363"><b>고채도의 순색</b></font>이 가장 잘 어울림\n극단으로 <font color="#636363"><b>차이</b></font>가 나는 색을 함께 사용해 <font color="#636363"><b>강한 포인트</b></font>\n흐릿하거나 뿌옇고 탁한 느낌을 주는 탁색은 피하기</string>
 </resources>

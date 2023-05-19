@@ -11,11 +11,14 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_mosa"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aiproject"
         tools:targetApi="31">
+        <activity
+            android:name=".loadingActivity"
+            android:exported="false"/>
         <activity
             android:name=".TutorialActivity"
             android:exported="false" />
@@ -29,17 +32,12 @@
             android:name=".PersonalActivity"
             android:exported="false" />
         <activity
-            android:name=".recommend.reccosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".recommend.recaccActivity"
-            android:exported="false" />
-        <activity
             android:name=".recommend.recclothActivity"
             android:exported="false" />
         <activity
-            android:name=".recommend.rechairActivity"
-            android:exported="false" />
+            android:name=".recommend.FullitemImage"
+            android:exported="false"/>
+
         <activity
             android:name=".styleSearchActivity"
             android:exported="false" />
@@ -54,6 +52,9 @@
             android:exported="false" />
         <activity
             android:name=".CustomerInfo"
+            android:exported="false" />
+        <activity
+            android:name=".find_password"
             android:exported="false" />
         <activity
             android:name=".Start"

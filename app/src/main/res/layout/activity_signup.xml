@@ -1,58 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
+    android:background="@color/white"
+    >
+
+    <ImageView
+        android:id="@+id/mosa_logo"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/mosa_color"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:ignore="MissingConstraints"
+
+        app:layout_constraintTop_toBottomOf="@+id/mosa_logo"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-
-            <TextView
+            <FrameLayout
+                android:id="@+id/welcome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="회원가입"
-                android:textColor="@color/pont_color"
-                android:textStyle="bold"
-
-                android:layout_marginBottom="5dp"
-                android:textSize="40sp"
-                >
-            </TextView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:textSize="16dp"
-                android:textColor="#E48A8888"
-                android:text="회원 계정을 만들고 스타일링 추천을 받아보세요!"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:textSize="19dp"
-                android:text="Email"
-                />
+                android:layout_height="match_parent" >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/account_image"
+                    android:layout_marginTop="30dp" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/create_text"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="100dp"
+                    android:layout_marginTop="30dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bin_white"
+                    />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/bin_red">
+                android:background="@drawable/bin_red"
+                android:layout_marginHorizontal="20dp"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/user_icon" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ffffff"
+                    android:fontFamily="@font/nanumgothic"
+                    android:hint="name"
+                    android:id="@+id/TextInputEditText_name"
+                    android:textColor="@color/white_gray"
+                    android:textColorHint="@color/white_gray"
+                    >
+                </EditText>>
+            </LinearLayout>>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bin_red"
+                android:layout_marginHorizontal="20dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -68,55 +103,20 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:background="#ffffff"
-                    android:hint="abc@naver.com" />
+                    android:textColor="@color/white_gray"
+                    android:textColorHint="@color/white_gray"
+                    android:fontFamily="@font/nanumgothic"
+                    android:hint="email" />
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:textSize="19dp"
-                android:text="Your Name"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bin_red"
-                >
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/user_icon" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:background="#ffffff"
-                    android:hint="홍길동"
-                    android:id="@+id/TextInputEditText_name"
-                    >
-                </EditText>>
-            </LinearLayout>>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:textSize="19dp"
-                android:text="Your Password"
-                />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/bin_red"
+                android:layout_marginHorizontal="20dp"
                 >
                 <ImageView
                     android:layout_width="20dp"
@@ -130,46 +130,58 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:background="#ffffff"
-                    android:hint="********"
+                    android:hint="password"
                     android:id="@+id/TextInputEditText_password"
+                    android:textColor="@color/white_gray"
+                    android:textColorHint="@color/white_gray"
+                    android:fontFamily="@font/nanumgothic"
                     >
                 </EditText>
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                />
-
-            <RelativeLayout
-                android:id="@+id/RelativeLayout_login"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/bin_login"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bin_red"
+                android:layout_marginHorizontal="20dp"
                 >
-
-                <android.widget.Button
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/lock_icon" />
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:textColor="#ffffff"
-                    android:stateListAnimator="@null"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="25dp"
-                    android:text="회원가입"
-                    android:id="@+id/Signup_button"
-                    android:background="@null"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ffffff"
+                    android:hint="check password"
+                    android:textColor="@color/white_gray"
+                    android:textColorHint="@color/white_gray"
+                    android:id="@+id/TextInputEditText_passwordcheck"
+                    android:fontFamily="@font/nanumgothic"
                     >
-                </android.widget.Button>
-            </RelativeLayout>
+                </EditText>
+            </LinearLayout>
 
-            <TextView
+            <android.widget.Button
+                android:id="@+id/Signup_button"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                />
-
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/bin_login2"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="계정 생성하기"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:fontFamily="@font/nanumgothic"
+                >
+            </android.widget.Button>
 
             <LinearLayout
                 android:layout_width="270dp"
@@ -184,8 +196,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="이미 계정이 있으십니까?"
-                    android:textSize="17sp"></TextView>
+                    android:textColor="@color/gray"
+                    android:text="이미 계정이 있으신가요?"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/nanumgothic"
+                    ></TextView>
 
                 <android.widget.Button
                     android:id="@+id/back_login"
@@ -193,10 +208,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:background="@color/white"
-                    android:text="로그인"
+                    android:text="@string/login"
                     android:textStyle="bold"
-                    android:textColor="#DB1A21"
-                    android:textSize="17sp"></android.widget.Button>
+                    android:textColor="#925A5757"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/nanumgothic"
+                    >
+
+                </android.widget.Button>
 
             </LinearLayout>
         </LinearLayout>
