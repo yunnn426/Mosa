@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".CustomerInfo">
 
     <!--로고-->
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#ffffff"
-
+                android:textColor="@color/black"
                 android:fontFamily="@font/nanumgothic"
                 android:text="@string/logout"
                 />
@@ -104,27 +105,25 @@
     </LinearLayout>
 
 
-
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        app:tabGravity="fill"
-        app:layout_constraintTop_toBottomOf="@id/profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:tabRippleColor="@android:color/transparent"
         android:fontFamily="@font/nanumgothic"
-        app:tabTextColor="#333333"
-        app:tabSelectedTextColor="#333333"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile"
+        app:tabGravity="fill"
         app:tabIndicatorColor="#333333"
-        >
-    </com.google.android.material.tabs.TabLayout>
+        app:tabMode="fixed"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="#333333"
+        app:tabTextColor="#333333"></com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
