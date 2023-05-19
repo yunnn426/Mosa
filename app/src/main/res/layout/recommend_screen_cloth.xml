@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 <TextView
-    android:layout_gravity="center_horizontal"
     android:id="@+id/fashion_color"
+    android:layout_gravity="center_horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textSize="22dp"

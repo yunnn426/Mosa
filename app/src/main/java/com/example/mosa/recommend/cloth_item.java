@@ -47,4 +47,6 @@ public class cloth_item extends RecyclerView.Adapter<cloth_item.fashion_viewhold
     public cloth_item(ArrayList<Bitmap> img){
         this.fashion_img=img;
     }
+    public cloth_item(){}
+    public void setcloth_item(ArrayList<Bitmap> img){this.fashion_img=img;}
 }
