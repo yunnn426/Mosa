@@ -1,7 +1,12 @@
 package com.example.mosa.recommend;
 
+import static java.security.AccessController.getContext;
+
+import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.media.Image;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +33,21 @@ public class cloth_item extends RecyclerView.Adapter<cloth_item.fashion_viewhold
     @Override
     public void onBindViewHolder(fashion_viewholder holder, int position) {
         Bitmap fashion=fashion_img.get(position);
+
+        //옷 이미지들을 화면에 맞게 크기를 늘리는 곳 입니다.
+        int wid=fashion.getWidth();
+        int hig=fashion.getHeight();
+
+        float ratio=(float)wid/hig;
+        int newhig=Math.round(500/ratio);
+
+        Matrix matrix = new Matrix();
+        float sclwid=((float)500)/wid;
+        float sclhig=((float)newhig)/hig;
+
+        matrix.postScale(sclwid,sclhig);
+
+        fashion=Bitmap.createBitmap(fashion,0,0,wid,hig,matrix,false);
         holder.fashion_item_img.setImageBitmap(fashion);
     }
 
