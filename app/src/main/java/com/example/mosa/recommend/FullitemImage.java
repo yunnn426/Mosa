@@ -32,6 +32,7 @@ public class FullitemImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullitemimage);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().hide();
 
         imageView = findViewById(R.id.full_image_view);
         item_detail=findViewById(R.id.item_detail);

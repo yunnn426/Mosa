@@ -22,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mosa.recommend.item_Recycler;
 import com.example.mosa.recommend.recclothActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,6 +58,14 @@ public class PersonalActivity  extends AppCompatActivity {
 
     Map<Integer, String> result_color = new HashMap<>();
     Map<Integer, String> result_color_ko=new HashMap<>();
+    ArrayList<Bitmap> itemfile_1;
+    ArrayList<Bitmap> itemfile_2;
+    ArrayList<Bitmap> itemfile_4;
+
+    ArrayList<String> itemdetail_1;
+    ArrayList<String> itemdetail_2;
+    ArrayList<String> itemdetail_4;
+
     TextView User_face;
     TextView User_color_recom;
     TextView User_name;
@@ -251,13 +261,13 @@ public class PersonalActivity  extends AppCompatActivity {
         item_Recycler recycler_2=new item_Recycler();
         item_Recycler recycler_4=new item_Recycler();
 
-        ArrayList<Bitmap> itemfile_1=new ArrayList<Bitmap>();
-        ArrayList<Bitmap> itemfile_2=new ArrayList<Bitmap>();
-        ArrayList<Bitmap> itemfile_4=new ArrayList<Bitmap>();
+        itemfile_1=new ArrayList<Bitmap>();
+        itemfile_2=new ArrayList<Bitmap>();
+        itemfile_4=new ArrayList<Bitmap>();
 
-        ArrayList<String> itemdetail_1=new ArrayList<String>();
-        ArrayList<String> itemdetail_2=new ArrayList<String>();
-        ArrayList<String> itemdetail_4=new ArrayList<String>();
+        itemdetail_1=new ArrayList<String>();
+        itemdetail_2=new ArrayList<String>();
+        itemdetail_4=new ArrayList<String>();
 
         User_color_recom=findViewById(R.id.recom_user_color);
         User_name=findViewById(R.id.recom_user_name);
@@ -323,15 +333,18 @@ public class PersonalActivity  extends AppCompatActivity {
                                 itemdetail_1.add(itemname);
                                 itemfile_1.add(bitmap);
                                 //여기에 데이터가 더이상 남지 않으면 리사이클러 뷰로 보여주는 조건을 추가한다.
-                                if(itemfile_1.size()==6){
-                                    recycler_1.setrecycler(itemfile_1,itemdetail_1);
-                                    itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_1.setAdapter(recycler_1);
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                recycler_1.setrecycler(itemfile_1,itemdetail_1);
+                                itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                itemlist_1.setAdapter(recycler_1);
+
                             }
                         });
 
@@ -373,15 +386,17 @@ public class PersonalActivity  extends AppCompatActivity {
                                 String itemname=itemfilename.substring(0, itemfilename.length() - 4);
                                 itemdetail_2.add(itemname);
                                 itemfile_2.add(bitmap);
-                                if(itemfile_2.size()==6){
-                                    recycler_2.setrecycler(itemfile_2,itemdetail_2);
-                                    itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_2.setAdapter(recycler_2);
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                recycler_2.setrecycler(itemfile_2,itemdetail_2);
+                                itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                itemlist_2.setAdapter(recycler_2);
                             }
                         });
 
@@ -421,15 +436,17 @@ public class PersonalActivity  extends AppCompatActivity {
                                 String itemname=itemfilename.substring(0, itemfilename.length() - 4);
                                 itemdetail_4.add(itemname);
                                 itemfile_4.add(bitmap);
-                                if(itemfile_4.size()==6){
-                                    recycler_4.setrecycler(itemfile_4,itemdetail_4);
-                                    itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_4.setAdapter(recycler_4);
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                recycler_4.setrecycler(itemfile_4,itemdetail_4);
+                                itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                itemlist_4.setAdapter(recycler_4);
                             }
                         });
 
