@@ -34,7 +34,8 @@ public class cloth_item extends RecyclerView.Adapter<cloth_item.fashion_viewhold
     public void onBindViewHolder(fashion_viewholder holder, int position) {
         Bitmap fashion=fashion_img.get(position);
 
-        //옷 이미지들을 화면에 맞게 크기를 늘리는 곳 입니다.
+        //옷 이미지들을 화면에 맞게 크기를 늘리는 곳 입니다. 만약 이미지 별로 다시 크기를 조정하고 싶다면 여기를 건드리면 됩니다.
+        //기본 (가로 500, 세로 비율에 맞게)
         int wid=fashion.getWidth();
         int hig=fashion.getHeight();
 

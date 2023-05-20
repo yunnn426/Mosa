@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,7 @@ public class recclothActivity extends AppCompatActivity {
 
     ArrayList<Bitmap> fashion_list;
     TextView color_name;
+    ImageButton bck_btn;
     RecyclerView fashion_view;
     FirebaseStorage storage;
     File path;
@@ -39,6 +42,7 @@ public class recclothActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.recommend_screen_cloth);
         color_name=findViewById(R.id.fashion_color);
+        bck_btn=findViewById(R.id.fashion_back);
         //결과 화면에서 해당 결과를 받아온다.
         Intent intent=getIntent();
         String color=intent.getStringExtra("your_color");
@@ -47,6 +51,14 @@ public class recclothActivity extends AppCompatActivity {
         fashion_list=new ArrayList<Bitmap>();
         fashion_view=findViewById(R.id.fashion_recyc);
         cloth_item clothItem=new cloth_item();
+
+
+        bck_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); //바로 전 화면으로 이동
+            }
+        });
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         //여기에 파이어베이스 스토리지를 연결해서 해당하는 이미지들을 가져온다.
