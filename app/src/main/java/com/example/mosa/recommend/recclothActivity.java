@@ -9,10 +9,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.mosa.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -26,11 +30,13 @@ public class recclothActivity extends AppCompatActivity {
 
     ArrayList<Bitmap> fashion_list;
     TextView color_name;
+    RecyclerView fashion_view;
     FirebaseStorage storage;
     File path;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.recommend_screen_cloth);
         color_name=findViewById(R.id.fashion_color);
         //결과 화면에서 해당 결과를 받아온다.
@@ -39,11 +45,12 @@ public class recclothActivity extends AppCompatActivity {
         String color_title="#"+color;
         color_name.setText(color_title);
         fashion_list=new ArrayList<Bitmap>();
-
+        fashion_view=findViewById(R.id.fashion_recyc);
         cloth_item clothItem=new cloth_item();
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         //여기에 파이어베이스 스토리지를 연결해서 해당하는 이미지들을 가져온다.
+        storage=FirebaseStorage.getInstance();
         StorageReference storageReference=storage.getReference().child(color+"/clothes/");
         storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
@@ -68,6 +75,14 @@ public class recclothActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
 
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                clothItem.setcloth_item(fashion_list);
+                                StaggeredGridLayoutManager staggeredGridLayoutManager=new StaggeredGridLayoutManager(2,RecyclerView.VERTICAL);
+                                fashion_view.setLayoutManager(staggeredGridLayoutManager);
+                                fashion_view.setAdapter(clothItem);
                             }
                         });
 

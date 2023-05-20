@@ -9,13 +9,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<TextView
-    android:id="@+id/fashion_color"
-    android:layout_gravity="center_horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="22dp"
-    android:text="데일리님의 색상"/>
+    <TextView
+        android:id="@+id/fashion_color"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22dp"
+        android:text="데일리님의 색상"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fashion_recyc"
