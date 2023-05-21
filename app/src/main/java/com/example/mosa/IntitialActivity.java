@@ -7,11 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +41,9 @@ import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -60,7 +68,7 @@ public class IntitialActivity extends AppCompatActivity {
     ImageButton backBtn;
     Button btn1;
     ImageButton btn3;
-    Button btn4;
+    Button check_btn;
     File file;
     String filePath;
     MenuItem bottom_1;
@@ -68,7 +76,7 @@ public class IntitialActivity extends AppCompatActivity {
     MenuItem bottom_3;
     String faceinfo=null;
     BottomNavigationView bottomNavigationView;
-    int clickcount=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,39 +101,13 @@ public class IntitialActivity extends AppCompatActivity {
 
 
         btn1=findViewById(R.id.img_button);
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickcount++;
-                Intent intent_choice_2 = null;
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
                 startActivityForResult(intent, 1);
-                BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
-                Bitmap bitmap=bitmapDrawable.getBitmap();
                 inImg = true;
-
-                if (clickcount > 1) {
-                    //사진을 등록하고 클릭해야 실행가능
-                    //여기에서 담고 갈 정보는 사진
-                    if (choice.equals("종합진단"))
-                    {
-                        //여기에는 진단 실행화면으로 넘어가는 인텐트를 대신 넣으면 된다.
-                        intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
-                        Bitmap bitmap_color = bitmap;
-                        File file = BmpToFile(bitmap_color, "image.png");
-                        intent_choice_2.putExtra("img", file.getAbsolutePath());
-                        //intent_choice_2.putExtra("result_color",9);
-                        clickcount=0;
-                    }
-                    else
-                    {
-                        Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                        clickcount=0;
-                    }
-                    startActivity(intent_choice_2);
-                }
             }
         });
         ActivityResultLauncher<Intent> requestCameraFileLauncher = registerForActivityResult(
@@ -133,14 +115,15 @@ public class IntitialActivity extends AppCompatActivity {
                 result -> {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     if (bitmap != null) {
-                        btn3.setImageBitmap(bitmap);
+                        Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800, "image.png");
+                        btn3.setImageBitmap(resize_bitmap);
+                        inImg = true;
                     }
                 });
         btn3=findViewById(R.id.cma);
         btn3.setOnClickListener(v -> {
             //camera app......................
             //파일 준비...............
-            clickcount++;
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             Intent intent_choice_2 = null;
@@ -162,32 +145,31 @@ public class IntitialActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+        });
+        check_btn = findViewById(R.id.check_btn);
+
+        check_btn.setOnClickListener(view -> {
+            Intent intent_choice_2 = null;
             BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
             Bitmap bitmap=bitmapDrawable.getBitmap();
-            inImg = true;
-
-            if (clickcount > 1) {
-                //사진을 등록하고 클릭해야 실행가능
-                //여기에서 담고 갈 정보는 사진
-                if (choice.equals("종합진단"))
-                {
+            if(inImg != false) {
+                if (choice.equals("종합진단")) {
                     //이제 여기에 진단 실행화면으로 넘어가는 인텐트를 넣으면 된다.
                     intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
                     //intent_choice_2.putExtra("result_color",9);
-                    clickcount=0;
-                }
-                else
-                {
+                } else {
                     Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                    clickcount=0;
                 }
                 startActivity(intent_choice_2);
+            }else{
+                Toast.makeText(IntitialActivity.this, "사진을 넣어주세요.", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
 
@@ -253,16 +235,18 @@ public class IntitialActivity extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
-                    btn3.setImageURI(uri);
+                    Uri resize_uri = resize_imageSizeUri(this, uri, 800, 800,"image.png");
+                    btn3.setImageURI(resize_uri);
                 }
                 break;
         }
 
         if(requestCode == 101  && resultCode == Activity.RESULT_OK){
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
+            options.inSampleSize = 4;
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            btn3.setImageBitmap(bitmap);
+            Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800,"image.png");
+            btn3.setImageBitmap(resize_bitmap);
         }
     }
 
@@ -273,6 +257,52 @@ public class IntitialActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public Bitmap resize_imageSize(Context context, Bitmap bitmap, int width, int height, String filename){
+        Bitmap resize = null;
+        try {
 
+            //Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
+            resize = Bitmap.createScaledBitmap(bitmap,width, height, true);
 
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return resize;
+    }
+
+    public Uri resize_imageSizeUri(Context context, Uri uri, int width, int height, String filename){
+
+        try {
+            Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
+            Bitmap resize = Bitmap.createScaledBitmap(orgImage,width, height, true);
+
+            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File image = new File(storageDir,filename);
+
+            if(image.exists()) {//만약 이미 이 파일이 존재한다면(1회 이상 했다면)
+                image.delete();//중복되므로 과거 파일은 삭제
+                image = new File(storageDir, filename);//그리고 다시 오픈
+            }
+
+            FileOutputStream outputStream = new FileOutputStream(image);
+            resize.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+            outputStream.close();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//sdk 24 이상, 누가(7.0)
+                uri = FileProvider.getUriForFile(context,// 7.0에서 바뀐 부분은 여기다.
+                        BuildConfig.APPLICATION_ID + ".provider", image);
+            } else {//sdk 23 이하, 7.0 미만
+                uri = Uri.fromFile(image);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return uri;
+    }
 }
