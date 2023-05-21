@@ -242,6 +242,33 @@ public class CustomerInfo extends AppCompatActivity {
                         Intent intent_bottom_1 = new Intent(CustomerInfo.this, CustomerActivity.class);
                         intent_bottom_1.putExtra("img", img);
 
+                        File directory_1=CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+                        File directory_2=CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_record_img");
+                        File directory_3=CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_profile_img");
+                        if (directory_1.exists() && directory_1.isDirectory()) {
+                            File[] files = directory_1.listFiles();
+                            if (files != null) {
+                                for (File file : files) {
+                                    file.delete();
+                                }
+                            }
+                        }
+                        if (directory_2.exists() && directory_2.isDirectory()) {
+                            File[] files = directory_2.listFiles();
+                            if (files != null) {
+                                for (File file : files) {
+                                    file.delete();
+                                }
+                            }
+                        }
+                        if (directory_3.exists() && directory_3.isDirectory()) {
+                            File[] files = directory_3.listFiles();
+                            if (files != null) {
+                                for (File file : files) {
+                                    file.delete();
+                                }
+                            }
+                        }
                         startActivity(intent_bottom_1);
                         overridePendingTransition(0,0);
                         return true;
