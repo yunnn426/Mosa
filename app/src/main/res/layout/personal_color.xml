@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+
     android:background="@color/white"
     >
 
@@ -82,72 +82,72 @@
             >
 
             <!--데일리님의 진단결과-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/title_username"
-                        android:textSize="15dp"
-                        android:layout_marginTop="15dp"
-                        android:text="데일리"
-                        android:textStyle="bold"
-                        android:textColor="#3d3d3d"
-                        android:fontFamily="@font/nanumgothic"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:text="님의 진단결과"
-                        android:textSize="15dp"
-                        android:textColor="#3d3d3d"
-                        android:fontFamily="@font/nanumgothic"
-                        />
-                </LinearLayout>
-
-                <!--컬러-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:padding="20dp"
-                    >
-                    <TextView
-                        android:id="@+id/title_usercolor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@color/pont_color"
-                        android:textSize="18dp"
-                        android:text="데일리의 색상"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/nanumgothic"
-                        />
-                </LinearLayout>
-
-            <View
-                android:layout_width="336dp"
-                android:layout_height="3dp"
-                android:background="@color/white_gray"
-                android:layout_gravity="center"
-                />
-          
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
                 <TextView
-                    android:textColor="@color/detail_color"
-                    android:id="@+id/color_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title_username"
+                    android:textSize="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="데일리"
+                    android:textStyle="bold"
+                    android:textColor="#3d3d3d"
+                    android:fontFamily="@font/nanumgothic"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="님의 진단결과"
+                    android:textSize="15dp"
+                    android:textColor="#3d3d3d"
+                    android:fontFamily="@font/nanumgothic"
+                    />
+            </LinearLayout>
+
+            <!--컬러-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="20dp"
+                >
+                <TextView
+                    android:id="@+id/title_usercolor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginBottom="35dp"
-                    android:textSize="13dp"
+                    android:textColor="@color/pont_color"
+                    android:textSize="18dp"
+                    android:text="데일리의 색상"
+                    android:textStyle="bold"
                     android:fontFamily="@font/nanumgothic"
-                    android:text="@string/summer_cool_Bright"/>
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="330dp"
+                android:layout_height="1dp"
+                android:background="#c5c5c5"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:textColor="@color/detail_color"
+                android:id="@+id/color_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="35dp"
+                android:textSize="13dp"
+                android:fontFamily="@font/nanumgothic"
+                android:text="@string/summer_cool_Bright"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
                         android:src="@drawable/spring_warm_light_color_chart"
                         android:layout_gravity="center_horizontal"/>
                 </LinearLayout>
-              
+
             </LinearLayout>
 
             <LinearLayout
@@ -189,7 +189,7 @@
                         android:text="고객님의 색상"
                         android:fontFamily="@font/nanumgothic"
                         />
-                  <TextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
@@ -243,38 +243,38 @@
                         android:text="님의"
                         android:fontFamily="@font/nanumgothic"
                         />
-               </LinearLayout>
-               
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content">
+                </LinearLayout>
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textSize="15dp"
-                       android:textColor="#3d3d3d"
-                       android:text="얼굴형("
-                       android:fontFamily="@font/nanumgothic"
-                       />
-                   <TextView
-                       android:id="@+id/face_title"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textSize="15dp"
-                       android:textColor="#3d3d3d"
-                       android:text="얼굴형"
-                       android:fontFamily="@font/nanumgothic"
-                       />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textSize="15dp"
-                         android:textColor="#3d3d3d"
-                         android:text=")에 어울리는"
-                         android:fontFamily="@font/nanumgothic"
-                         />
-               </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="#3d3d3d"
+                        android:text="얼굴형("
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                    <TextView
+                        android:id="@+id/face_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="#3d3d3d"
+                        android:text="얼굴형"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="#3d3d3d"
+                        android:text=")에 어울리는"
+                        android:fontFamily="@font/nanumgothic"
+                        />
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -292,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp" />
 
-           <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
