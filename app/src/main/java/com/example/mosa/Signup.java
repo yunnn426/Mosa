@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -15,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //이거를 main쪽의 같은 이름의 클래스로 바꿔서 생각
 public class Signup extends AppCompatActivity {
-    private Button login;
+    private ImageButton login;
     private EditText email_login;
     private EditText pwd_login;
     FirebaseAuth firebaseAuth;
@@ -56,8 +58,8 @@ public class Signup extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button imageButton = findViewById(R.id.Layout_signup);
-        imageButton.setOnClickListener(view -> {
+        Button signUp = findViewById(R.id.Layout_signup);
+        signUp.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(),
                     subSignup.class);
             startActivity(intent);

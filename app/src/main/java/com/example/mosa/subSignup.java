@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ import java.util.Map;
 public class subSignup extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     EditText mEmailText, mPasswordText, mPasswordcheckText, mName;
-    Button mregisterBtn;
+    ImageButton mregisterBtn;
     private FirebaseAuth firebaseAuth;
 
     private EditText email_join;
