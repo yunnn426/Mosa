@@ -10,15 +10,14 @@
 
         />
 
+    <item
+        android:id="@+id/bottom_menu_3"
+        android:title="진단기록 검색"
+        />
 
     <item
         android:id="@+id/bottom_menu_2"
-        android:title="스타일 검색" />
-
-
-    <item
-        android:id="@+id/bottom_menu_3"
         android:icon="@drawable/ic_profile"
-        android:title="회원정보"
-        />
+        android:title="마이 페이지" />
+
 </menu>

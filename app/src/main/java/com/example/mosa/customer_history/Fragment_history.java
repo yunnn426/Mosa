@@ -147,7 +147,9 @@ public class Fragment_history extends Fragment {
 
 
                 File result_path= getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_record_img");
-
+                if(Diagnosis_file_name.isEmpty()){
+                    msg.setText("진단기록이 없습니다.");
+                }
                 for (String filename : Diagnosis_file_name) {
                     final File localFile;
                     try {

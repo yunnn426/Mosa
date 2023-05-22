@@ -43,10 +43,8 @@ public class Signup extends AppCompatActivity {
                             Toast.makeText(Signup.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(Signup.this,CustomerActivity.class);
                             startActivity(intent);
-                        } else {//실패했을때 일단 로그인이 안되도 넘어가게
-                            Toast.makeText(Signup.this, "로그인 오류", Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(Signup.this,CustomerActivity.class);
-                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Signup.this, "잘못된 정보를 입력하셨습니다.", Toast.LENGTH_SHORT).show();
                         }
                     });
 
