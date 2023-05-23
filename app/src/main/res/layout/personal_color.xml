@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+
     android:background="@color/white"
     >
 
@@ -130,9 +130,9 @@
                 </LinearLayout>
 
             <View
-                android:layout_width="336dp"
-                android:layout_height="3dp"
-                android:background="@color/white_gray"
+                android:layout_width="330dp"
+                android:layout_height="1dp"
+                android:background="#c5c5c5"
                 android:layout_gravity="center"
                 />
           
