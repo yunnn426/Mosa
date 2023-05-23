@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -117,7 +118,11 @@ public class IntitialActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     if (bitmap != null) {
                         Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800, "image.png");
-                        btn3.setImageBitmap(resize_bitmap);
+                        Matrix matrix = new Matrix();
+                        matrix.setRotate(90);
+                        Bitmap dscBitmap = Bitmap.createBitmap(resize_bitmap, 0, 0, resize_bitmap.getWidth(), resize_bitmap.getHeight(), matrix, true);
+                        btn3.setImageBitmap(dscBitmap);
+
                         inImg = true;
                     }
                 });
