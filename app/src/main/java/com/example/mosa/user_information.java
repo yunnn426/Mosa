@@ -6,13 +6,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class styleSearchActivity extends AppCompatActivity {
+public class user_information extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.style_search_screen);
+        setContentView(R.layout.user_inform);
         getSupportActionBar().hide();
 
 
