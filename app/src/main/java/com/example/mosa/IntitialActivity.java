@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,6 +47,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -116,7 +118,11 @@ public class IntitialActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     if (bitmap != null) {
                         Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800, "image.png");
-                        btn3.setImageBitmap(resize_bitmap);
+                        Matrix matrix = new Matrix();
+                        matrix.setRotate(90);
+                        Bitmap dscBitmap = Bitmap.createBitmap(resize_bitmap, 0, 0, resize_bitmap.getWidth(), resize_bitmap.getHeight(), matrix, true);
+                        btn3.setImageBitmap(dscBitmap);
+
                         inImg = true;
                     }
                 });
@@ -234,9 +240,15 @@ public class IntitialActivity extends AppCompatActivity {
         switch(requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    Uri resize_uri = resize_imageSizeUri(this, uri, 800, 800,"image.png");
-                    btn3.setImageURI(resize_uri);
+                    try {
+                        InputStream in = getContentResolver().openInputStream(data.getData());
+                        Bitmap img = BitmapFactory.decodeStream(in);
+                        in.close();
+                        Bitmap resize_bitmap = resize_imageSize(this, img, 800, 800, "image.png");
+                        btn3.setImageBitmap(resize_bitmap);
+                    }catch (Exception e){
+
+                    }
                 }
                 break;
         }
@@ -270,39 +282,5 @@ public class IntitialActivity extends AppCompatActivity {
         }
 
         return resize;
-    }
-
-    public Uri resize_imageSizeUri(Context context, Uri uri, int width, int height, String filename){
-
-        try {
-            Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
-            Bitmap resize = Bitmap.createScaledBitmap(orgImage,width, height, true);
-
-            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File image = new File(storageDir,filename);
-
-            if(image.exists()) {//만약 이미 이 파일이 존재한다면(1회 이상 했다면)
-                image.delete();//중복되므로 과거 파일은 삭제
-                image = new File(storageDir, filename);//그리고 다시 오픈
-            }
-
-            FileOutputStream outputStream = new FileOutputStream(image);
-            resize.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-            outputStream.close();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//sdk 24 이상, 누가(7.0)
-                uri = FileProvider.getUriForFile(context,// 7.0에서 바뀐 부분은 여기다.
-                        BuildConfig.APPLICATION_ID + ".provider", image);
-            } else {//sdk 23 이하, 7.0 미만
-                uri = Uri.fromFile(image);
-            }
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return uri;
     }
 }
