@@ -73,9 +73,9 @@ public class subSignup extends AppCompatActivity {
         mregisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String email = mEmailText.getText().toString().trim();
-                String pwd = mPasswordText.getText().toString().trim();
-                String pwdCheck = mPasswordcheckText.getText().toString().trim();
+                final String email = mEmailText.getText().toString();
+                String pwd = mPasswordText.getText().toString();
+                String pwdCheck = mPasswordcheckText.getText().toString();
                 String name = mName.getText().toString().trim();
 
                 if (pwd.equals(pwdCheck)) {
