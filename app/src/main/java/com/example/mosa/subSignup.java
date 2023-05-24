@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,12 +93,17 @@ public class subSignup extends AppCompatActivity {
 
                             //가입 성공시
                             if (task.isSuccessful()) {
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+                                Date date=new Date();
+
                                 mDialog.dismiss();
 
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 String email = user.getEmail();
                                 String uid = user.getUid();
                                 String name = mName.getText().toString().trim();
+                                String createuid=format.format(date);
+                                String updateuid=format.format(date);
 
                                 //해쉬맵 테이블을 파이어베이스 데이터베이스에 저장
                                 HashMap<Object, String> hashMap = new HashMap<>();
@@ -104,6 +111,8 @@ public class subSignup extends AppCompatActivity {
                                 hashMap.put("uid", uid);
                                 hashMap.put("email", email);
                                 hashMap.put("name", name);
+                                hashMap.put("create_date",createuid);
+                                hashMap.put("modify_date",updateuid);
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference reference = database.getReference("Users");
