@@ -301,11 +301,7 @@ public class PersonalActivity  extends AppCompatActivity {
         StorageReference storageReference_1=storage.getReference().child(color_str+"/cosmetics/");
         StorageReference storageReference_2=storage.getReference().child(face_str+"/");
         StorageReference storageReference_3=storage.getReference().child(color_str+"/clothes/");
-        //폴더에 파일이 없으면 안나온다;;
-        //StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
-        //StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
-        //StorageReference storageReference_3=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"shadow/");
-        //StorageReference storageReference_4=storageReference_3;
+        //폴더에 파일이 없으면 안나온다;
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         storageReference_1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
