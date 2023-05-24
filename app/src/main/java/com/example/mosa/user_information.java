@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class user_information extends AppCompatActivity {
 
@@ -70,6 +71,7 @@ public class user_information extends AppCompatActivity {
     String email_pro=user_pro.getEmail();
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+    Date date=new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +185,18 @@ public class user_information extends AppCompatActivity {
                 }
             }
         });
+
+        /*
+        프로필 이미지 수정
+        */
+
+        /*
+        이름 수정
+        */
+
+        /*
+        가입일자, 최근 수정일자 보여줌
+        */
 
         /*
         앱의 버전 정보를 보여준다.
