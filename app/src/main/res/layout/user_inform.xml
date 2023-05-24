@@ -11,6 +11,8 @@
     <ScrollView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_navigation"
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -35,22 +37,22 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/custmer_pro_name"
+                android:id="@+id/user_name_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:textStyle="bold"
                 android:fontFamily="@font/nanumgothic"
-                android:textColor="#3d3d3d"
+                android:textColor="@color/pont_color"
                 android:textSize="25dp"
-                android:text="데일리님"/>
+                android:text="데일리"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothic"
                 android:textColor="#3d3d3d"
                 android:textSize="25dp"
-                android:text="의 마이페이지"/>
+                android:text="님의 마이페이지"/>
 
         </LinearLayout>
         <View
@@ -67,22 +69,23 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
         <ImageView
+            android:id="@+id/user_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginRight="100dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="120dp"
             android:background="@android:color/transparent"
             android:src="@drawable/circle_button"/>
 
-        <android.widget.Button
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:outlineSpotShadowColor="@color/white"
-            android:fontFamily="@font/nanumgothic"
-            android:textStyle="bold"
-            android:text="프로필 수정하기"/>
-
+            <android.widget.Button
+                android:id="@+id/user_profile_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nanumgothic"
+                android:outlineSpotShadowColor="@color/white"
+                android:text="프로필 수정하기"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <View
@@ -96,28 +99,27 @@
             <LinearLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:id="@+id/user_name_2"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:textStyle="bold"
                     android:fontFamily="@font/nanumgothic"
-                    android:layout_marginRight="70dp"
-                    android:textColor="#3d3d3d"
+                    android:textColor="@color/pont_color"
                     android:textSize="20dp"
                     android:text="데일리님의 현재 이름"/>
 
                 <android.widget.Button
+                    android:id="@+id/user_name_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/nanumgothic"
                     android:outlineSpotShadowColor="@color/white"
                     android:text="이름 수정하기"
                     android:textStyle="bold" />
@@ -146,16 +148,18 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/user_name_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="데일리님"/>
+                    android:text="데일리"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="의 가입일: "/>
+                    android:text="님의 가입일: "/>
 
                 <TextView
+                    android:id="@+id/user_join"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2023.01.01 00:00:00"/>
@@ -169,16 +173,18 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/user_name_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="데일리님"/>
+                    android:text="데일리"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="의 최근 수정일자: "/>
+                    android:text="님의 최근 수정일자: "/>
 
                 <TextView
+                    android:id="@+id/user_edit_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2023.01.01 00:00:00"/>
@@ -204,11 +210,77 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
                 android:textSize="20dp"
-
                 android:text="앱의 정보들"
                 />
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="앱의 버전정보: "/>
+                <TextView
+                    android:id="@+id/app_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.0.0"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제작사 정보: "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="경기대학교 컴퓨터공학심화캡스톤디자인,\n 최민규 교수 수업 7조"/>
+
+            </LinearLayout>
         </LinearLayout>
+
+            <View
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#c5c5c5"
+                android:layout_gravity="center"
+                />
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="정보를 수정하고 나서 적용버튼을 눌러야 적용 됩니다."/>
+
+                <android.widget.Button
+                    android:id="@+id/edit_set_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanumgothic"
+                    android:layout_gravity="center"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:text="모든 변경사항 적용하기"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
 
