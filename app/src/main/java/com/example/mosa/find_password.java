@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ import com.google.firebase.database.annotations.NotNull;
 import java.util.ArrayList;
 
 public class find_password extends AppCompatActivity {
-    private Button find_button;
+    private ImageButton find_button;
     private EditText email;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
@@ -58,5 +59,18 @@ public class find_password extends AppCompatActivity {
                     });
         });
 
+        Button to_login = findViewById(R.id.login);
+        to_login.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(),
+                    Signup.class);
+            startActivity(intent);
+        });
+
+        Button to_signUp = findViewById(R.id.signup);
+        to_signUp.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(),
+                    subSignup.class);
+            startActivity(intent);
+        });
     }
 }

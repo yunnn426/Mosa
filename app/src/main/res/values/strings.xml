@@ -4,7 +4,7 @@
     <string name="skip">건너뛰기</string>
     <string name="start">시작</string>
     <string name="register"><u>계정 생성하기</u> </string>
-    <string name="find_pw"><u>비밀번호 찾기</u></string>
+    <string name="find_pw"><u>비밀번호 재설정</u></string>
     <string name="login"><u>로그인</u></string>
     <string name="logout"><u>로그아웃</u></string>
 
