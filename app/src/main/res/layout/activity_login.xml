@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
 
             android:fontFamily="@font/nanumgothic"
-            android:text="Login"
+            android:text="로그인"
             android:textColor="#505050"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -115,9 +115,6 @@
             android:fontFamily="@font/nanumgothic"
             android:gravity="center"
             android:stateListAnimator="@null"
-            android:text="로그인"
-            android:textColor="#ffffff"
-            android:textSize="16dp"
             android:src="@drawable/login"
             android:scaleType="fitCenter"
             app:layout_constraintTop_toBottomOf="@+id/password1">
@@ -148,7 +145,7 @@
 
             android:textStyle="bold"
             android:textColor="#545454"
-            android:textSize="17sp"
+            android:textSize="14dp"
             app:layout_constraintTop_toBottomOf="@+id/login_button"
             android:stateListAnimator="@null"
             >
@@ -171,7 +168,7 @@
                 android:gravity="right"
                 android:text="계정이 없으신가요?   "
                 android:textColor="#545454"
-                android:textSize="17sp" />
+                android:textSize="14dp" />
 
             <android.widget.Button
                 android:id="@+id/Layout_signup"
@@ -185,7 +182,7 @@
                 android:gravity="left"
                 android:text="@string/register"
                 android:textColor="#545454"
-                android:textSize="17sp"
+                android:textSize="14dp"
                 android:stateListAnimator="@null"
                 >
 
