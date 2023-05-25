@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
 
             android:fontFamily="@font/nanumgothic"
-            android:text="Resigter"
+            android:text="회원 가입"
             android:textColor="#505050"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -184,7 +184,7 @@
             android:text="계정 생성하기"
             android:textColor="#ffffff"
             android:textSize="16dp"
-            android:src="@drawable/login"
+            android:src="@drawable/register"
             android:fontFamily="@font/nanumgothic"
             android:scaleType="fitCenter"
             app:layout_constraintTop_toBottomOf="@+id/password2"
@@ -204,13 +204,13 @@
         >
 
         <TextView
-            android:layout_width="220dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:gravity="center"
             android:textColor="#545454"
             android:text="이미 계정이 있으신가요?"
-            android:textSize="17sp"
+            android:textSize="14dp"
             android:fontFamily="@font/nanumgothic"
             ></TextView>
 
@@ -223,7 +223,7 @@
             android:text="@string/login"
             android:textStyle="bold"
             android:textColor="#545454"
-            android:textSize="17sp"
+            android:textSize="14dp"
             android:fontFamily="@font/nanumgothic"
             android:stateListAnimator="@null"
             >
