@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/full_image_view"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:scaleType="fitCenter"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

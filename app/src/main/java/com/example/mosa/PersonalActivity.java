@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mosa.recommend.item_Recycler;
+import com.example.mosa.recommend.recclothActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,6 +58,14 @@ public class PersonalActivity  extends AppCompatActivity {
 
     Map<Integer, String> result_color = new HashMap<>();
     Map<Integer, String> result_color_ko=new HashMap<>();
+    ArrayList<Bitmap> itemfile_1;
+    ArrayList<Bitmap> itemfile_2;
+    ArrayList<Bitmap> itemfile_4;
+
+    ArrayList<String> itemdetail_1;
+    ArrayList<String> itemdetail_2;
+    ArrayList<String> itemdetail_4;
+
     TextView User_face;
     TextView User_color_recom;
     TextView User_name;
@@ -79,6 +91,8 @@ public class PersonalActivity  extends AppCompatActivity {
     //닫기용 버튼
     ImageButton closeBtn;
 
+    Button fas_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*
@@ -97,6 +111,7 @@ public class PersonalActivity  extends AppCompatActivity {
         Date date = new Date();//사진을 찍은 날짜를 저장해야,
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
+        fas_btn=findViewById(R.id.fashion_search);
         //닫기
         closeBtn = findViewById(R.id.close);
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -246,13 +261,13 @@ public class PersonalActivity  extends AppCompatActivity {
         item_Recycler recycler_2=new item_Recycler();
         item_Recycler recycler_4=new item_Recycler();
 
-        ArrayList<Bitmap> itemfile_1=new ArrayList<Bitmap>();
-        ArrayList<Bitmap> itemfile_2=new ArrayList<Bitmap>();
-        ArrayList<Bitmap> itemfile_4=new ArrayList<Bitmap>();
+        itemfile_1=new ArrayList<Bitmap>();
+        itemfile_2=new ArrayList<Bitmap>();
+        itemfile_4=new ArrayList<Bitmap>();
 
-        ArrayList<String> itemdetail_1=new ArrayList<String>();
-        ArrayList<String> itemdetail_2=new ArrayList<String>();
-        ArrayList<String> itemdetail_4=new ArrayList<String>();
+        itemdetail_1=new ArrayList<String>();
+        itemdetail_2=new ArrayList<String>();
+        itemdetail_4=new ArrayList<String>();
 
         User_color_recom=findViewById(R.id.recom_user_color);
         User_name=findViewById(R.id.recom_user_name);
@@ -286,11 +301,7 @@ public class PersonalActivity  extends AppCompatActivity {
         StorageReference storageReference_1=storage.getReference().child(color_str+"/cosmetics/");
         StorageReference storageReference_2=storage.getReference().child(face_str+"/");
         StorageReference storageReference_3=storage.getReference().child(color_str+"/clothes/");
-        //폴더에 파일이 없으면 안나온다;;
-        //StorageReference storageReference_1=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"rip/");
-        //StorageReference storageReference_2=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"blusher/");
-        //StorageReference storageReference_3=storage.getReference().child(result_color.get(1)+"/cosmetics/"+"shadow/");
-        //StorageReference storageReference_4=storageReference_3;
+        //폴더에 파일이 없으면 안나온다;
 
         File result_path= getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         storageReference_1.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -318,15 +329,18 @@ public class PersonalActivity  extends AppCompatActivity {
                                 itemdetail_1.add(itemname);
                                 itemfile_1.add(bitmap);
                                 //여기에 데이터가 더이상 남지 않으면 리사이클러 뷰로 보여주는 조건을 추가한다.
-                                if(itemfile_1.size()==6){
-                                    recycler_1.setrecycler(itemfile_1,itemdetail_1);
-                                    itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_1.setAdapter(recycler_1);
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                recycler_1.setrecycler(itemfile_1,itemdetail_1);
+                                itemlist_1.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                itemlist_1.setAdapter(recycler_1);
+
                             }
                         });
 
@@ -368,15 +382,17 @@ public class PersonalActivity  extends AppCompatActivity {
                                 String itemname=itemfilename.substring(0, itemfilename.length() - 4);
                                 itemdetail_2.add(itemname);
                                 itemfile_2.add(bitmap);
-                                if(itemfile_2.size()==6){
-                                    recycler_2.setrecycler(itemfile_2,itemdetail_2);
-                                    itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_2.setAdapter(recycler_2);
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                recycler_2.setrecycler(itemfile_2,itemdetail_2);
+                                itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                itemlist_2.setAdapter(recycler_2);
                             }
                         });
 
@@ -416,15 +432,17 @@ public class PersonalActivity  extends AppCompatActivity {
                                 String itemname=itemfilename.substring(0, itemfilename.length() - 4);
                                 itemdetail_4.add(itemname);
                                 itemfile_4.add(bitmap);
-                                if(itemfile_4.size()==6){
-                                    recycler_4.setrecycler(itemfile_4,itemdetail_4);
-                                    itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                    itemlist_4.setAdapter(recycler_4);
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                recycler_4.setrecycler(itemfile_4,itemdetail_4);
+                                itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                itemlist_4.setAdapter(recycler_4);
                             }
                         });
 
@@ -466,6 +484,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.spring_warm_light));
                 //color_title.setBackgroundColor(getColor(R.color.spring_worm_light));
                 color_detail.setText(R.string.spring_warm_Light);
+                fas_btn.setText("spring warm_Light");
                 break;
             case "spring warm_Bright":
                 selected_color_1.setImageResource(R.drawable.spring_warm_bright_color_chart);
@@ -476,6 +495,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.spring_warm_bright));
                 //color_title.setBackgroundColor(getColor(R.color.spring_worm_bright));
                 color_detail.setText(R.string.spring_warm_Bright);
+                fas_btn.setText("spring warm_Bright");
                 break;
             case "summer cool_Light":
                 selected_color_1.setImageResource(R.drawable.summer_cool_light_color_chart);
@@ -486,6 +506,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_light));
                 //color_title.setBackgroundColor(getColor(R.color.summer_cool_light));
                 color_detail.setText(R.string.summer_cool_Light);
+                fas_btn.setText("summer cool_Light");
                 break;
             case "summer cool_Bright":
                 selected_color_1.setImageResource(R.drawable.summer_cool_bright_color_chart);
@@ -496,6 +517,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_bright));
                 //color_title.setBackgroundColor(getColor(R.color.summer_cool_bright));
                 color_detail.setText(R.string.summer_cool_Bright);
+                fas_btn.setText("summer cool_Bright");
                 break;
             case "summer cool_Mute":
                 selected_color_1.setImageResource(R.drawable.summer_cool_mute_color_chart);
@@ -506,6 +528,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.summer_cool_mute));
                 //color_title.setBackgroundColor(getColor(R.color.summer_cool_mute));
                 color_detail.setText(R.string.summer_cool_Mute);
+                fas_btn.setText("summer cool_Mute");
                 break;
             case "autumn warm_Deep":
                 selected_color_1.setImageResource(R.drawable.autumn_warm_deep_color_chart);
@@ -516,6 +539,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.autumn_warm_deep));
                 //color_title.setBackgroundColor(getColor(R.color.autumn_worm_deep));
                 color_detail.setText(R.string.autumn_warm_Deep);
+                fas_btn.setText("autumn warm_Deep");
                 break;
             case "autumn warm_Mute":
                 selected_color_1.setImageResource(R.drawable.autumn_warm_mute_color_chart);
@@ -526,6 +550,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.autumn_warm_mute));
                 //color_title.setBackgroundColor(getColor(R.color.autumn_worm_mute));
                 color_detail.setText(R.string.autumn_warm_Mute);
+                fas_btn.setText("autumn warm_Mute");
                 break;
             case "autumn warm_Strong":
                 selected_color_1.setImageResource(R.drawable.autumn_warm_strong_color_chart);
@@ -536,6 +561,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.autumn_warm_strong));
                 //color_title.setBackgroundColor(getColor(R.color.autumn_worm_strong));
                 color_detail.setText(R.string.autumn_warm_Strong);
+                fas_btn.setText("autumn warm_Strong");
                 break;
             case "winter cool_Deep":
                 selected_color_1.setImageResource(R.drawable.winter_cool_deep_color_chart);
@@ -546,6 +572,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_deep));
                 //color_title.setBackgroundColor(getColor(R.color.winter_cool_deep));
                 color_detail.setText(R.string.winter_cool_Deep);
+                fas_btn.setText("winter cool_Deep");
                 break;
             case "winter cool_Bright":
                 selected_color_1.setImageResource(R.drawable.winter_cool_bright_color_chart);
@@ -556,6 +583,7 @@ public class PersonalActivity  extends AppCompatActivity {
                 Title_User_color.setTextColor(getColor(R.color.winter_cool_bright));
                 //color_title.setBackgroundColor(getColor(R.color.winter_cool_bright));
                 color_detail.setText(R.string.winter_cool_Bright);
+                fas_btn.setText("winter cool_Bright");
                 break;
             default:
                 //여기에는 오류화면 띄우면 될듯
@@ -572,6 +600,14 @@ public class PersonalActivity  extends AppCompatActivity {
         diagnosesref=db.collection("user_record");
         //아래에 db에 기록하는 코드를 추가
 
+        fas_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_fas=new Intent(PersonalActivity.this, recclothActivity.class);
+                intent_fas.putExtra("your_color",fas_btn.getText().toString());
+                startActivity(intent_fas);
+            }
+        });
 
     }
 

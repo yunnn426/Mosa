@@ -1,7 +1,5 @@
 package com.example.mosa;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,20 +9,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.mosa.customer_history.Fragment_Adapter;
@@ -50,8 +43,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -242,13 +233,40 @@ public class CustomerInfo extends AppCompatActivity {
                         Intent intent_bottom_1 = new Intent(CustomerInfo.this, CustomerActivity.class);
                         intent_bottom_1.putExtra("img", img);
 
+                        File directory_1=CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+                        File directory_2=CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_record_img");
+                        File directory_3=CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_profile_img");
+                        if (directory_1.exists() && directory_1.isDirectory()) {
+                            File[] files = directory_1.listFiles();
+                            if (files != null) {
+                                for (File file : files) {
+                                    file.delete();
+                                }
+                            }
+                        }
+                        if (directory_2.exists() && directory_2.isDirectory()) {
+                            File[] files = directory_2.listFiles();
+                            if (files != null) {
+                                for (File file : files) {
+                                    file.delete();
+                                }
+                            }
+                        }
+                        if (directory_3.exists() && directory_3.isDirectory()) {
+                            File[] files = directory_3.listFiles();
+                            if (files != null) {
+                                for (File file : files) {
+                                    file.delete();
+                                }
+                            }
+                        }
                         startActivity(intent_bottom_1);
                         overridePendingTransition(0,0);
                         return true;
                     }
                     case R.id.bottom_menu_2: {
                         //Toast.makeText(this, "스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
-                        Intent intent_bottom_2 = new Intent(CustomerInfo.this, styleSearchActivity.class);
+                        Intent intent_bottom_2 = new Intent(CustomerInfo.this, user_information.class);
                         //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
                         startActivity(intent_bottom_2);
                         overridePendingTransition(0,0);

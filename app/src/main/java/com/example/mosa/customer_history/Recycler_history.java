@@ -151,7 +151,7 @@ public class Recycler_history extends RecyclerView.Adapter<Recycler_history.View
                     case "둥근 얼굴형":
                         result_face = "c";
                         break;
-                    case "각진 얼굴형":
+                    case "각진 얼굴형": case "각진 얼굴형(마름모)":
                         result_face = "d";
                         break;
                     case "계란 얼굴형":

@@ -2,45 +2,50 @@ package com.example.mosa;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
+
+import android.content.ContentResolver;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.face.Face;
-import com.google.mlkit.vision.face.FaceDetection;
-import com.google.mlkit.vision.face.FaceDetector;
-import com.google.mlkit.vision.face.FaceDetectorOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class IntitialActivity extends AppCompatActivity {
 
@@ -60,7 +65,7 @@ public class IntitialActivity extends AppCompatActivity {
     ImageButton backBtn;
     Button btn1;
     ImageButton btn3;
-    Button btn4;
+    Button check_btn;
     File file;
     String filePath;
     MenuItem bottom_1;
@@ -68,7 +73,7 @@ public class IntitialActivity extends AppCompatActivity {
     MenuItem bottom_3;
     String faceinfo=null;
     BottomNavigationView bottomNavigationView;
-    int clickcount=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,39 +98,13 @@ public class IntitialActivity extends AppCompatActivity {
 
 
         btn1=findViewById(R.id.img_button);
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickcount++;
-                Intent intent_choice_2 = null;
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
                 startActivityForResult(intent, 1);
-                BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
-                Bitmap bitmap=bitmapDrawable.getBitmap();
                 inImg = true;
-
-                if (clickcount > 1) {
-                    //사진을 등록하고 클릭해야 실행가능
-                    //여기에서 담고 갈 정보는 사진
-                    if (choice.equals("종합진단"))
-                    {
-                        //여기에는 진단 실행화면으로 넘어가는 인텐트를 대신 넣으면 된다.
-                        intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
-                        Bitmap bitmap_color = bitmap;
-                        File file = BmpToFile(bitmap_color, "image.png");
-                        intent_choice_2.putExtra("img", file.getAbsolutePath());
-                        //intent_choice_2.putExtra("result_color",9);
-                        clickcount=0;
-                    }
-                    else
-                    {
-                        Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                        clickcount=0;
-                    }
-                    startActivity(intent_choice_2);
-                }
             }
         });
         ActivityResultLauncher<Intent> requestCameraFileLauncher = registerForActivityResult(
@@ -133,14 +112,19 @@ public class IntitialActivity extends AppCompatActivity {
                 result -> {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     if (bitmap != null) {
-                        btn3.setImageBitmap(bitmap);
+                        Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800, "image.png");
+                        Matrix matrix = new Matrix();
+                        matrix.setRotate(90);
+                        Bitmap dscBitmap = Bitmap.createBitmap(resize_bitmap, 0, 0, resize_bitmap.getWidth(), resize_bitmap.getHeight(), matrix, true);
+                        btn3.setImageBitmap(dscBitmap);
+
+                        inImg = true;
                     }
                 });
         btn3=findViewById(R.id.cma);
         btn3.setOnClickListener(v -> {
             //camera app......................
             //파일 준비...............
-            clickcount++;
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             Intent intent_choice_2 = null;
@@ -162,32 +146,31 @@ public class IntitialActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+        });
+        check_btn = findViewById(R.id.check_btn);
+
+        check_btn.setOnClickListener(view -> {
+            Intent intent_choice_2 = null;
             BitmapDrawable bitmapDrawable=(BitmapDrawable)btn3.getDrawable();
             Bitmap bitmap=bitmapDrawable.getBitmap();
-            inImg = true;
-
-            if (clickcount > 1) {
-                //사진을 등록하고 클릭해야 실행가능
-                //여기에서 담고 갈 정보는 사진
-                if (choice.equals("종합진단"))
-                {
+            if(inImg != false) {
+                if (choice.equals("종합진단")) {
                     //이제 여기에 진단 실행화면으로 넘어가는 인텐트를 넣으면 된다.
                     intent_choice_2 = new Intent(IntitialActivity.this, loadingActivity.class);
                     Bitmap bitmap_color = bitmap;
                     File file = BmpToFile(bitmap_color, "image.png");
                     intent_choice_2.putExtra("img", file.getAbsolutePath());
                     //intent_choice_2.putExtra("result_color",9);
-                    clickcount=0;
-                }
-                else
-                {
+                } else {
                     Toast.makeText(IntitialActivity.this, "알수없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                    clickcount=0;
                 }
                 startActivity(intent_choice_2);
+            }else{
+                Toast.makeText(IntitialActivity.this, "사진을 넣어주세요.", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
 
@@ -206,7 +189,7 @@ public class IntitialActivity extends AppCompatActivity {
                 case R.id.bottom_menu_2:
                 {
                     //Toast.makeText(this,"스타일 검색으로 이동합니다.(고객님이 원하는 태그를 입력해주세요)", Toast.LENGTH_SHORT).show();
-                    Intent intent_bottom_2=new Intent(IntitialActivity.this,styleSearchActivity.class);
+                    Intent intent_bottom_2=new Intent(IntitialActivity.this, user_information.class);
                     //이거는 그냥 단순한 스타일 검색 기능이기 때문에 인텐트를 통해서 어떤 정보를 전달할 필요가 없다.
                     startActivity(intent_bottom_2);
                     break;
@@ -252,17 +235,25 @@ public class IntitialActivity extends AppCompatActivity {
         switch(requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    btn3.setImageURI(uri);
+                    try {
+                        InputStream in = getContentResolver().openInputStream(data.getData());
+                        Bitmap img = BitmapFactory.decodeStream(in);
+                        in.close();
+                        Bitmap resize_bitmap = resize_imageSize(this, img, 800, 800, "image.png");
+                        btn3.setImageBitmap(resize_bitmap);
+                    }catch (Exception e){
+
+                    }
                 }
                 break;
         }
 
         if(requestCode == 101  && resultCode == Activity.RESULT_OK){
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
+            options.inSampleSize = 4;
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            btn3.setImageBitmap(bitmap);
+            Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800,"image.png");
+            btn3.setImageBitmap(resize_bitmap);
         }
     }
 
@@ -273,6 +264,18 @@ public class IntitialActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public Bitmap resize_imageSize(Context context, Bitmap bitmap, int width, int height, String filename){
+        Bitmap resize = null;
+        try {
 
+            //Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
+            resize = Bitmap.createScaledBitmap(bitmap,width, height, true);
 
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return resize;
+    }
 }
