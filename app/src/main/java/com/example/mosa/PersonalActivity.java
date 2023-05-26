@@ -294,7 +294,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
         itemlist_1=findViewById(R.id.cos_list);
         itemlist_2=findViewById(R.id.hair_list);
-        itemlist_4=findViewById(R.id.cloth_list);
+        //itemlist_4=findViewById(R.id.cloth_list);
 
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
         storage=FirebaseStorage.getInstance();
@@ -440,9 +440,9 @@ public class PersonalActivity  extends AppCompatActivity {
                         }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
-                                recycler_4.setrecycler(itemfile_4,itemdetail_4);
-                                itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                itemlist_4.setAdapter(recycler_4);
+                                //recycler_4.setrecycler(itemfile_4,itemdetail_4);
+                                //itemlist_4.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                //itemlist_4.setAdapter(recycler_4);
                             }
                         });
 
