@@ -12,12 +12,13 @@
 
     <item
         android:id="@+id/bottom_menu_3"
-        android:title="진단기록 검색"
+        android:icon="@drawable/ic_history"
+        android:title="진단기록"
         />
 
     <item
         android:id="@+id/bottom_menu_2"
         android:icon="@drawable/ic_profile"
-        android:title="마이 페이지" />
+        android:title="마이페이지" />
 
 </menu>
