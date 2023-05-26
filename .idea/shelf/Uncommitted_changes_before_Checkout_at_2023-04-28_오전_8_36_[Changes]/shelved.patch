@@ -1,0 +1,102 @@
+Index: app/src/main/res/layout/personal_color.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:layout_gravity=\"center_horizontal\">\r\n\r\n\r\n        <ImageView\r\n            android:id=\"@+id/skin_img\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"30dp\"\r\n            android:background=\"@color/pont_color\"\r\n            android:src=\"@drawable/personal_color_ex\"\r\n            android:layout_gravity=\"center_horizontal\"/>\r\n        <TextView\r\n            android:id=\"@+id/user_color_en\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textSize=\"25dp\"\r\n            android:text=\"고객님의 색상(영문)\"/>\r\n        <TextView\r\n            android:id=\"@+id/user_color\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"20dp\"\r\n            android:textSize=\"25dp\"\r\n            android:text=\"고객님의 색상\"/>\r\n        <TextView\r\n            android:id=\"@+id/user_color_detail\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"40dp\"\r\n            android:textSize=\"15dp\"\r\n            android:text=\"고객님의 색상에 대한 설명\"/>\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textSize=\"25dp\"\r\n            android:text=\"컬러 차트\"/>\r\n\r\n\r\n        <ImageView\r\n            android:id=\"@+id/color_chrt\"\r\n            android:layout_width=\"400dp\"\r\n            android:layout_height=\"400dp\"\r\n            android:paddingLeft=\"10dp\"\r\n            android:paddingRight=\"10dp\"\r\n            android:paddingBottom=\"10dp\"\r\n            android:paddingTop=\"10dp\"\r\n            android:src=\"@drawable/color_chrt_1\"/>\r\n\r\n        <ImageView\r\n            android:id=\"@+id/selected_color_chrt\"\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"300dp\"\r\n            android:layout_marginTop=\"40dp\"\r\n            android:layout_marginBottom=\"40dp\"\r\n            android:src=\"@drawable/color_chrt_2\"\r\n            android:layout_gravity=\"center_horizontal\"/>\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textSize=\"25dp\"\r\n            android:text=\"Recommendations\"/>\r\n\r\n        <GridLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:columnCount=\"2\"\r\n            android:rowCount=\"2\"\r\n            android:alignmentMode=\"alignMargins\"\r\n            android:columnOrderPreserved=\"false\"\r\n            android:rowOrderPreserved=\"false\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_columnWeight=\"1\"\r\n                android:layout_rowWeight=\"1\"\r\n                android:layout_margin=\"16dp\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <androidx.cardview.widget.CardView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"0dp\"\r\n                    android:layout_weight=\"1\"\r\n                    app:cardCornerRadius=\"100dp\"\r\n                    app:cardElevation=\"5dp\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/recommand_btn_1\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:scaleType=\"centerCrop\"\r\n                        android:src=\"@drawable/cos_exm\" />\r\n\r\n                </androidx.cardview.widget.CardView>\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"화장품 추천\"\r\n                    android:layout_gravity=\"center_horizontal\"/>\r\n\r\n            </LinearLayout>\r\n            <LinearLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_columnWeight=\"1\"\r\n                android:layout_rowWeight=\"1\"\r\n                android:layout_margin=\"16dp\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <androidx.cardview.widget.CardView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"0dp\"\r\n                    android:layout_weight=\"1\"\r\n                    app:cardCornerRadius=\"100dp\"\r\n                    app:cardElevation=\"5dp\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/recommand_btn_2\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:scaleType=\"centerCrop\"\r\n                        android:src=\"@drawable/hair_exm\" />\r\n\r\n                </androidx.cardview.widget.CardView>\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"헤어 추천\"\r\n                    android:layout_gravity=\"center_horizontal\"/>\r\n\r\n            </LinearLayout>\r\n            <LinearLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_columnWeight=\"1\"\r\n                android:layout_rowWeight=\"1\"\r\n                android:layout_margin=\"16dp\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <androidx.cardview.widget.CardView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"0dp\"\r\n                    android:layout_weight=\"1\"\r\n                    app:cardCornerRadius=\"100dp\"\r\n                    app:cardElevation=\"5dp\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/recommand_btn_3\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:scaleType=\"centerCrop\"\r\n                        android:src=\"@drawable/acc_exm\" />\r\n\r\n                </androidx.cardview.widget.CardView>\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"악세서리 추천\"\r\n                    android:layout_gravity=\"center_horizontal\"/>\r\n\r\n            </LinearLayout>\r\n            <LinearLayout\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_columnWeight=\"1\"\r\n            android:layout_rowWeight=\"1\"\r\n            android:layout_margin=\"16dp\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"0dp\"\r\n                android:layout_weight=\"1\"\r\n                app:cardCornerRadius=\"100dp\"\r\n                app:cardElevation=\"5dp\">\r\n\r\n                <ImageButton\r\n                    android:id=\"@+id/recommand_btn_4\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/clo_exm\" />\r\n\r\n            </androidx.cardview.widget.CardView>\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"옷 추천\"\r\n                android:layout_gravity=\"center_horizontal\"/>\r\n\r\n        </LinearLayout>\r\n        </GridLayout>\r\n\r\n\r\n    </LinearLayout>\r\n\r\n\r\n</ScrollView>
+===================================================================
+diff --git a/app/src/main/res/layout/personal_color.xml b/app/src/main/res/layout/personal_color.xml
+--- a/app/src/main/res/layout/personal_color.xml	
++++ b/app/src/main/res/layout/personal_color.xml	
+@@ -16,62 +16,76 @@
+         <ImageView
+             android:id="@+id/skin_img"
+             android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
++            android:layout_height="256dp"
+             android:layout_marginBottom="30dp"
+-            android:background="@color/pont_color"
++            android:background="#FFABA4"
+             android:src="@drawable/personal_color_ex"
+             android:layout_gravity="center_horizontal"/>
+         <TextView
+             android:id="@+id/user_color_en"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:textSize="25dp"
+-            android:text="고객님의 색상(영문)"/>
++            android:layout_marginTop="20dp"
++            android:textColor="#FFABA4"
++            android:textSize="20sp"
++            android:textStyle="bold"
++            android:text="Spring Warm Light"/>
+         <TextView
+             android:id="@+id/user_color"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:layout_marginBottom="20dp"
+-            android:textSize="25dp"
+-            android:text="고객님의 색상"/>
++            android:text="봄 웜 라이트"
++            android:textSize="20sp"
++            android:textColor="#FF4D4D"
++            android:textStyle="bold"/>
+         <TextView
+             android:id="@+id/user_color_detail"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:layout_marginBottom="40dp"
++            android:layout_marginTop="20dp"
++            android:lineSpacingExtra="3dp"
+             android:textSize="15dp"
+-            android:text="고객님의 색상에 대한 설명"/>
++            android:textColor="#99000000"
++            android:text="고객님의 색상에 대한 설명당신과 조화를 이루는 색은 흰 기가 많이 도는 순한 파스텔 톤 입니다. 이는 회색빛이 섞인 탁한 파스텔과는 거리가 멉니다. ‘봄 웜 라이트 톤’의 컬러는 페일톤과 라이트 톤으로 "/>
+ 
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:textSize="25dp"
+-            android:text="컬러 차트"/>
++            android:layout_marginTop="50dp"
++            android:text="Color chart"
++            android:textSize="20sp"
++            android:textColor="#FF4D4D"
++            android:textStyle="bold"/>
+ 
+ 
+         <ImageView
+             android:id="@+id/color_chrt"
+-            android:layout_width="400dp"
+-            android:layout_height="400dp"
++            android:layout_width="match_parent"
++            android:layout_height="256dp"
++            android:background="@android:color/transparent"
+             android:paddingLeft="10dp"
+             android:paddingRight="10dp"
+             android:paddingBottom="10dp"
+             android:paddingTop="10dp"
++            android:layout_marginTop="20dp"
+             android:src="@drawable/color_chrt_1"/>
+ 
+         <ImageView
+             android:id="@+id/selected_color_chrt"
+-            android:layout_width="300dp"
+-            android:layout_height="300dp"
++            android:layout_width="match_parent"
++            android:layout_height="256dp"
++            android:background="@android:color/transparent"
+             android:layout_marginTop="40dp"
+             android:layout_marginBottom="40dp"
+             android:src="@drawable/color_chrt_2"
+             android:layout_gravity="center_horizontal"/>
+ 
+         <TextView
+-            android:layout_width="wrap_content"
++            android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:textSize="25dp"
++            android:textSize="20sp"
++            android:textColor="#FF4D4D"
++            android:textStyle="bold"
+             android:text="Recommendations"/>
+ 
+         <GridLayout
