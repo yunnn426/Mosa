@@ -10,7 +10,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:visibility="visible"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="50dp"
     android:textColor="@color/black"
     android:text="진단 기록을 불러오는 중입니다."/>
 
