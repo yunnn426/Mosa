@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -74,6 +75,8 @@ public class IntitialActivity extends AppCompatActivity {
     String faceinfo=null;
     BottomNavigationView bottomNavigationView;
 
+    ExifInterface exif = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,13 +114,16 @@ public class IntitialActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                    try{
+                        exif = new ExifInterface(filePath);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                    Bitmap bmRotated = rotateBitmap(bitmap, orientation);
                     if (bitmap != null) {
-                        Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800, "image.png");
-                        Matrix matrix = new Matrix();
-                        matrix.setRotate(90);
-                        Bitmap dscBitmap = Bitmap.createBitmap(resize_bitmap, 0, 0, resize_bitmap.getWidth(), resize_bitmap.getHeight(), matrix, true);
-                        btn3.setImageBitmap(dscBitmap);
-
+                        Bitmap resize_bitmap = resize_imageSize(this, bmRotated, 800, 800, "image.png");
+                        btn3.setImageBitmap(resize_bitmap);
                         inImg = true;
                     }
                 });
@@ -278,4 +284,48 @@ public class IntitialActivity extends AppCompatActivity {
 
         return resize;
     }
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
