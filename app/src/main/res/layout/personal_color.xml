@@ -305,15 +305,17 @@
 
 
 
-        <android.widget.Button
-            android:id="@+id/fashion_search"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="270dp"
-            android:outlineSpotShadowColor="@color/white"
-            android:layout_height="45dp"
-            android:text="스타일링 더보기"
-            android:textSize="18dp"
-            android:background="@drawable/fashion_plus_btn" />
+
+            <android.widget.Button
+                android:id="@+id/fashion_search"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="270dp"
+                android:outlineSpotShadowColor="@color/white"
+                android:layout_height="45dp"
+                android:text="스타일링 더보기"
+                android:textSize="18dp"
+                android:background="@drawable/fashion_plus_btn" />
+
 
         </LinearLayout>
 
