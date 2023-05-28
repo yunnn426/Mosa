@@ -54,6 +54,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class user_information extends AppCompatActivity {
 
     static int update_info=0;
@@ -61,7 +63,9 @@ public class user_information extends AppCompatActivity {
     File recent_pro_img;
     String version;
 
-    ImageButton profile_img;
+    CircleImageView profile_img;
+
+    ImageButton btn_change_profile; //프로필 사진 변경 버튼
     ImageButton btn_setting;
 
     TextView join_date_name;
@@ -69,7 +73,7 @@ public class user_information extends AppCompatActivity {
     TextView edit_date_name;
     TextView edit_date;
     TextView version_info;
-    TextView user_mail;
+    EditText user_mail;
     TextView logout;
     EditText name_edit;
     String before_name;
@@ -85,6 +89,8 @@ public class user_information extends AppCompatActivity {
     String value;
     String user_img_name = email_pro+ "_" +"profile"+"_"+ format.format(date);
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +100,7 @@ public class user_information extends AppCompatActivity {
         user_mail=findViewById(R.id.user_email);
 
         profile_img=findViewById(R.id.user_profile);
+        btn_change_profile = findViewById(R.id.change_profile);
 
         join_date_name=findViewById(R.id.user_name_3);
         join_date=findViewById(R.id.user_join);
@@ -187,7 +194,26 @@ public class user_information extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                     Bitmap pro_bitmap= BitmapFactory.decodeFile(recent_pro_img.getAbsolutePath());
-                                    profile_img.setImageBitmap(pro_bitmap);
+                                    //프로필 이미지 리사이징
+                                    int width=pro_bitmap.getWidth();
+                                    int height=pro_bitmap.getHeight();
+
+                                    float ratio = (float) width / height;
+
+                                    int resizedWidth, resizedHeight;
+                                    if (ratio > 1) {
+                                        // 이미지의 가로가 더 긴 경우
+                                        resizedWidth = 500;
+                                        resizedHeight = (int) (resizedWidth / ratio);
+                                    } else {
+                                        // 이미지의 세로가 더 긴 경우
+                                        resizedHeight = 500;
+                                        resizedWidth = (int) (resizedHeight * ratio);
+                                    }
+
+                                    Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
+
+                                    profile_img.setImageBitmap(resize);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -209,7 +235,7 @@ public class user_information extends AppCompatActivity {
         /*
         프로필 이미지 수정
         */
-        profile_img.setOnClickListener(new View.OnClickListener() {
+        btn_change_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_proimg = new Intent(Intent.ACTION_PICK);
@@ -217,9 +243,6 @@ public class user_information extends AppCompatActivity {
                 startActivityForResult(intent_proimg, 1);
             }
         });
-
-
-
 
         /*
         가입일자, 최근 수정일자 보여줌
@@ -250,7 +273,6 @@ public class user_information extends AppCompatActivity {
 
             }
         });
-
 
 
         /*
@@ -381,14 +403,19 @@ public class user_information extends AppCompatActivity {
                             // 이미지의 가로가 더 긴 경우
                             resizedWidth = 500;
                             resizedHeight = (int) (resizedWidth / ratio);
+                            //resize = Bitmap.createBitmap(pro_bitmap, pro_bitmap.getWidth(), pro_bitmap.getHeight() / 4, 500, 500);
+
                         } else {
                             // 이미지의 세로가 더 긴 경우
                             resizedHeight = 500;
                             resizedWidth = (int) (resizedHeight * ratio);
+                            //resize = Bitmap.createBitmap(pro_bitmap, pro_bitmap.getWidth() / 4, pro_bitmap.getHeight(), 500, 500);
                         }
 
                         Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
+
                         profile_img.setImageBitmap(resize);
+
                         update_info=1;
 
                     } catch (IOException e) {

@@ -7,6 +7,7 @@
     <string name="find_pw"><u>비밀번호 재설정</u></string>
     <string name="login"><u>로그인</u></string>
     <string name="logout"><u>로그아웃</u></string>
+    <string name="app_version">1.0.0</string>
 
     <string name="spring_warm_Light">고채도의 순색보다는 <font color="#636363"><b>흰색이나 베이지가 섞인 파스텔톤</b></font>\n고명도의 색이라면 <font color="#636363"><b>여름 쿨 라이트</b></font> 색도 소화가능\n짙고 어두운 저명도의 색상은 피하기</string>
     <string name="spring_warm_Bright"><font color="#636363"><b>깨끗하고 쨍한 청색 또는 순색</b></font>이 가장 잘 어울림\n<font color="#636363"><b>대비감</b></font>을 사용해 포인트를 주기\n흐릿한 탁색은 피하기</string>
