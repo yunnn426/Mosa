@@ -52,14 +52,8 @@ import java.util.Date;
 public class CustomerInfo extends AppCompatActivity {
 
     ArrayList<String> pro_file_name;
-    TextView customer_name;
-    TextView customer_email;
-    ImageButton user_proimg;
-    FirebaseDatabase firebaseDatabase;
     Fragment_Adapter adapter;
     ViewPager viewPager;
-    TextView logout;
-    File recent_profile;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference pro_storef=storage.getReference().child("user_profile/");
@@ -74,10 +68,6 @@ public class CustomerInfo extends AppCompatActivity {
         setContentView(R.layout.customer_info);
         getSupportActionBar().hide();
 
-        logout = findViewById(R.id.logout);
-        user_proimg = findViewById(R.id.customer_picture);
-        customer_name = findViewById(R.id.customer_name);
-        customer_email = findViewById(R.id.customer_email);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("진단기록"));
@@ -90,93 +80,12 @@ public class CustomerInfo extends AppCompatActivity {
 
 
 
-
-
-        pro_storef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-
-                for(StorageReference item : listResult.getItems()){
-                    String profile_name=item.getName();
-
-                    SpannableString spannableString = new SpannableString(profile_name);
-
-                    if(profile_name.contains(email_pro)){
-                        pro_file_name.add(item.getName());
-                    }
-
-                }
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        }).addOnCompleteListener(new OnCompleteListener<ListResult>() {
-            @Override
-            public void onComplete(@NonNull Task<ListResult> task) {
-                if(task.isSuccessful()){
-                Collections.sort(pro_file_name, new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        return o1.compareTo(o2);
-                    }
-                });
-
-                if(!pro_file_name.isEmpty()){
-                String recent_pro_filename=pro_file_name.get(pro_file_name.size()-1);
-                File result_path= CustomerInfo.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"/user_profile_img");
-                try {
-                    recent_profile=File.createTempFile(recent_pro_filename,"jpg",result_path);
-                    StorageReference recent_pro_storef=storage.getReference().child("user_profile/"+recent_pro_filename);
-                    recent_pro_storef.getFile(recent_profile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            Bitmap pro_pitmap=BitmapFactory.decodeFile(recent_profile.getAbsolutePath());
-                            user_proimg.setImageBitmap(pro_pitmap);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                        }
-                    });
-                } catch (IOException e) {
-                    Toast.makeText(CustomerInfo.this,"해당하는 사진이 존재하지 않습니다",Toast.LENGTH_SHORT).show();
-                }
-            }
-                }
-            }
-        });
-
-
-
         /*
         여기에는 사용자의 이메일에 해당하는 모든 프로파일 이미지를 싹다 가져오고 나서 정렬하고 가장 최근의 프로파일을 가져와서 등록하는 코드를 넣는다.
         만약 null일시 에러 말고 기본이미지를 띄우도록한다.
         */
 
 
-
-        user_proimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_proimg = new Intent(Intent.ACTION_PICK);
-                intent_proimg.setType("image/*");
-                startActivityForResult(intent_proimg, 1);
-
-                }
-
-        });
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent logout_intent = new Intent(CustomerInfo.this, Signup.class);
-                startActivity(logout_intent);
-            }
-        });
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -197,30 +106,15 @@ public class CustomerInfo extends AppCompatActivity {
         });
 
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference("Users");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        myRef.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue(String.class);
-                customer_name.setText(value);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         Intent intent = getIntent();
         //이 화면에서 스타일 진단 화면으로 가려면 얼굴 이미지 경로, ml_kit 얼굴 분석정보가 필요하다.
         String img = intent.getStringExtra("img");
         String name = intent.getStringExtra("username");
-        String email = intent.getStringExtra("useremail");
 
 
-        customer_email.setText(email);
+
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_3);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -313,59 +207,5 @@ public class CustomerInfo extends AppCompatActivity {
         return file;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK && data!=null) {
-                    Uri uri = data.getData();
-                    try {
-                        Bitmap pro_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-
-                        int width=pro_bitmap.getWidth();
-                        int height=pro_bitmap.getHeight();
-
-                        float ratio = (float) width / height;
-
-                        int resizedWidth, resizedHeight;
-                        if (ratio > 1) {
-                            // 이미지의 가로가 더 긴 경우
-                            resizedWidth = 250;
-                            resizedHeight = (int) (resizedWidth / ratio);
-                        } else {
-                            // 이미지의 세로가 더 긴 경우
-                            resizedHeight = 250;
-                            resizedWidth = (int) (resizedHeight * ratio);
-                        }
-
-                        Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
-                        user_proimg.setImageBitmap(resize);
-
-                        BitmapDrawable bitmapDrawable = (BitmapDrawable) user_proimg.getDrawable();
-                        Bitmap user_img = bitmapDrawable.getBitmap();
-
-                        File user_profile_img = BmpToFile(user_img, user_img_name);
-                        Uri uri_pro = Uri.fromFile(user_profile_img);
-                        StorageReference pro_storef_2 = pro_storef.child(user_img_name);
-
-                        pro_storef_2.putFile(uri_pro).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(CustomerInfo.this, "연결 상태가 원할하지 않습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                break;
-        }
-    }
 }

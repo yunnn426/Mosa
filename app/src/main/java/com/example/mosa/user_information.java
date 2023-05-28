@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,21 +61,18 @@ public class user_information extends AppCompatActivity {
     File recent_pro_img;
     String version;
 
-    ImageView profile_img;
+    ImageButton profile_img;
+    ImageButton btn_setting;
 
-    Button btn_prof;
-    Button btn_name;
-    Button btn_setting;
-
-    TextView my_page_name;
-    TextView current_name;
     TextView join_date_name;
     TextView join_date;
     TextView edit_date_name;
     TextView edit_date;
     TextView version_info;
-
+    TextView user_mail;
+    TextView logout;
     EditText name_edit;
+    String before_name;
 
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -93,13 +91,9 @@ public class user_information extends AppCompatActivity {
         setContentView(R.layout.user_inform);
         getSupportActionBar().hide();
 
-        my_page_name=findViewById(R.id.user_name_1);
+        user_mail=findViewById(R.id.user_email);
 
         profile_img=findViewById(R.id.user_profile);
-        btn_prof=findViewById(R.id.user_profile_edit);
-
-        current_name=findViewById(R.id.user_name_2);
-        btn_name=findViewById(R.id.user_name_edit);
 
         join_date_name=findViewById(R.id.user_name_3);
         join_date=findViewById(R.id.user_join);
@@ -115,6 +109,15 @@ public class user_information extends AppCompatActivity {
 
         pro_file_name=new ArrayList<String>();
 
+        logout=findViewById(R.id.logout_text);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(user_information.this,Signup.class);
+                startActivity(intent);
+            }
+        });
 
         /*
         유저의 이름을 가져온다.
@@ -126,10 +129,11 @@ public class user_information extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 value = snapshot.getValue(String.class);
-                my_page_name.setText(value);
-                current_name.setText(value);
                 join_date_name.setText(value);
                 edit_date_name.setText(value);
+                name_edit.setText(value);
+                user_mail.setText(user_pro.getEmail());
+                before_name=value;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -205,39 +209,17 @@ public class user_information extends AppCompatActivity {
         /*
         프로필 이미지 수정
         */
-        btn_prof.setOnClickListener(new View.OnClickListener() {
+        profile_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_proimg = new Intent(Intent.ACTION_PICK);
                 intent_proimg.setType("image/*");
                 startActivityForResult(intent_proimg, 1);
-                update_info=1;
             }
         });
 
 
-        /*
-        이름 수정
-        */
-        btn_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (name_edit.getVisibility() == View.VISIBLE) {
-                    name_edit.setVisibility(View.GONE);
 
-                    if(!name_edit.getText().toString().isEmpty()){
-                        current_name.setText(name_edit.getText());
-                        update_info=1;
-                    }
-                    else{
-
-                    }
-
-                } else {
-                    name_edit.setVisibility(View.VISIBLE);
-                }
-            }
-        });
 
         /*
         가입일자, 최근 수정일자 보여줌
@@ -277,11 +259,11 @@ public class user_information extends AppCompatActivity {
         version=BuildConfig.VERSION_NAME;
         version_info.setText(version);
 
+
+
         /*
         사용자의 변경사항을 앱에 적용한다.
         */
-
-
         btn_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -289,8 +271,9 @@ public class user_information extends AppCompatActivity {
                 /*
                 수정한 이름을 저장
                 */
-                if(update_info==1) {
-                    String update_name=current_name.getText().toString();
+                //이미지와 이름에 대한 조건 검사
+                if(update_info==1 || (!name_edit.getText().toString().isEmpty() && !before_name.equals(name_edit.getText().toString())) ) {
+                    String update_name=name_edit.getText().toString();
                     Map<String, Object> updates = new HashMap<>();
                     updates.put("name",update_name);
                     myRef.child(user_pro.getUid()).updateChildren(updates);
@@ -324,6 +307,9 @@ public class user_information extends AppCompatActivity {
                     String update_day=format.format(date);
                     updates_2.put("modify_date",update_day);
                     myRef.child(user_pro.getUid()).updateChildren(updates_2);
+                }
+                else{
+                    Toast.makeText(user_information.this,"새로운 이름이나 프로필 이미지를 넣어주세요.",Toast.LENGTH_SHORT).show();
                 }
                 update_info=0;
             }
@@ -393,17 +379,17 @@ public class user_information extends AppCompatActivity {
                         int resizedWidth, resizedHeight;
                         if (ratio > 1) {
                             // 이미지의 가로가 더 긴 경우
-                            resizedWidth = 250;
+                            resizedWidth = 500;
                             resizedHeight = (int) (resizedWidth / ratio);
                         } else {
                             // 이미지의 세로가 더 긴 경우
-                            resizedHeight = 250;
+                            resizedHeight = 500;
                             resizedWidth = (int) (resizedHeight * ratio);
                         }
 
                         Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
                         profile_img.setImageBitmap(resize);
-
+                        update_info=1;
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
