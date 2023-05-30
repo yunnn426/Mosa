@@ -390,33 +390,44 @@ public class user_information extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK && data!=null) {
                     Uri uri = data.getData();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
                     try {
                         Bitmap pro_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri), null, options);
 
                         int width=pro_bitmap.getWidth();
                         int height=pro_bitmap.getHeight();
 
-                        float ratio = (float) width / height;
-
-                        int resizedWidth, resizedHeight;
-                        if (ratio > 1) {
-                            // 이미지의 가로가 더 긴 경우
-                            resizedWidth = 500;
-                            resizedHeight = (int) (resizedWidth / ratio);
-                            //resize = Bitmap.createBitmap(pro_bitmap, pro_bitmap.getWidth(), pro_bitmap.getHeight() / 4, 500, 500);
-
-                        } else {
-                            // 이미지의 세로가 더 긴 경우
-                            resizedHeight = 500;
-                            resizedWidth = (int) (resizedHeight * ratio);
-                            //resize = Bitmap.createBitmap(pro_bitmap, pro_bitmap.getWidth() / 4, pro_bitmap.getHeight(), 500, 500);
+                        int samplesize = 1;
+                        //Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
+                        while(true){
+                            if(width/2 < 250 || height /2 < 250)
+                                break;
+                            width /= 2;
+                            height /= 2;
+                            samplesize *=2;
                         }
-
-                        Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
-
+                        options.inSampleSize = samplesize;
+                        Bitmap resize = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri), null, options);
                         profile_img.setImageBitmap(resize);
 
+//                        float ratio = (float) width / height;
+//
+//                        int resizedWidth, resizedHeight;
+//                        if (ratio > 1) {
+//                            // 이미지의 가로가 더 긴 경우
+//                            resizedWidth = 250;
+//                            resizedHeight = (int) (resizedWidth / ratio);
+//                        } else {
+//                            // 이미지의 세로가 더 긴 경우
+//                            resizedHeight = 250;
+//                            resizedWidth = (int) (resizedHeight * ratio);
+//                        }
+//
+//                        Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
+
                         update_info=1;
+
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
