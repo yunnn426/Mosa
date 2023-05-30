@@ -19,4 +19,9 @@
     <string name="autumn_warm_Strong">레드, 키키, 그린, 베이지 등 <font color="#636363"><b>웜톤</b></font> 색이 가장 잘 어울림\n차가운 색보다는 <font color="#636363"><b>따뜻한 느낌</b></font>의 색 사용\n차가운 느낌이 느껴지는 쿨톤의 색은 피하기</string>
     <string name="winter_cool_Deep">진분홍색, 체리색 같은 <font color="#636363"><b>고채도-저명도</b></font>의 색이 잘 어울림\n유광, 고채도, 고명도의 색을 포인트로 <font color="#636363"><b>대비감</b></font> 살리기\n형광 색상은 인위적인 느낌이 들기 때문에 사용이 어려움</string>
     <string name="winter_cool_Bright">쨍한 느낌이 드는 <font color="#636363"><b>고채도의 순색</b></font>이 가장 잘 어울림\n극단으로 <font color="#636363"><b>차이</b></font>가 나는 색을 함께 사용해 <font color="#636363"><b>강한 포인트</b></font>\n흐릿하거나 뿌옇고 탁한 느낌을 주는 탁색은 피하기</string>
+
+    <string name="how_string1">‘지금 시작하기\'를 눌러\n바로 시작하세요!\n\n 조명이 너무 어둡거나 밝으면\n정확한 진단이 어려울 수\n있습니다.</string>
+    <string name="how_string2">얼굴 정면이 나온 사진을\n업로드해 주세요.\n\n머리카락이나 손이 얼굴을\n가리지 않도록 주의해 주세요.</string>
+    <string name="how_string3">사전 학습된 인공지능이\n당신에게 어울리는 컬러와\n당신의 얼굴형을 분석중입니다.\n\n잠시 기다려 주세요.</string>
+    <string name="how_string4">당신의 컬러와 얼굴형에\n어울리는 메이크업 제품과\n헤어스타일, 스타일링을\n제안합니다.</string>
 </resources>
