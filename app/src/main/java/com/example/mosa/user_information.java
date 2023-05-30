@@ -1,11 +1,15 @@
 package com.example.mosa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -62,7 +66,6 @@ public class user_information extends AppCompatActivity {
     ArrayList<String> pro_file_name;
     File recent_pro_img;
     String version;
-
     CircleImageView profile_img;
 
     ImageButton btn_change_profile; //프로필 사진 변경 버튼
@@ -77,7 +80,7 @@ public class user_information extends AppCompatActivity {
     TextView logout;
     EditText name_edit;
     String before_name;
-
+    ExifInterface exif = null;
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference pro_storef=storage.getReference().child("user_profile/");
@@ -390,42 +393,33 @@ public class user_information extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK && data!=null) {
                     Uri uri = data.getData();
-                    BitmapFactory.Options options = new BitmapFactory.Options();
                     try {
                         Bitmap pro_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri), null, options);
-
+                        Uri photoUri = Uri.parse(getRealPathFromURI(uri));
+                        exif = new ExifInterface(photoUri.getPath());
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
                         int width=pro_bitmap.getWidth();
                         int height=pro_bitmap.getHeight();
 
-                        int samplesize = 1;
-                        //Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
-                        while(true){
-                            if(width/2 < 250 || height /2 < 250)
-                                break;
-                            width /= 2;
-                            height /= 2;
-                            samplesize *=2;
+                        float ratio = (float) width / height;
+
+                        int resizedWidth, resizedHeight;
+                        if (ratio > 1) {
+                            // 이미지의 가로가 더 긴 경우
+                            resizedWidth = (int) (500*1.3);
+                            resizedHeight = 500;
+                        } else if(ratio < 1){
+                            // 이미지의 세로가 더 긴 경우
+                            resizedHeight = (int) (500*1.3);
+                            resizedWidth = 500;
+                        } else {
+                            resizedHeight = 500;
+                            resizedWidth = 500;
                         }
-                        options.inSampleSize = samplesize;
-                        Bitmap resize = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri), null, options);
-                        profile_img.setImageBitmap(resize);
 
-//                        float ratio = (float) width / height;
-//
-//                        int resizedWidth, resizedHeight;
-//                        if (ratio > 1) {
-//                            // 이미지의 가로가 더 긴 경우
-//                            resizedWidth = 250;
-//                            resizedHeight = (int) (resizedWidth / ratio);
-//                        } else {
-//                            // 이미지의 세로가 더 긴 경우
-//                            resizedHeight = 250;
-//                            resizedWidth = (int) (resizedHeight * ratio);
-//                        }
-//
-//                        Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
-
+                        Bitmap resize=Bitmap.createScaledBitmap(pro_bitmap, resizedWidth, resizedHeight, true);
+                        Bitmap rotate = rotateBitmap(resize, orientation);
+                        profile_img.setImageBitmap(rotate);
                         update_info=1;
 
 
@@ -436,6 +430,62 @@ public class user_information extends AppCompatActivity {
                 break;
         }
     }
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
 
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public String getRealPathFromURI(Uri contentUri){
+        String result;
+
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+        if(cursor==null) {
+            result = contentUri.getPath();
+        } else{
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
 
 }
