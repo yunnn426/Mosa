@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 선택되지 않은 점(선택 되지 않은 페이지 점) -->
+    <color name="dot_dark_screen1">#D9D9D9</color>
+    <color name="dot_dark_screen2">#D9D9D9</color>
+    <color name="dot_dark_screen3">#D9D9D9</color>
+    <color name="dot_dark_screen4">#D9D9D9</color>
+
+    <!-- 선택된 점(해당 페이지 일 때) -->
+    <color name="dot_light_screen1">#F9938D</color>
+    <color name="dot_light_screen2">#F9938D</color>
+    <color name="dot_light_screen3">#F9938D</color>
+    <color name="dot_light_screen4">#F9938D</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
+</resources>
