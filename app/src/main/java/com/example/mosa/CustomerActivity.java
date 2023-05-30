@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public class CustomerActivity extends AppCompatActivity {
     MenuItem bottom_2;
     MenuItem bottom_3;
 
+    ImageButton btn_how; //사용법 버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +170,16 @@ public class CustomerActivity extends AppCompatActivity {
             }
         });
 
+        //사용법 버튼
+        btn_how = findViewById(R.id.how_to_use);
+
+        btn_how.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CustomerActivity.this, HowToUse.class);
+                startActivity(intent);
+            }
+        });
 /*
         FirebaseCustomRemoteModel remoteModel = new FirebaseCustomRemoteModel.Builder("test").build();
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
