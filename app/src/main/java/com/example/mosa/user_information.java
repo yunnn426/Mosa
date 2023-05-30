@@ -316,7 +316,7 @@ public class user_information extends AppCompatActivity {
                     pro_storef_2.putFile(uri_pro).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                            Toast.makeText(user_information.this, "변경사항이 적용되었습니다.\n페이지를 다시 열어주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

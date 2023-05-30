@@ -32,32 +32,21 @@
         android:layout_above="@id/layoutDots"
         android:background="@android:color/white" />
 
-    <!-- 다음 버튼 -->
-
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:text="@string/next"
-        android:textColor="@android:color/white" />
-
-    <!-- 스킵 버튼 -->
-    <Button
-        android:id="@+id/btn_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@null"
-        android:text="@string/skip"
-        android:textColor="@android:color/white" />
-
-
-
-
-
+        android:layout_marginBottom="@dimen/dots_margin_bottom"
+        android:gravity="center"
+        >
+        <ImageButton
+            android:id="@+id/startApp"
+            android:layout_width="261dp"
+            android:layout_height="45dp"
+            android:src="@drawable/start_app"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
