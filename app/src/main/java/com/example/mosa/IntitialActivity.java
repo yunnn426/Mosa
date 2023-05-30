@@ -11,6 +11,7 @@ import android.content.ContentResolver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -236,12 +237,6 @@ public class IntitialActivity extends AppCompatActivity {
         }
         return file;
     }
-    public Uri getImageUri(Context context, Bitmap inImage){
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -253,9 +248,9 @@ public class IntitialActivity extends AppCompatActivity {
                     try {
                         InputStream in = getContentResolver().openInputStream(data.getData());
                         Bitmap img = BitmapFactory.decodeStream(in);
-                        uri1 = getImageUri(this, img);
+                        Uri uri = data.getData();
                         in.close();
-                        Bitmap resize_bitmap = resize_imageSize(this, uri1, img, "image.png");
+                        Bitmap resize_bitmap = resize_imageSize(this, uri, img, "image.png");
                         btn3.setImageBitmap(resize_bitmap);
                     }catch (Exception e){
 
