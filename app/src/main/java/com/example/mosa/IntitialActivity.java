@@ -62,6 +62,7 @@ public class IntitialActivity extends AppCompatActivity {
 
     //현재 이미지가 올라와 있는지 여부를 확인
     boolean inImg=false;
+    Uri uri1;
 
     ImageButton backBtn;
     Button btn1;
@@ -120,10 +121,11 @@ public class IntitialActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-                    Bitmap bmRotated = rotateBitmap(bitmap, orientation);
+
                     if (bitmap != null) {
-                        Bitmap resize_bitmap = resize_imageSize(this, bmRotated, 800, 800, "image.png");
-                        btn3.setImageBitmap(resize_bitmap);
+                        Bitmap resize_bitmap = resize_imageSize(this, uri1, bitmap,"image.png");
+                        Bitmap bmRotated = rotateBitmap(resize_bitmap, orientation);
+                        btn3.setImageBitmap(bmRotated);
                         inImg = true;
                     }
                 });
@@ -146,6 +148,7 @@ public class IntitialActivity extends AppCompatActivity {
                         "com.example.mosa.fileprovider",
                         file
                 );
+                uri1 = photoURI;
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 requestCameraFileLauncher.launch(intent);
@@ -233,6 +236,12 @@ public class IntitialActivity extends AppCompatActivity {
         }
         return file;
     }
+    public Uri getImageUri(Context context, Bitmap inImage){
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -244,8 +253,9 @@ public class IntitialActivity extends AppCompatActivity {
                     try {
                         InputStream in = getContentResolver().openInputStream(data.getData());
                         Bitmap img = BitmapFactory.decodeStream(in);
+                        uri1 = getImageUri(this, img);
                         in.close();
-                        Bitmap resize_bitmap = resize_imageSize(this, img, 800, 800, "image.png");
+                        Bitmap resize_bitmap = resize_imageSize(this, uri1, img, "image.png");
                         btn3.setImageBitmap(resize_bitmap);
                     }catch (Exception e){
 
@@ -258,7 +268,7 @@ public class IntitialActivity extends AppCompatActivity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            Bitmap resize_bitmap = resize_imageSize(this, bitmap, 800, 800,"image.png");
+            Bitmap resize_bitmap = resize_imageSize(this, uri1 ,bitmap,"image.png");
             btn3.setImageBitmap(resize_bitmap);
         }
     }
@@ -270,12 +280,26 @@ public class IntitialActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public Bitmap resize_imageSize(Context context, Bitmap bitmap, int width, int height, String filename){
+    public Bitmap resize_imageSize(Context context, Uri uri, Bitmap bitmap,String filename){
         Bitmap resize = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
         try {
-
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+            int wid = options.outWidth;
+            int hei = options.outHeight;
+            int samplesize = 1;
             //Bitmap orgImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);//비트맵 파일 겟
-            resize = Bitmap.createScaledBitmap(bitmap,width, height, true);
+            while(true){
+                if(wid/2 < 500 || hei /2 < 500)
+                    break;
+                wid /= 2;
+                hei /= 2;
+                samplesize *=2;
+            }
+            options.inSampleSize = samplesize;
+            Bitmap bitmap2 = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+            resize = bitmap2;
+            //resize = Bitmap.createScaledBitmap(bitmap,width, height, true);
 
         }
         catch (Exception e){
