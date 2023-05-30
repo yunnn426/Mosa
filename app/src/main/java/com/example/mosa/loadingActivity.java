@@ -329,6 +329,7 @@ public class loadingActivity extends AppCompatActivity {
                         color = "#ffffff";
                         break;
                 }
+                if(0<=result_1 && result_1<=9 || result_2!=null){
 
                 cons.postDelayed(new Runnable() {
                     @Override
@@ -357,6 +358,14 @@ public class loadingActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+
+                }
+                else{
+                    Toast.makeText(loadingActivity.this,"진단을 실패했습니다. 다시 이미지를 등록해 주세요.",Toast.LENGTH_SHORT).show();
+                    Intent intent_back=new Intent(loadingActivity.this,IntitialActivity.class);
+                    intent_back.putExtra("choice","종합진단");
+                    startActivity(intent_back);
+                }
             }
 
             @Override
