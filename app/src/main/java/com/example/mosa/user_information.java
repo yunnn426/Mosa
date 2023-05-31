@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -281,7 +282,7 @@ public class user_information extends AppCompatActivity {
         /*
         앱의 버전 정보를 보여준다.
         */
-        version=BuildConfig.VERSION_NAME;
+        version= BuildConfig.VERSION_NAME;
         version_info.setText(version);
 
 
