@@ -1,7 +1,9 @@
 package com.example.mosa;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +11,12 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.ExifInterface;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -51,6 +57,7 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,8 +67,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import android.Manifest;
 
 public class user_information extends AppCompatActivity {
+
 
     static int update_info=0;
     ArrayList<String> pro_file_name;
@@ -93,8 +102,6 @@ public class user_information extends AppCompatActivity {
     String value;
     String user_img_name = email_pro+ "_" +"profile"+"_"+ format.format(date);
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +128,7 @@ public class user_information extends AppCompatActivity {
         pro_file_name=new ArrayList<String>();
 
         logout=findViewById(R.id.logout_text);
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,10 +247,12 @@ public class user_information extends AppCompatActivity {
         /*
         프로필 이미지 수정
         */
+
         btn_change_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_proimg = new Intent(Intent.ACTION_PICK);
+
+                Intent intent_proimg = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent_proimg.setType("image/*");
                 startActivityForResult(intent_proimg, 1);
             }
@@ -371,6 +381,22 @@ public class user_information extends AppCompatActivity {
             return false;
         });
 
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        int permission2 = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission == PackageManager.PERMISSION_DENIED || permission2 == PackageManager.PERMISSION_DENIED) {
+            // 마쉬멜로우 이상버전부터 권한을 물어본다
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // 권한 체크(READ_PHONE_STATE의 requestCode를 1000으로 세팅
+                requestPermissions(
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1000);
+            }
+            return;
+        }
+
     }
 
     public File BmpToFile(Bitmap bmp, String filename) {
@@ -392,13 +418,18 @@ public class user_information extends AppCompatActivity {
 
         switch (requestCode) {
             case 1:
-                if (resultCode == RESULT_OK && data!=null) {
-                    Uri uri = data.getData();
+                if (resultCode == RESULT_OK) {
+
                     try {
-                        Bitmap pro_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        InputStream in = getContentResolver().openInputStream(data.getData());
+                        Bitmap pro_bitmap= BitmapFactory.decodeStream(in);
+                        Uri uri = data.getData();
+                        in.close();
+
                         Uri photoUri = Uri.parse(getRealPathFromURI(uri));
                         exif = new ExifInterface(photoUri.getPath());
                         int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
                         int width=pro_bitmap.getWidth();
                         int height=pro_bitmap.getHeight();
 
@@ -488,5 +519,30 @@ public class user_information extends AppCompatActivity {
         }
         return result;
     }
+    // 권한 체크 이후로직
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
+        // READ_PHONE_STATE의 권한 체크 결과를 불러온다
+        super.onRequestPermissionsResult(requestCode, permissions, grandResults);
+        if (requestCode == 1000) {
+            boolean check_result = true;
+
+            // 모든 퍼미션을 허용했는지 체크
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false;
+                    break;
+                }
+            }
+
+            // 권한 체크에 동의를 하지 않으면 안드로이드 종료
+            if (check_result == true) {
+
+            } else {
+                finish();
+            }
+        }
+    }
+
 
 }
