@@ -2,13 +2,17 @@ package com.example.mosa;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +20,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -210,6 +215,21 @@ public class IntitialActivity extends AppCompatActivity {
             }
             return false;
         });
+        int permission = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        int permission2 = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission == PackageManager.PERMISSION_DENIED || permission2 == PackageManager.PERMISSION_DENIED) {
+            // 마쉬멜로우 이상버전부터 권한을 물어본다
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // 권한 체크(READ_PHONE_STATE의 requestCode를 1000으로 세팅
+                requestPermissions(
+                        new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1000);
+            }
+            return;
+        }
     }
 
     //비트맵 이미지를 파일 형태로 변환
@@ -226,20 +246,7 @@ public class IntitialActivity extends AppCompatActivity {
         }
         return file;
     }
-    public String getRealPathFromURI(Uri contentUri){
-        String result;
 
-        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
-        if(cursor==null) {
-                result = contentUri.getPath();
-        } else{
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -248,14 +255,17 @@ public class IntitialActivity extends AppCompatActivity {
         switch(requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
+
                     try {
                         InputStream in = getContentResolver().openInputStream(data.getData());
                         Bitmap img = BitmapFactory.decodeStream(in);
                         Uri uri = data.getData();
                         in.close();
+
                         Uri photoUri = Uri.parse(getRealPathFromURI(uri));
                         exif = new ExifInterface(photoUri.getPath());
                         int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
                         Bitmap resize_bitmap = resize_imageSize(this, uri, img, "image.png");
                         Bitmap rotate = rotateBitmap(resize_bitmap,orientation);
                         btn3.setImageBitmap(rotate);
@@ -268,13 +278,13 @@ public class IntitialActivity extends AppCompatActivity {
 
         if(requestCode == 101  && resultCode == Activity.RESULT_OK){
             BitmapFactory.Options options = new BitmapFactory.Options();
+            Uri uri = data.getData();
             options.inSampleSize = 4;
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            Bitmap resize_bitmap = resize_imageSize(this, uri1 ,bitmap,"image.png");
+            Bitmap resize_bitmap = resize_imageSize(this, uri ,bitmap,"image.png");
             btn3.setImageBitmap(resize_bitmap);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -299,8 +309,7 @@ public class IntitialActivity extends AppCompatActivity {
                 samplesize *=2;
             }
             options.inSampleSize = samplesize;
-            Bitmap bitmap2 = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
-            resize = bitmap2;
+            resize = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
             //resize = Bitmap.createScaledBitmap(bitmap,width, height, true);
 
         }
@@ -351,6 +360,44 @@ public class IntitialActivity extends AppCompatActivity {
         catch (OutOfMemoryError e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public String getRealPathFromURI(Uri contentUri){
+        String result;
+        //String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+        if(cursor==null) {
+            result = contentUri.getPath();
+        } else{
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+    // 권한 체크 이후로직
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
+        // READ_PHONE_STATE의 권한 체크 결과를 불러온다
+        super.onRequestPermissionsResult(requestCode, permissions, grandResults);
+        if (requestCode == 1000) {
+            boolean check_result = true;
+
+            // 모든 퍼미션을 허용했는지 체크
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false;
+                    break;
+                }
+            }
+
+            // 권한 체크에 동의를 하지 않으면 안드로이드 종료
+            if (check_result == true) {
+
+            } else {
+                finish();
+            }
         }
     }
 
