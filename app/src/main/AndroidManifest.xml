@@ -40,6 +40,9 @@
             android:exported="false"/>
 
         <activity
+            android:name=".HowToUse"
+            android:exported="false" />
+        <activity
             android:name=".user_information"
             android:exported="false" />
         <activity
