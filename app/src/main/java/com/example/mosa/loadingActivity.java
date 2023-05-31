@@ -335,7 +335,7 @@ public class loadingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //이곳을 나중에 퍼스널 컬러별 색으로 바꾸면 될듯
-                        cons.setBackgroundColor(Color.parseColor(color));
+                        cons.setBackgroundColor(Color.parseColor(color));//
                     }
                 }, 2000);
 
