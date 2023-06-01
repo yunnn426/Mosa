@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+<com.jackandphantom.carouselrecyclerview.view.ReflectionViewContainer
+    android:layout_width="150dp"
+    android:layout_height="260dp"
+    android:orientation="vertical"
+    app:reflect_gap="5dp">
 <ImageView
     android:id="@+id/hair_item"
     android:layout_width="150dp"
-    android:layout_height="300dp"
+    android:layout_height="240dp"
     android:scaleType="fitXY"/>
 
     <TextView
@@ -15,4 +20,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="헤어스타일 번호"/>
+</com.jackandphantom.carouselrecyclerview.view.ReflectionViewContainer>
 </LinearLayout >

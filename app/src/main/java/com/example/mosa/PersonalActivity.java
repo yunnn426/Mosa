@@ -402,12 +402,12 @@ public class PersonalActivity  extends AppCompatActivity {
                                 recycler_2.setrecycler(itemfile_2,itemdetail_2);
                                 recyc.setrecycler(itemfile_2,itemdetail_2);
                                 //itemhair.setIntervalRatio(0.5f);
-                                //itemhair.setAlpha(true);
+                                itemhair.setAlpha(true);
                                 //itemhair.setFlat(false);
-                                itemhair.setOrientation(RecyclerView.HORIZONTAL);
+                                itemhair.setOrientation(RecyclerView.VERTICAL);
                                 //itemhair.setIsScrollingEnabled(true);
                                 //itemhair.setInfinite(false);
-                                //itemhair.set3DItem(true);
+                                itemhair.set3DItem(true);
                                 itemhair.setAdapter(recyc);
                                 //itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                 //itemlist_2.setLayoutManager(layoutManager);
