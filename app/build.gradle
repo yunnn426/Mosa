@@ -66,9 +66,8 @@ dependencies {
     //circle image view
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.mig35:carousellayoutmanager:1.4.6'
-    //implementation 'com.github.sparrow007:carouselrecyclerview:1.2.6'
-
+    //implementation 'com.mig35:carousellayoutmanager:1.4.6'
+    implementation 'com.github.sparrow007:carouselrecyclerview:1.2.6'
 
 
     // TODO: Add the dependencies for Firebase products you want to use

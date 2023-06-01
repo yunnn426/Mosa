@@ -21,6 +21,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mosa.databinding.ActivityMainBinding;
 import com.example.mosa.recommend.hair_recycler;
 import com.example.mosa.recommend.item_Recycler;
 import com.example.mosa.recommend.recclothActivity;
@@ -43,9 +44,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.mig35.carousellayoutmanager.CarouselLayoutManager;
-import com.mig35.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.mig35.carousellayoutmanager.CenterScrollListener;
+import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager;
+import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class PersonalActivity  extends AppCompatActivity {
     RecyclerView itemlist_1;
     RecyclerView itemlist_2;
     RecyclerView itemlist_4;
-    RecyclerView itemhair;
+    CarouselRecyclerview itemhair;
     File path;
     String name;
 
@@ -99,7 +99,6 @@ public class PersonalActivity  extends AppCompatActivity {
     ImageButton closeBtn;
 
     Button fas_btn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*
@@ -401,12 +400,18 @@ public class PersonalActivity  extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                 recycler_2.setrecycler(itemfile_2,itemdetail_2);
-                                itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,false);
+                                recyc.setrecycler(itemfile_2,itemdetail_2);
+                                //itemhair.setIntervalRatio(0.5f);
+                                //itemhair.setAlpha(true);
+                                //itemhair.setFlat(false);
+                                itemhair.setOrientation(RecyclerView.HORIZONTAL);
+                                //itemhair.setIsScrollingEnabled(true);
+                                //itemhair.setInfinite(false);
+                                //itemhair.set3DItem(true);
+                                itemhair.setAdapter(recyc);
+                                //itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
                                 //itemlist_2.setLayoutManager(layoutManager);
-                                //itemlist_2.setHasFixedSize(true);
-                                itemlist_2.setAdapter(recycler_2);
-                                //itemlist_2.addOnScrollListener(new CenterScrollListener());
+                                //itemlist_2.setAdapter(recycler_2);
                             }
                         });
 
