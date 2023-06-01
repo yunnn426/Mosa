@@ -404,7 +404,7 @@ public class PersonalActivity  extends AppCompatActivity {
                                 //itemhair.setIntervalRatio(0.5f);
                                 itemhair.setAlpha(true);
                                 //itemhair.setFlat(false);
-                                itemhair.setOrientation(RecyclerView.VERTICAL);
+                                itemhair.setOrientation(RecyclerView.HORIZONTAL);
                                 //itemhair.setIsScrollingEnabled(true);
                                 //itemhair.setInfinite(false);
                                 itemhair.set3DItem(true);
