@@ -402,10 +402,10 @@ public class PersonalActivity  extends AppCompatActivity {
                                 recycler_2.setrecycler(itemfile_2,itemdetail_2);
                                 recyc.setrecycler(itemfile_2,itemdetail_2);
                                 //itemhair.setIntervalRatio(0.5f);
-                                itemhair.setAlpha(true);
+                                itemhair.setAlpha(false);
                                 //itemhair.setFlat(false);
-                                itemhair.setOrientation(RecyclerView.HORIZONTAL);
-                                //itemhair.setIsScrollingEnabled(true);
+                                itemhair.setOrientation(RecyclerView.VERTICAL);
+                                itemhair.setIsScrollingEnabled(true);
                                 //itemhair.setInfinite(false);
                                 itemhair.set3DItem(true);
                                 itemhair.setAdapter(recyc);

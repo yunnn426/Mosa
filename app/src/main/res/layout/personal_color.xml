@@ -285,6 +285,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"/>
             <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:id="@+id/hair_carousel"
                 android:layout_width="match_parent"
