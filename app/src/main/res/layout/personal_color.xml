@@ -301,6 +301,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
+                    android:layout_marginTop="30dp"
                     android:text="버튼을 눌러"
                     android:textColor="#3d3d3d"
                     android:fontFamily="@font/nanumgothic"
