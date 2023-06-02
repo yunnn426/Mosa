@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class hair_recycler extends RecyclerView.Adapter<hair_recycler.ViewHolder_item>{
 
     ArrayList<Bitmap> itemfile=new ArrayList<Bitmap>();
-    ArrayList<String> itemname=new ArrayList<String>();
 
     @NonNull
     @Override
@@ -37,10 +36,8 @@ public class hair_recycler extends RecyclerView.Adapter<hair_recycler.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder_item holder, int position) {
         Bitmap img=itemfile.get(position);
-        String name=itemname.get(position);
 
         holder.item_img.setImageBitmap(img);
-        holder.item_de.setText(name);
 
     }
 
@@ -50,13 +47,11 @@ public class hair_recycler extends RecyclerView.Adapter<hair_recycler.ViewHolder
     }
 
     public class ViewHolder_item extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView item_de;
         ImageView item_img;
 
         public ViewHolder_item(@NonNull View itemView) {
             super(itemView);
             item_img=itemView.findViewById(R.id.hair_item);
-            item_de=itemView.findViewById(R.id.hair_num);
             item_img.setOnClickListener(this);
         }
 
@@ -65,9 +60,7 @@ public class hair_recycler extends RecyclerView.Adapter<hair_recycler.ViewHolder
             int position=getAdapterPosition();
             Intent intent=new Intent(itemView.getContext(),FullitemImage.class);
             Bitmap bitmap=itemfile.get(position);
-            String item_detail=itemname.get(position);
             File file=BmpToFile(bitmap,"item_img");
-            intent.putExtra("item_detail",item_detail);
             intent.putExtra("bitmap_url",file.getAbsolutePath());
             itemView.getContext().startActivity(intent);
         }
@@ -85,8 +78,7 @@ public class hair_recycler extends RecyclerView.Adapter<hair_recycler.ViewHolder
             return file;
         }
     }
-    public void setrecycler(ArrayList<Bitmap> itemfile_list,ArrayList<String> itemname){
+    public void setrecycler(ArrayList<Bitmap> itemfile_list){
         this.itemfile=itemfile_list;
-        this.itemname=itemname;
     }
 }

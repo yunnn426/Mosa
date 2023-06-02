@@ -15,10 +15,5 @@
     android:layout_height="240dp"
     android:scaleType="fitXY"/>
 
-    <TextView
-        android:id="@+id/hair_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="헤어스타일 번호"/>
 </com.jackandphantom.carouselrecyclerview.view.ReflectionViewContainer>
 </LinearLayout >

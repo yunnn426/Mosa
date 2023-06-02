@@ -400,7 +400,7 @@ public class PersonalActivity  extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                 recycler_2.setrecycler(itemfile_2,itemdetail_2);
-                                recyc.setrecycler(itemfile_2,itemdetail_2);
+                                recyc.setrecycler(itemfile_2);
                                 //itemhair.setIntervalRatio(0.5f);
                                 itemhair.setAlpha(false);
                                 //itemhair.setFlat(false);
