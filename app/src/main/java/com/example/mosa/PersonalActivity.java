@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mosa.databinding.ActivityMainBinding;
+import com.example.mosa.recommend.hair_recycler;
 import com.example.mosa.recommend.item_Recycler;
 import com.example.mosa.recommend.recclothActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +44,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager;
+import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +79,7 @@ public class PersonalActivity  extends AppCompatActivity {
     TextView Title_User_color;
     TextView color_detail;
     FirebaseDatabase firebaseDatabase;
-
+    MotionLayout motionLayout;
 
     ImageView color_title;
     ImageView color_chrt;
@@ -86,6 +91,7 @@ public class PersonalActivity  extends AppCompatActivity {
     RecyclerView itemlist_1;
     RecyclerView itemlist_2;
     RecyclerView itemlist_4;
+    CarouselRecyclerview itemhair;
     File path;
     String name;
 
@@ -93,7 +99,6 @@ public class PersonalActivity  extends AppCompatActivity {
     ImageButton closeBtn;
 
     Button fas_btn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*
@@ -260,6 +265,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
         item_Recycler recycler_1=new item_Recycler();
         item_Recycler recycler_2=new item_Recycler();
+        hair_recycler recyc=new hair_recycler();
         item_Recycler recycler_4=new item_Recycler();
 
         itemfile_1=new ArrayList<Bitmap>();
@@ -296,6 +302,7 @@ public class PersonalActivity  extends AppCompatActivity {
 
         itemlist_1=findViewById(R.id.cos_list);
         itemlist_2=findViewById(R.id.hair_list);
+        itemhair=findViewById(R.id.hair_carousel);
         //itemlist_4=findViewById(R.id.cloth_list);
 
         //나중에 경로는 따로 바꾸면 된다. 결과 값을 이전 엑티비티에서 받아서 그 결과 값에 맞는 result_color,result_face 값을 가져오고 그 값으로 스토리지랑 연결
@@ -393,8 +400,18 @@ public class PersonalActivity  extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                 recycler_2.setrecycler(itemfile_2,itemdetail_2);
-                                itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
-                                itemlist_2.setAdapter(recycler_2);
+                                recyc.setrecycler(itemfile_2);
+                                //itemhair.setIntervalRatio(0.5f);
+                                itemhair.setAlpha(false);
+                                //itemhair.setFlat(false);
+                                itemhair.setOrientation(RecyclerView.VERTICAL);
+                                itemhair.setIsScrollingEnabled(true);
+                                //itemhair.setInfinite(false);
+                                itemhair.set3DItem(true);
+                                itemhair.setAdapter(recyc);
+                                //itemlist_2.setLayoutManager(new LinearLayoutManager(PersonalActivity.this, RecyclerView.HORIZONTAL, false));
+                                //itemlist_2.setLayoutManager(layoutManager);
+                                //itemlist_2.setAdapter(recycler_2);
                             }
                         });
 
