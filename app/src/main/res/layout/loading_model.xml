@@ -11,6 +11,7 @@
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="컬러를 찾는 중입니다."
         android:textColor="#3d3d3d"
         android:textSize="20dp"

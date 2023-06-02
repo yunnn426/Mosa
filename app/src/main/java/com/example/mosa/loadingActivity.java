@@ -149,7 +149,6 @@ public class loadingActivity extends AppCompatActivity {
 
                     String[] labels = {"b", "a", "e", "c", "d"};
                     String predictedLabel = labels[maxIndex];
-                    Toast.makeText(loadingActivity.this,predictedLabel,Toast.LENGTH_SHORT).show();
 
                     result_2 = predictedLabel;
 
@@ -280,57 +279,57 @@ public class loadingActivity extends AppCompatActivity {
                 // 애니메이션이 종료되면 실행될 작업
 
                 loading_img.clearAnimation();
-                loading_text.setText("컬러를 찾았습니다!");
+                if(0<=result_1 && result_1<=9 && result_2!=null){
 
-                loading_img.setVisibility(View.INVISIBLE);
-                res_img.setVisibility(View.VISIBLE);
+                    loading_text.setText("컬러를 찾았습니다!");
 
-                //결과 값을 받아서 그거에 맞는 ui 요소를 표시
-                String rst_color="result_"+result_1;
-                int drawable_id=getResources().getIdentifier(rst_color,"drawable",getPackageName());
-                res_img.setImageResource(drawable_id);
+                    loading_img.setVisibility(View.INVISIBLE);
+                    res_img.setVisibility(View.VISIBLE);
 
-                //임시로 표시
-                //res_img.setImageResource(R.drawable.result_1);
+                    //결과 값을 받아서 그거에 맞는 ui 요소를 표시
+                    String rst_color="result_"+result_1;
+                    int drawable_id=getResources().getIdentifier(rst_color,"drawable",getPackageName());
+                    res_img.setImageResource(drawable_id);
 
-                String color;
-                switch (result_1) {
-                    case 1:
-                        color = "#FFA6AF";
-                        break;
-                    case 2:
-                        color = "#FF6E55";
-                        break;
-                    case 3:
-                        color = "#D6EDE5";
-                        break;
-                    case 4:
-                        color = "#F4FFB4";
-                        break;
-                    case 5:
-                        color = "#E0C8EF";
-                        break;
-                    case 6:
-                        color = "#273E19";
-                        break;
-                    case 7:
-                        color = "#97AB60";
-                        break;
-                    case 8:
-                        color = "#987A5F";
-                        break;
-                    case 9:
-                        color = "#023854";
-                        break;
-                    case 10:
-                        color = "#FF53AC";
-                        break;
-                    default:
-                        color = "#ffffff";
-                        break;
-                }
-                if(0<=result_1 && result_1<=9 || result_2!=null){
+                    //임시로 표시
+                    //res_img.setImageResource(R.drawable.result_1);
 
+                    String color;
+                    switch (result_1) {
+                        case 1:
+                            color = "#FFA6AF";
+                            break;
+                        case 2:
+                            color = "#FF6E55";
+                            break;
+                        case 3:
+                            color = "#D6EDE5";
+                            break;
+                        case 4:
+                            color = "#F4FFB4";
+                            break;
+                        case 5:
+                            color = "#E0C8EF";
+                            break;
+                        case 6:
+                            color = "#273E19";
+                            break;
+                        case 7:
+                            color = "#97AB60";
+                            break;
+                        case 8:
+                            color = "#987A5F";
+                            break;
+                        case 9:
+                            color = "#023854";
+                            break;
+                        case 10:
+                            color = "#FF53AC";
+                            break;
+                        default:
+                            color = "#ffffff";
+                            break;
+                    }
                 cons.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -361,10 +360,22 @@ public class loadingActivity extends AppCompatActivity {
 
                 }
                 else{
+                    loading_text.setText("이미지 분석을 실패 했습니다\n(화면을 터치 하세요)");
+                    loading_img.setVisibility(View.INVISIBLE);
                     Toast.makeText(loadingActivity.this,"진단을 실패했습니다. 다시 이미지를 등록해 주세요.",Toast.LENGTH_SHORT).show();
                     Intent intent_back=new Intent(loadingActivity.this,IntitialActivity.class);
                     intent_back.putExtra("choice","종합진단");
-                    startActivity(intent_back);
+
+                    cons.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+
+                            if(event.getAction()==event.ACTION_DOWN){
+                                startActivity(intent_back);
+                            }
+                            return false;
+                        }
+                    });
                 }
             }
 
